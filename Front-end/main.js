@@ -15,7 +15,12 @@ document.getElementById("submit").addEventListener("click", function() {
 httpRequest.onreadystatechange = function() {
 	var status = document.getElementById("status");
 	if (httpRequest.readyState === XMLHttpRequest.DONE) {
-		var data = JSON.parse(httpRequest.responseText)
+		var data = JSON.parse(httpRequest.responseText);
+		if (!data.njit || !data.db) {
+			status.innerHTML = "<span class='error'>Error - Bad response data</span>";
+			status.style.display = "block";
+			return;
+		}
 		if (httpRequest.status === 200) {
 			status.innerHTML = "NJIT: <span class='" + (data.njit.status == 200 ? 'ok' : 'error') + "'>" + data.njit.response + "</span>, ";
 			status.innerHTML += "database: <span class='" + (data.db.status == 200 ? 'ok' : 'error') + "'>" + data.db.response + "</span>";
