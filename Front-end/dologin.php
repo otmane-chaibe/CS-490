@@ -21,7 +21,7 @@
 	$curl = curl_init();
 	curl_setopt_array($curl, [
 	    CURLOPT_RETURNTRANSFER => 1,
-	    CURLOPT_URL => 'https://web.njit.edu/~ks492/searchform.php', #https://web.njit.edu/~sma76
+	    CURLOPT_URL => 'https://web.njit.edu/~ks492/searchform.php', # https://web.njit.edu/~sma76
 	    CURLOPT_USERAGENT => 'NJIT Auth Front-end',
 	    CURLOPT_POST => 1,
 	    CURLOPT_POSTFIELDS => [
