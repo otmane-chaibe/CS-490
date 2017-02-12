@@ -29,9 +29,8 @@
 	    ]
 	]);
 	$resp = curl_exec($curl);
-	print_r($resp);
 	var_dump($resp);
-	# echo json_encode($resp);
+	echo json_encode($resp);
 	curl_close($curl);
 	
 	
