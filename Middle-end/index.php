@@ -19,24 +19,51 @@
 		die(json_encode(["status" => 400, "response" => "Bad Request"]));
 	}
 	
+	# cURL Request - NJIT
 	$curl = curl_init();
 	curl_setopt_array($curl, [
 		CURLOPT_FOLLOWLOCATION => true,
 		CURLOPT_HTTPHEADER     => ['Content-Type: application/x-www-form-urlencoded'],
-	    CURLOPT_POST           => 1,
-	    CURLOPT_POSTFIELDS     => "user=" . $ucid . "&pass=" . $pass . "&uuid=0xACA021",
-		CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_POST           => 1,
+		CURLOPT_POSTFIELDS     => "user=" . $ucid . "&pass=" . $pass . "&uuid=0xACA021",
+		CURLOPT_RETURNTRANSFER => 1,
 		CURLOPT_URL            => 'https://cp4.njit.edu/cp/home/login',
-		CURLOPT_USERAGENT      => 'NJIT Authentication System',
+		CURLOPT_USERAGENT      => 'NJIT Auth Middle-end'
 	]);
-	
-	# Verify cURL response
 	$resp = curl_exec($curl);
 	curl_close($curl);
-	if (!strpos($resp, "Login Successful")) {
-		die(json_encode(["status" => 403, "response" => "Unauthorized"]));
+	
+	# Verify cURL response
+	$njit = ["status" => 403, "response" => "Login not successful"];
+	if (strpos($resp, "Login Successful")) {
+		$njit = ["status" => 200, "response" => "Login successful"];
 	}
-	echo json_encode([
-		"njit" => ["status" => 200, "response" => "Login successful"],
-		"db"   => ["status" => 403, "response" => "Login not successful"]
+
+	# cURL Request - Back-end
+	$curl = curl_init();
+	curl_setopt_array($curl, [
+	    CURLOPT_RETURNTRANSFER => 1,
+	    CURLOPT_URL            => 'https://web.njit.edu/~ks492/searchform.php',
+	    CURLOPT_USERAGENT      => 'NJIT Auth Middle-end',
+	    CURLOPT_POST           => 1,
+	    CURLOPT_POSTFIELDS     => [
+	    	"ucid" => $ucid,
+	       	"pass" => $pass
+	    ]
 	]);
+	$resp = curl_exec($curl);
+	curl_close($curl);
+	
+	# Verify cURL response
+	$resp = json_decode($resp, true);
+	$db = ["status" => 403, "response" => "Login not successful"];
+	if (!empty($resp["db"]) && $resp["db"]["status"] == 200) {
+		$db = ["status" => 200, "response" => "Login successful"];
+	}
+	
+	# Return Results
+	echo json_encode([
+		"njit" => $njit,
+		"db"   => $db
+	]);
+	
