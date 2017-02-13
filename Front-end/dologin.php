@@ -1,5 +1,7 @@
 <?php
 
+	# Maurice Achtenhagen
+
 	header('Content-Type: application/json');
 
 	# Check Request Method
@@ -38,5 +40,3 @@
 	$resp = curl_exec($curl);
 	curl_close($curl);
 	echo $resp;
-
-?>
