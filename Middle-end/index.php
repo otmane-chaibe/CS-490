@@ -13,9 +13,9 @@
 	if (empty($ucid) || empty($pass)) {
 		$methodName = $_POST['methodName'];
 		$argNum = $_POST['argNum'];
-		$conType = $_POST['ConType'];
-		$methodInput = $_POST['methodInput'];
-		$methodOutput = $_POST['methodOutput'];
+		$conType = $_POST['ConType'];				//condition type
+		$methodInput = $_POST['methodInput'];		//input to the method
+		$methodOutput = $_POST['methodOutput'];		//expected answer
 		
 		if (empty($methodName) || empty($argNum) || empty($conType) || empty($methodInput) || empty($methodOutput)) {
 			header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad Request');
@@ -86,5 +86,4 @@
 	}
 
 ?>
-	############################################################################
 	
