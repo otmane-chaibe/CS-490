@@ -10,8 +10,8 @@
 	
 	$methodName = $_POST['methodName'];
 	$argNum = $_POST['argNum'];
-	$conType = $_POST['ConType'];				//condition type, loop, recursion or switch and stuff 
-	$qType = $_POST['qType'];					//question type
+	$qType = $_POST['qType'];					//condition type, loop, recursion or switch and stuff
+	$qDiff = $_POST['qDiff'];				 	//question difficulty
 	$methodInput = $_POST['methodInput'];		//input to the method
 	$methodOutput = $_POST['methodOutput'];		//expected answer
 	
@@ -28,10 +28,10 @@
 		CURLOPT_USERAGENT      => 'NJIT Auth Middle-end',
 		CURLOPT_POST           => 1,
 		CURLOPT_POSTFIELDS     => [
-			"argNum" => $argNum,
 			"methodName" => $methodName,
-			"conType" => $conType,
+			"argNum" => $argNum,
 			"qType" => $qType,
+			"qDiff" => $qDiff,
 			"methodInput" => $methodInput,
 			"methodOutput" =>  $methodOutput
 		]
