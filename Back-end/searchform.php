@@ -1,5 +1,3 @@
-//Khurshid Sohail
-
 <?php
 
 mysql_connect ('sql.njit.edu', 'ks492', 'SpqROrOBi');
@@ -12,6 +10,7 @@ if($_SERVER['REQUEST_METHOD'] != "POST")
 	header('Allow: POST');
 	die(json_encode(["error" => "Must Use POST"]));
 }
+session_start();
 
 $ucid=$_POST["ucid"];
 $pass=$_POST["pass"];
@@ -22,12 +21,26 @@ if($x=mysql_fetch_array($gpw)) {
 do {
 	$tmp=$x['@test'];
 } while($x=mysql_fetch_array($gpw)); }
-
-$result = mysql_query ("SELECT * FROM `ids` WHERE ucid ='$ucid' AND pass like '$tmp%'");
-			
-if ($row = mysql_fetch_array($result)) {
+$result = mysql_query ("SELECT * FROM `ids` WHERE ucid ='$ucid' AND pass like '$tmp%'
+			");
+			if ($row = mysql_fetch_array($result)) {
 			do {
-				$ex=["status" => 200, "response" => "login successful"];
+				session_regenerate_id();
+				print("<p>");
+					print $row["id"];
+					$_SESSION['sess_ucid']=$row["ucid"];
+					$_SESSION['sess_id']=$row["id"];
+					$_SESSION['sess_ucid']=$row["ucid"];
+					$_SESSION['sess_name']=$row["name"];
+					$_SESSION['sess_role']=$row["role"];
+					print (" ");
+					print $row["name"];
+					print("<p>");
+					echo $_SESSION['sess_role'];
+				session_write_close();
+				$ex=["status" => 200, "response" => "login
+				successful", "role" => $row["role"]];
+
 				echo json_encode(["db" => $ex]);
 							} 
 							while($row =
@@ -40,6 +53,11 @@ if ($row = mysql_fetch_array($result)) {
 							echo json_encode(["db" => $ex]);
 							}
 
+#if( $_SESSION['sess_role'] == "0"){
+# header('Location: instructor.php');
+# }else{
+#  header('Location: student.php');
+#  }
 							?>
 
 
