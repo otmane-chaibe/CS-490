@@ -7,15 +7,19 @@
 		header('Allow: POST');
 		die(json_encode(["status" => 405, "response" => "Must Use POST"]));
 	}
-	$ucid = $_POST['ucid'];
-	$pass = $_POST['pass'];
-	# Check POST Variables
-	if (empty($ucid) || empty($pass)) {
+	
+	$methodName = $_POST['methodName'];
+	$argNum = $_POST['argNum'];
+	$conType = $_POST['ConType'];				//condition type
+	$methodInput = $_POST['methodInput'];		//input to the method
+	$methodOutput = $_POST['methodOutput'];		//expected answer
+	
+	if (empty($methodName) || empty($argNum) || empty($conType) || empty($methodInput) || empty($methodOutput)) {
 		header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad Request');
 		die(json_encode(["status" => 400, "response" => "Bad Request"]));
 	}
 	
-	# cURL Request - Back-end - For Login
+	# cURL Request - Back-end = For Question
 	$curl = curl_init();
 	curl_setopt_array($curl, [
 		CURLOPT_RETURNTRANSFER => 1,
@@ -23,10 +27,14 @@
 		CURLOPT_USERAGENT      => 'NJIT Auth Middle-end',
 		CURLOPT_POST           => 1,
 		CURLOPT_POSTFIELDS     => [
-			"ucid" => $ucid,
-			"pass" => $pass
+			"argNum" => $argNum,
+			"methodName" => $methodName,
+			"conType" => $conType,
+			"methodInput" => $methodInput,
+			"methodOutput" =>  $methodOutput
 		]
 	]);
+	
 	$resp = curl_exec($curl);
 	curl_close($curl);
 	
@@ -41,6 +49,5 @@
 	echo json_encode([
 		"db"   => $db
 	]);
-
-?>
 	
+?>
