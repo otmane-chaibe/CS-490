@@ -15,7 +15,7 @@
 	$methodInput = $_POST['methodInput'];		//input to the method
 	$methodOutput = $_POST['methodOutput'];		//expected answer
 	
-	if (empty($methodName) || empty($argNum) || empty($conType) || empty($methodInput) || empty($methodOutput)) {
+	if (empty($methodName) || empty($argNum) || empty($qType) || empty($qDiff) ||empty($methodInput) || empty($methodOutput)) {
 		header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad Request');
 		die(json_encode(["status" => 400, "response" => "Bad Request"]));
 	}
