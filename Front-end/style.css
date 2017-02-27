@@ -6,6 +6,10 @@
 	outline: none
 }
 
+html {
+	height: 100%
+}
+
 body {
 	background: #fff;
 	color: #8c8c8c;
@@ -34,7 +38,14 @@ header {
 	background: #8A0000 url('images/njit.png') no-repeat 40px center;
 	background-size: 150px 50px;
 	height: 60px;
+	position: absolute;
+	top: 0;
 	width: 100%
+}
+
+main {
+	height: inherit;
+	padding-top: 60px
 }
 
 #login {
@@ -114,3 +125,34 @@ header {
 	height: 1px;
 	width: inherit
 }
+
+/* Lists */
+
+.list .item {
+	background: #fff;
+	border-bottom: 1px solid #f8f8f8;
+	cursor: pointer;
+	font-weight: bold;
+	font-size: 18px;
+	height: 64px;
+	padding: 26px;
+}
+
+.list .item:last-child { border-bottom: none }
+
+.list .item:hover {
+	background: #5093E1;
+	color: #fff
+}
+
+.list .item:hover * { color: #fff !important }
+
+.list .item .detail {
+	color: #A5A3A3;
+	float: right;
+	font-family: 'Noway Light', Helvetica, sans-serif;
+	font-size: 14px
+}
+
+.list .item .detail.left  { float: left }
+.list .item .detail.right { float: right }

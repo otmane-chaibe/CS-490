@@ -1,0 +1,46 @@
+#question-wrapper {
+	color: #333;
+	float: left;
+	font-size: 16px;
+	padding: 40px 40px 0 40px;
+	width: 70%
+}
+
+#question-wrapper h1 { margin-bottom: 60px }
+
+#question-wrapper input {
+	display: inline-block;
+	margin: 0 10px;
+	padding: 0 10px;
+	text-align: center
+}
+
+#function-name { width: 110px }
+
+#arg-count { width: 38px }
+
+#question-wrapper select {
+	background: #fff;
+	height: 35px;
+	border: 1px solid #E0E2EA;
+	border-radius: 4px;
+	font-size: 16px;
+	margin: 0 10px;
+	padding: 0 10px;
+	text-align: center
+}
+
+#solution {
+	height: 200px;
+	margin: 40px 0;
+	width: 100%
+}
+
+#submit { margin-top: 40px }
+
+#sidebar {
+	border-left: 1px solid #E0E2EA;
+	float: right;
+	height: 100%;
+	width: 30%
+}
