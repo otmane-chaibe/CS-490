@@ -39,7 +39,7 @@ $result = mysql_query ("SELECT * FROM `ids` WHERE ucid ='$ucid' AND pass like '$
 					echo $_SESSION['sess_role'];
 				session_write_close();
 				$ex=["status" => 200, "response" => "login
-				successful", "role" => $row["role"]];
+				successful", "user_id" => $row["id"], "role" => $row["role"]];
 
 				echo json_encode(["db" => $ex]);
 							} 
@@ -59,5 +59,4 @@ $result = mysql_query ("SELECT * FROM `ids` WHERE ucid ='$ucid' AND pass like '$
 #  header('Location: student.php');
 #  }
 							?>
-
 
