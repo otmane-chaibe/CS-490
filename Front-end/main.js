@@ -18,7 +18,7 @@ httpRequest.onreadystatechange = function() {
 	var status = document.getElementById("status");
 	if (httpRequest.readyState === XMLHttpRequest.DONE) {
 		var data = JSON.parse(httpRequest.responseText);
-		if (!data.njit || !data.db) {
+		if (!data) {
 			status.innerHTML = "<span class='error'>Error - Bad response data</span>";
 			status.style.display = "block";
 			return;

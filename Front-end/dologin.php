@@ -2,6 +2,8 @@
 
 	# Maurice Achtenhagen
 
+	session_start();
+
 	header('Content-Type: application/json');
 
 	# Check Request Method
@@ -39,4 +41,14 @@
 	]);
 	$resp = curl_exec($curl);
 	curl_close($curl);
-	echo $resp;
+
+	if (!isset($resp['user_id'])) {
+		die($resp);
+	}
+
+	if (!isset($resp['role'])) {
+		die($resp);
+	}
+
+	$_SESSION['user_id'] = $resp['user_id'];
+	$_SESSION['role'] = $resp['role'];

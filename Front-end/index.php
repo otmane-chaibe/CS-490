@@ -1,4 +1,17 @@
-<?php require_once('header.php') ?>
+<?php
+	require_once('header.php');
+
+	if (isset($_SESSION['user_id'])) {
+		if (isset($_SESSION['role'])) {
+			if ($_SESSION['role'] === 1) {
+				header('Location: question.php');
+			} else {
+				header('Location: student.php');
+			}
+		}
+	}
+
+?>
 <div id="login">
 	<h1>Authentication Service</h1>
 	<p>Please enter your UCID to proceed.</p>

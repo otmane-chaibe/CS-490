@@ -15,7 +15,14 @@
 		<option value="2">Difficult</option>
 	</select>
 	<br /><br />
-	Write a function named<input id="function-name" type="text">using
+	Write a function named<input id="function-name" type="text">of type
+	<select id="func-type">
+		<option value="0" selected>Int</option>
+		<option value="1">Float</option>
+		<option value="2">Double</option>
+		<option value="3">String</option>
+		<option value="4">Bool</option>
+	</select>using
 	<input id="arg-count" type="text">args of type
 	<select id="arg-type">
 		<option value="0" selected>Int</option>
