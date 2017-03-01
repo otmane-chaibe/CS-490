@@ -1,7 +1,19 @@
 <?php
 
+//$servername = "sql.njit.edu";
+//$username = "ks492";
+//$password = "SpqROrOBi";
+//$dbname = "ks492";
 mysql_connect ('sql.njit.edu', 'ks492', 'SpqROrOBi');
 mysql_select_db ('ks492');
+
+//$conn = new mysqli($servername, $username, $password, $dbname);
+
+//if ($conn->connect_error)
+//{
+// die("Connection Failed: " . $conn->connect_error);
+//}
+
 
 if($_SERVER['REQUEST_METHOD'] != "POST")
 {
@@ -14,31 +26,34 @@ $ucid = $_POST['ucid'];
 
 $methodName = $_POST['methodName'];
 $argNum = $_POST['argNum'];
-$conType = $_POST['conType'];
+$qType = $_POST['qType'];
+$qDiff = $_POST['dDiff']
 $methodInput = $_POST['methodInput'];
 $methodOutput = $_POST['methodOutput'];
 //need ftype
 //need arg types
 //arg names
-//need difficulty
 //description
 //
 
-$n = mysql_num_rows(mysql_query("SELECT * FROM `questions` WHERE 1"));
-$n++;
+//$n = mysql_num_rows(mysql_query("SELECT * FROM `questions` WHERE 1"));
+//$n++;
 
 $user = mysql_query("SELECT FROM `ids` WHERE ucid='$ucid'");
  if($row = mysql_fetch_array($user))
  {
   $user_id = $row["id"];
+  //$role
  }
 
-$question = mysql_query("INSERT INTO `questions` (id, user_id, category,
+$question = mysql_query("INSERT INTO `questions` ( user_id, category,
 function_name, function_type, difficulty, description, solution, template)
-VALUES ('$n', '$user_id', '$conType', '$methodName', '$ftype', '$diff', '$desc',
+VALUES ( '$user_id', '$qType', '$methodName', '$ftype', '$qDiff', '$desc',
 '$methodOutput', '$methodInput')");
 
-$arg = mysql_query("INSERT INTO `args` (id, q_id, type, name) VALUES ('$n',
+
+
+$arg = mysql_query("INSERT INTO `args` (q_id, type, name) VALUES ('$n',
 '$n', '$atype', '$aname')");
 
 $res = ["status" => 200, "response" => "question submitted"];

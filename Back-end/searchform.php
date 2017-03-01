@@ -39,9 +39,9 @@ $result = mysql_query ("SELECT * FROM `ids` WHERE ucid ='$ucid' AND pass like '$
 					echo $_SESSION['sess_role'];
 				session_write_close();
 				$ex=["status" => 200, "response" => "login
-				successful", "role" => $row["role"]];
+				successful", "user_id" => $row["id"], "role" => $row["role"]];
 
-				echo json_encode(["db" => $ex]);
+				echo $ex;
 							} 
 							while($row =
 							mysql_fetch_array($result));
@@ -50,7 +50,7 @@ $result = mysql_query ("SELECT * FROM `ids` WHERE ucid ='$ucid' AND pass like '$
 							{
 							$ex=["status" => 403,
 							"response" => "login not succesful"];
-							echo json_encode(["db" => $ex]);
+							echo $ex;
 							}
 
 #if( $_SESSION['sess_role'] == "0"){
@@ -59,5 +59,4 @@ $result = mysql_query ("SELECT * FROM `ids` WHERE ucid ='$ucid' AND pass like '$
 #  header('Location: student.php');
 #  }
 							?>
-
 
