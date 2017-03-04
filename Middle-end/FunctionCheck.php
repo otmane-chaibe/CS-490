@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 	
 final class FunctionCheck {
 	
@@ -8,7 +10,7 @@ final class FunctionCheck {
 		$this->$function_body = $function_body;
 	}
 	
-	public static function fromString(string $function_body): self {
+	public static function fromString(string $function_body) {
 		return new self($function_body);
 	}
 	
