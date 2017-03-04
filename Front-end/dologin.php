@@ -1,54 +1,38 @@
 <?php
 
-	# Maurice Achtenhagen
+# Maurice Achtenhagen
 
-	session_start();
+require_once('../functions.php');
 
-	header('Content-Type: application/json');
+session_start();
 
-	# Check Request Method
-	if ($_SERVER['REQUEST_METHOD'] != "POST") {
-		header($_SERVER['SERVER_PROTOCOL'] . ' 405 Method Not Allowed');
-		header('Allow: POST');
-		die(json_encode(["status" => 405, "response" => "Must Use POST"]));
-	}
+header('Content-Type: application/json');
 
-	$ucid = $_POST['ucid'];
-	$pass = $_POST['pass'];
+assertPost();
 
-	# Check POST Variables
-	if (empty($ucid) || empty($pass)) {
-		header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad Request');
-		die(json_encode(["status" => 400, "response" => "Bad Request"]));
-	}
-	if (strlen($ucid) > 6 || strlen($pass) > 20) {
-		header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad Request');
-		die(json_encode(["status" => 400, "response" => "Bad Request"]));
-	}
+$ucid = $_POST['ucid'];
+$pass = $_POST['pass'];
 
-	# cURL Request - Middle-end
-	$curl = curl_init();
-	curl_setopt_array($curl, [
-		CURLOPT_FOLLOWLOCATION => true,
-		CURLOPT_RETURNTRANSFER => 1,
-		CURLOPT_URL            => 'https://web.njit.edu/~sma76/index.php',
-		CURLOPT_USERAGENT      => 'NJIT Auth Front-end',
-		CURLOPT_POST           => 1,
-		CURLOPT_POSTFIELDS     => [
-	        "ucid" => $ucid,
-	        "pass" => $pass
-	    ]
-	]);
-	$resp = curl_exec($curl);
-	curl_close($curl);
+# Check POST Variables
+if (empty($ucid) || empty($pass)) {
+	header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad Request');
+	die(json_encode(["status" => 400, "response" => "Bad Request"]));
+}
+if (strlen($ucid) > 6 || strlen($pass) > 20) {
+	header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad Request');
+	die(json_encode(["status" => 400, "response" => "Bad Request"]));
+}
 
-	if (!isset($resp['user_id'])) {
-		die($resp);
-	}
+# cURL Request - Middle-end
+$resp = \NJIT::login($ucid, $pass);
 
-	if (!isset($resp['role'])) {
-		die($resp);
-	}
+if (!isset($resp['user_id'])) {
+	die($resp);
+}
 
-	$_SESSION['user_id'] = $resp['user_id'];
-	$_SESSION['role'] = $resp['role'];
+if (!isset($resp['role'])) {
+	die($resp);
+}
+
+$_SESSION['user_id'] = $resp['user_id'];
+$_SESSION['role'] = $resp['role'];
