@@ -26,31 +26,25 @@ $result = mysql_query ("SELECT * FROM `ids` WHERE ucid ='$ucid' AND pass like '$
 			if ($row = mysql_fetch_array($result)) {
 			do {
 				session_regenerate_id();
-				print("<p>");
-					print $row["id"];
+				
 					$_SESSION['sess_ucid']=$row["ucid"];
 					$_SESSION['sess_id']=$row["id"];
 					$_SESSION['sess_ucid']=$row["ucid"];
 					$_SESSION['sess_name']=$row["name"];
 					$_SESSION['sess_role']=$row["role"];
-					print (" ");
-					print $row["name"];
-					print("<p>");
-					echo $_SESSION['sess_role'];
+					
 				session_write_close();
-				$ex=["status" => 200, "response" => "login
-				successful", "user_id" => $row["id"], "role" => $row["role"]];
+				$ex=["status" => 200, "response" => "login successful", "user_id" => $row["id"], "role" => $row["role"]];
 
-				echo $ex;
+				echo json_encode($ex);
 							} 
 							while($row =
 							mysql_fetch_array($result));
 							} else 
 							
 							{
-							$ex=["status" => 403,
-							"response" => "login not succesful"];
-							echo $ex;
+							$ex=["status" => 403, "response" => "login not succesful"];
+							echo json_encode($ex);
 							}
 
 #if( $_SESSION['sess_role'] == "0"){

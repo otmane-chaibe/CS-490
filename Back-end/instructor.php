@@ -46,20 +46,22 @@ $user = mysql_query("SELECT FROM `ids` WHERE ucid='$ucid'");
   //$role
  }
 
-$question = mysql_query("INSERT INTO `questions` ( user_id, category,
+$question = mysql_query("INSERT INTO `questions` (user_id, category,
 function_name, function_type, difficulty, description, solution, template)
-VALUES ( '$user_id', '$qType', '$methodName', '$ftype', '$qDiff', '$desc',
+VALUES ('$user_id', '$qType', '$methodName', '$ftype', '$qDiff', '$desc',
 '$methodOutput', '$methodInput')");
 
+$q_id = mysql_insert_id();
 
+$arg = mysql_query("INSERT INTO `args` (q_id, type, name) VALUES ('$q_id', '$atype', '$aname')");
 
-$arg = mysql_query("INSERT INTO `args` (q_id, type, name) VALUES ('$n',
-'$n', '$atype', '$aname')");
+$unit = mysql_query("INSERT INTO `unitTest` (q_id, unit_test) VALUES ('$q_id',
+$methodOutput)")
 
 $res = ["status" => 200, "response" => "question submitted"];
 $display = ["description" = $desc];
 
-echo json_encode(["db" => $res]);
+echo $res;
 echo json_encode(["db" => $display]);
 
 
