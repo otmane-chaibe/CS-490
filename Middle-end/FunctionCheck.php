@@ -4,14 +4,19 @@ declare(strict_types=1);
 	
 class FunctionCheck {
 	
+	private $source_class = "MainDriver.class";
+	private $source_file  = "MainDriver.java";
+	private $source_name  = "MainDriver";
 	private $function, $function_name, $function_body;
-	private $modifiers, $function_params;
+	private $modifiers, $function_params, $unit_tests;
 	private $return_type;
 	
-	function __construct($function) {
+	function __construct($function, $unit_tests) {
 		$this->function = trim($function);
+		$this->unit_tests = $unit_tests;
 	}
 	
+	# (1) Parse function
 	public function parse() {
 		if (empty($this->function)) {
 			throw new InvalidArgumentException("This is not a valid Java method signature.");
@@ -27,6 +32,36 @@ class FunctionCheck {
 		if (empty($matches)) {
 			throw new InvalidArgumentException("This is not a valid Java method signature.");
 		}
+	}
+	
+	# (2) Compile Java code
+	public function compile() {
+		
+		if (file_exists($this->source_file)) {
+			unlink($this->source_file);
+		}
+		
+		if (file_exists($this->source_class)) {
+			unlink($this->source_class);
+		}
+		
+		$code  = "class MainDriver {\n\tpublic static void main(String[] args) {\n\t\t";
+		$code .= "MainDriver main = new MainDriver();\n\t}\n\n\t" . $this->function . "\n}";
+		$code = trim($code);
+		
+		if (!file_put_contents($this->source_file, $code)) {
+			throw new FileWriteException("PHP failed to write the file.");
+		}
+		
+		$cmd = "javac -verbose " . $this->source_file;
+		exec($cmd);
+	}
+	
+	# (3) Run unit tests against code
+	public function run_tests() {
+		$cmd = "java " . $this->source_name;
+		exec($cmd, $test_results);
+		var_dump($test_results);
 	}
 	
 	# Match all parameters in between parenthesis.
