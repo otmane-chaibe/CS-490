@@ -4,38 +4,35 @@ declare(strict_types=1);
 	
 class FunctionCheck {
 	
-	const MAX_MODIFIERS = 2;
-	
-	private $function;
-	private $modifiers, $return_type, $function_name, $function_parameters, $function_body;
+	private $function, $function_name, $function_body;
+	private $modifiers, $function_params;
+	private $return_type;
 	
 	function __construct($function) {
 		$this->function = trim($function);
 	}
 	
-	# Check the entire signature of the function.
-	public function signature() {
+	public function parse() {
 		if (empty($this->function)) {
 			throw new InvalidArgumentException("This is not a valid Java method signature.");
 		}
-		
-		$components = explode(" ", $this->function);
-		foreach($components as $c) {
-			
+		$brace_pos = strpos($this->function, "{");
+		if (!$brace_pos) {
+			throw new InvalidArgumentException("This is not a valid Java method signature.");
 		}
+		$signature = substr($this->function, 0, $brace_pos);
+		preg_match('/(public|private)(?: )*(static)?(?: )+(void|int|float|double|string boolean)(?: )*([a-z](?:\w|\d)*) ?\((.*?)\)/i', $signature, $matches);
+		# print_r($matches);
 		
-		$modifier = $components[0];
-		if (!self::match_modifier($modifier)) {
-			throw new BadModifierException("Illegal modifier. Expected public, private or void.");
+		if (empty($matches)) {
+			throw new InvalidArgumentException("This is not a valid Java method signature.");
 		}
-		
-		$return_type = $components[1];
-		$method_name = $components[2];
-		# preg_match('#\((.*?)\)#', $this->function_body, $param_str);
-		# $param_str = $param_str[1];
+	}
+	
+	# Match all parameters in between parenthesis.
+	private static function parse_params($param_str) {
 		$params = [];
 		foreach (explode(",", $param_str) as $p) {
-			# var_dump(trim($p));
 			$param = explode(" ", trim($p));
 			$type = $param[0];
 			$name = $param[1];
@@ -45,20 +42,15 @@ class FunctionCheck {
 				"name"     => $name
 			];
 		}
-//		$function = [
-//			"modifier"    => $modifier,
-//			"return_type" => $return_type,
-//			"method_name" => $method_name,
-//			"parameters"  => $params
-//		];
+		return $params;	
 	}
 	
 	public function body() {
 		preg_match('#\({.*?}\)#', $this->function_body, $body);
 	}
 	
-	# Match the function modifier (public|private|static|void)
-	private function match_modifier($mod) {
+	# Match the function modifier (public|private|static|void).
+	private function is_modifier($mod) {
 		if (empty($mod)) { return false; }
 		switch ($mod) {
 			case "public":
@@ -74,8 +66,33 @@ class FunctionCheck {
 		}
 	}
 	
+	# Match the function return type.
+	private static function is_type($type) {
+		switch ($type) {
+			case "int":
+				return true;
+			case "float":
+				return true;
+			case "double":
+				return true;
+			case "string":
+				return true;
+			case "bool":
+				return true;											
+			default:
+				return false;
+		}
+	}
+	
+	# Match the function to a valid name
+	private static function is_valid_name($name) {
+		if (!ctype_alnum($name)) { return false; }
+		if (is_numeric(substr($name, 0, 1))) { return false; }
+		return true;
+	}
+	
 	# Get the argument type from string
-	private function get_type_from($str) {
+	private static function get_type_from($str) {
 		if (empty($str)) { return 0; }
 		switch ($str) {
 			case "int":
@@ -95,6 +112,6 @@ class FunctionCheck {
 	
 	# String representation of self
 	public function __toString() {
-		return $this->function_body;
+		return $this->function;
 	}
 }
