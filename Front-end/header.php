@@ -10,7 +10,9 @@
 		<link rel="stylesheet" href="style.css" />
 		<link rel="stylesheet" href="controls.css" />
 		<link rel="stylesheet" href="question.css" />
-		<title>Authentication Service</title>
+		<link rel="stylesheet" href="instructor.css" />
+		<link rel="stylesheet" href="test.css" />
+		<title>Online Exam System</title>
 	</head>
 	<body>
 		<header></header>

@@ -1,0 +1,1 @@
+<?php class BadFunctionNameException extends Exception {}

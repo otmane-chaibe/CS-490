@@ -30,15 +30,16 @@
 	</div>
 	<div class="step">
 		<div class="num">3</div>
-		<p>Function arguments (0)</p>
-		Argument Name<input id="arg-name" type="text">Argument Type
-		<select id="arg-type">
-			<option value="0" selected>Int</option>
-			<option value="1">Float</option>
-			<option value="2">Double</option>
-			<option value="3">String</option>
-			<option value="4">Bool</option>
-		</select>
+		<p>Function arguments (<span id="argumentCounter">0</span>)</p>
+		<table border="1" width="100%">
+			<thead>
+				<th>Argument Name</th>
+				<th>Argument Type</th>
+				<th>Delete</th>
+			</thead>
+			<tbody id="arguments"></tbody>
+		</table>
+		<hr />
 		<button id="add-arg" type="button" class="blue">Add Argument</button>
 	</div>
 	<div class="step">
@@ -53,4 +54,7 @@
 </div>
 <div id="sidebar"></div>
 
-<?php require_once('footer.php') ?>
+<?php
+	$js = "question";
+	require_once('footer.php');
+?>

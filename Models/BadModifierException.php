@@ -1,1 +1,1 @@
-<?php class BadModifierException extends Exception {} ?>
+<?php class BadModifierException extends Exception {}

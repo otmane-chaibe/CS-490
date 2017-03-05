@@ -7,23 +7,24 @@ class Test
 	{
 		global $mysqli;
 
-		$sql = 'SELECT id, `name`, created FROM tests WHERE user_id = ?';
+		$sql = 'SELECT id, user_id, `name`, created FROM tests WHERE user_id = ?';
 		$stmt = null;
 		if (!$stmt = $mysqli->prepare($sql)) { return null; }
 		$stmt->bind_param('i', $user_id);
 		$stmt->execute();
-		$stmt->bind_result($id, $name, $created);
-		$stmt->fetch();
+		$result = $stmt->get_result();
+		$out = [];
+		while ($row = $result->fetch_array(MYSQLI_ASSOC))
+		{
+			$out[] = [
+				'id'      => (int) $row['id'],
+				'user_id' => (int) $row['user_id'],				
+				'name'    => $row['name'],
+				'created' => (int) $row['created']
+			];
+		}
 		$stmt->close();
-
-		if (empty($id)) { return null; }
-
-		$out = [
-			'id'      => (int) $id,
-			'user_id' => $user_id,
-			'name'    => $name,
-			'created' => $created,
-		];
+		return $out;
 	}
 
 	public static function releaseTest($test_id, $user_id)

@@ -21,7 +21,7 @@ class FunctionCheck {
 			throw new InvalidArgumentException("This is not a valid Java method signature.");
 		}
 		$signature = substr($this->function, 0, $brace_pos);
-		preg_match('/(public|private)(?: )*(static)?(?: )+(void|int|float|double|string boolean)(?: )*([a-z](?:\w|\d)*) ?\((.*?)\)/i', $signature, $matches);
+		preg_match('/(public|private)(?: )*(static)?(?: )+(void|int|float|double|string|boolean)(?: )*([a-z](?:\w|\d)*) ?\((.*?)\)/i', $signature, $matches);
 		# print_r($matches);
 		
 		if (empty($matches)) {
