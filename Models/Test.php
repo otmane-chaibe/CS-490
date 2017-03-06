@@ -160,8 +160,7 @@ class Test
 		$stmt->execute();
 		$result = $stmt->get_result();
 		$out = [];
-		while ($row = $result->fetch_array(MYSQLI_ASSOC))
-		{
+		while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
 			$out[] = [
 				'test_id'    => (int) $row['test_id'],
 				'test_name'  => $row['name'],
@@ -169,8 +168,33 @@ class Test
 				'completed'  => ($row['completed'] == 1),
 			];
 		}
-
 		return $out;
+	}
+	
+	# Insert question score
+	public static function insertQuestionScore($user_id, $test_id, $question_id, $score, $remark = "") {
+		global $mysqli;
+		$sql = "INSERT INTO test_results (user_id, test_id, question_id, remark, score) VALUES (?, ?, ?, ?, ?)";
+		$stmt = null;
+		if (!$stmt = $mysqli->prepare($sql)) {
+			return;
+		}
+		$stmt->bind_param('iiisi', $user_id, $test_id, $question_id, $remark, $score);
+		$stmt->execute();
+		$stmt->close();
+	}
+	
+	# Insert test score
+	public static function insertTestScore($user_id, $test_id, $score) {
+		global $mysqli;
+		$sql = "INSERT INTO student_tests (user_id, test_id, test_grade) VALUES (?, ?, ?)";
+		$stmt = null;
+		if (!$stmt = $mysqli->prepare($sql)) {
+			return;
+		}
+		$stmt->bind_param('iii', $user_id, $test_id, $score);
+		$stmt->execute();
+		$stmt->close();		
 	}
 
 }

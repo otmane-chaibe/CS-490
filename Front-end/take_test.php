@@ -38,9 +38,9 @@ if (empty($test)) { die('No Such Test.'); }
 ?>
 
 <div id="test-questions-wrapper">
+	<div id="error"></div>
 	<ul id="test-questions">
-		<?php
-		
+		<?php		
 			foreach ($questions as $index => $q) {
 				echo '
 					<li>
@@ -51,8 +51,13 @@ if (empty($test)) { die('No Such Test.'); }
 					</li>
 				';
 			}
-		
 		?>
 	</ul>
 	<button id="submit-btn" class="button green" type="button">Submit</button>
 </div>
+<script type="application/javascript" src="js/take_test.js"></script>
+<script type="text/javascript">
+	var elems = [<?php foreach ($questions as $idx => $q) { echo "'solution-" . $idx . "'"; if ($idx !== count($questions) -1 ) { echo ","; } } ?>]
+	var ids = [<?php foreach ($questions as $idx => $q) { echo $q['id']; if ($idx !== count($questions) -1 ) { echo ","; } } ?>]
+	var testID = <?php echo $test_id ?>
+</script>

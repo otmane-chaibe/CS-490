@@ -108,6 +108,8 @@ class Question
 		}
 
 		$mysqli->query('COMMIT');
+		
+		return $question_id;
 	}
 
 	public static function listAllQuestions()
@@ -129,5 +131,43 @@ class Question
 		}
 		return $out;
 	}
-
+	
+	public static function getQuestionSolution($q_id) {
+		global $mysqli;
+		$sql = "SELECT function_type,function_name FROM questions WHERE id = $q_id LIMIT 1";
+		$result = $mysqli->query($sql);
+		$row = $result->fetch_array(MYSQLI_ASSOC);
+		$out = [
+			'modifiers' => ["public", "static"],
+			'name'      => $row['function_name'],
+			'type'      => self::get_str_from_type($row['function_type']),
+			'params'    => self::getQuestionArgs($q_id)
+		];
+		return $out;
+	}
+	
+	private static function getQuestionArgs ($question_id) {
+		global $mysqli;
+		$out = [];
+		$sql = "SELECT question_id, type, `name` FROM args WHERE question_id  = $question_id";
+		$result = $mysqli->query($sql);
+		while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+			$out[] = [
+				'type' => self::get_str_from_type((int)$row['type']),
+				'name' => $row['name'],
+			];
+		}
+		return $out;		
+	}
+	
+	public static function get_str_from_type($int) {
+		switch ($int) {
+			case 0: return "int";
+			case 1: return "float";
+			case 2: return "double";
+			case 3: return "string";
+			case 4: return "bool";											
+			default: return "int";
+		}
+	}
 }

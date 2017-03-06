@@ -141,7 +141,7 @@ main {
 .list .item:last-child { border-bottom: none }
 
 .list .item:hover {
-	background: #5093E1;
+	background: #8A0000;
 	color: #fff
 }
 

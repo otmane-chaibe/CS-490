@@ -15,6 +15,7 @@
 		<link rel="stylesheet" href="style/controls.css" />
 		<link rel="stylesheet" href="style/question.css" />
 		<link rel="stylesheet" href="style/instructor.css" />
+		<link rel="stylesheet" href="style/student.css" />
 		<link rel="stylesheet" href="style/test.css" />
 		<title>Online Exam System</title>
 	</head>

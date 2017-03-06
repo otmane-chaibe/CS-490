@@ -3,10 +3,22 @@
 require_once('../functions.php');
 require_once('header.php');
 
+if ($_SESSION['role'] != 1) {
+	redirect("student.php");
+}
+
 $tests = Test::getTestsForUser($_SESSION['user_id']);
 
 ?>
 
+<form id="tests-wrapper">
+	<h1>Create New Test</h1>
+	<input id="name" type="text" placeholder="Test Name" />
+	<div class="step">
+		<div id="error"></div>
+		<button id="submit" type="button" class="green">Submit</button>
+	</div>
+</form>
 <ul class="list" id="tests">
 	<?php
 		foreach($tests as $test) {			
@@ -18,24 +30,6 @@ $tests = Test::getTestsForUser($_SESSION['user_id']);
 		}
 	?>
 </ul>
-
-<br/><br/>
-
-<form id="question-wrapper">
-	<h1>Create New Test</h1>
-
-	<div class="step">
-		<div class="num">1</div>
-		Name <input id="name" type="text" style="width: 400px" />
-	</div>
-	<div class="step">
-		<div class="num">2</div>
-
-		<div id="error"></div>
-
-		<button id="submit" type="button" class="green">Submit</button>
-	</div>
-</form>
 
 <?php
 	$js = "instructor";

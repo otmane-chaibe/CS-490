@@ -1,1 +1,19 @@
-#tests {}
+#tests {
+	border-top: 1px solid rgba(0, 0, 0, .1);
+}
+
+#tests-wrapper {
+	color: #333;
+	font-size: 16px;
+	margin: 40px;
+	width: 600px
+}
+
+#tests-wrapper input {
+	margin: 40px 0;
+	width: 200px;
+}
+
+#tests-wrapper button {
+	width: 200px;
+}

@@ -69,10 +69,14 @@ byId('submit').onclick = function(e) {
 	var type = byId("question-type").selectedIndex
 	var diff = byId("question-difficulty").selectedIndex
 	var name = encodeURIComponent(byId("function-name").value)
+	var description = encodeURIComponent(byId("description").value)
 	var returns = byId("func-type").selectedIndex
 	var solution = encodeURIComponent(byId("solution").value)
+	var unitTestInputs = document.getElementById("unit-input").value.split(",")
+	var unitTestOutput = document.getElementById("unit-output").value
 
 	var body = "type=" + type + "&difficulty=" + diff + "&name=" + name + "&returns=" + returns + "&solution=" + solution
+	body += "&description=" + description + "&unitout=" + unitTestOutput
 
 	var c = byId("arguments").children
 	var i = 0
@@ -82,6 +86,12 @@ byId('submit').onclick = function(e) {
 		var name = encodeURIComponent(byId("argname" + id).value)
 		var type = byId("argtype" + id).selectedIndex
 		body += "&argname[]=" + name + "&argtype[]=" + type
+		i++
+	}
+	i = 0
+	while (true) {
+		if (i == unitTestInputs.length) { break }
+		body += "&unitin[]=" + unitTestInputs[i]
 		i++
 	}
 

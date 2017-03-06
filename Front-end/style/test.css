@@ -1,3 +1,15 @@
+#test-wrapper {
+	padding: 40px
+}
+
+#test-wrapper h1 {
+	color: #333;
+}
+
+#test-wrapper table {
+	margin-top: 40px
+}
+
 #test-questions-wrapper {
 	margin: auto;
 	width: 600px

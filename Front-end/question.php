@@ -23,7 +23,7 @@
 	</div>
 	<div class="step">
 		<div class="num">2</div>
-		Function Name<input id="function-name" type="text">Function Type
+		Function name<input id="function-name" type="text">Function type
 		<select id="func-type">
 			<option value="0" selected>Int</option>
 			<option value="1">Float</option>
@@ -31,6 +31,8 @@
 			<option value="3">String</option>
 			<option value="4">Bool</option>
 		</select>
+		<p style="margin-top:40px">Question description</p>
+		<textarea id="description"></textarea>
 	</div>
 	<div class="step">
 		<div class="num">3</div>
@@ -53,13 +55,16 @@
 	</div>
 	<div class="step">
 		<div class="num">5</div>
-
+		<p>Unit Tests</p>
+		<input id="unit-input" type="text" placeholder="Inputs (ex: int 1,int 2)">
+		<input id="unit-output" type="text" placeholder="Output (ex: 3)">
+	</div>	
+	<div class="step">
+		<div class="num">6</div>
 		<div id="error"></div>
-
 		<button id="submit" type="button" class="green">Submit</button>
 	</div>
 </div>
-<div id="sidebar"></div>
 
 <?php
 	$js = "question";
