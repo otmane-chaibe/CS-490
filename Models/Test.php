@@ -25,16 +25,11 @@ class Test
 	public static function getTestsForUser($user_id)
 	{
 		global $mysqli;
-
-		$sql = 'SELECT id, user_id, `name`, created FROM tests WHERE user_id = ?';
-		$stmt = null;
-		if (!$stmt = $mysqli->prepare($sql)) { return null; }
-		$stmt->bind_param('i', $user_id);
-		$stmt->execute();
-		$result = $stmt->get_result();
+		
 		$out = [];
-		while ($row = $result->fetch_array(MYSQLI_ASSOC))
-		{
+		$sql = 'SELECT id, user_id, `name`, created FROM tests WHERE user_id = ?';
+		$result = $mysqli->query($sql);
+		while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
 			$out[] = [
 				'id'      => (int) $row['id'],
 				'user_id' => (int) $row['user_id'],				
@@ -42,7 +37,7 @@ class Test
 				'created' => (int) $row['created']
 			];
 		}
-		$stmt->close();
+		
 		return $out;
 	}
 
