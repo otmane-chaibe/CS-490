@@ -65,3 +65,12 @@
 	height: 100%;
 	width: 30%
 }
+
+#error:empty { display: none }
+#error {
+	padding: 10px;
+	background: peachpuff;
+	color: black;
+	font-weight: bold;
+	margin-bottom: 10px
+}

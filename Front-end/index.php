@@ -2,10 +2,12 @@
 
 require_once('../functions.php');
 
+session_start();
+
 if (isset($_SESSION['user_id'])) {
 	if (isset($_SESSION['role'])) {
-		if ($_SESSION['role'] === 1) {
-			redirect('question.php');
+		if ($_SESSION['role'] == 1) {
+			redirect('instructor.php');
 		} else {
 			redirect('student.php');
 		}

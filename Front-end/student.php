@@ -3,9 +3,7 @@
 require_once('../functions.php');
 require_once('header.php');
 
-$_SESSION['user_id'] = 1;
-$_SESSION['role'] = 0;
-$tests = Test::getTestsForUser($_SESSION['user_id']);
+$tests = Test::getAllTests();
 
 ?>
 
@@ -14,7 +12,7 @@ $tests = Test::getTestsForUser($_SESSION['user_id']);
 		foreach($tests as $test) {			
 			echo '
 				<li class="item">
-					<a href="test.php?id=' . $test['id'] . '">' . $test['name'] . '</a>
+					<a href="take_test.php?id=' . $test['id'] . '">' . $test['name'] . '</a>
 				</li>
 			';
 		}

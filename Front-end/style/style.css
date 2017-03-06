@@ -35,7 +35,7 @@ a:hover, a:focus, a:active { text-decoration: underline }
 ul { list-style-type: none }
 
 header {
-	background: #8A0000 url('images/njit.png') no-repeat 40px center;
+	background: #8A0000 url('../images/njit.png') no-repeat 40px center;
 	background-size: 150px 50px;
 	height: 60px;
 	position: absolute;
@@ -150,9 +150,27 @@ main {
 .list .item .detail {
 	color: #A5A3A3;
 	float: right;
-	font-family: 'Noway Light', Helvetica, sans-serif;
+	font-weight: lighter;
 	font-size: 14px
 }
 
 .list .item .detail.left  { float: left }
 .list .item .detail.right { float: right }
+
+.list .item .detail.error {
+	color: #ff0000;
+	font-weight: normal;
+	font-size: 16px
+}
+
+.list .item .detail.date {
+	float: left;
+	color: #A5A3A3;
+	font-size: 14px;
+	font-weight: normal;
+	margin: 2px 25px 0 0;
+}
+
+nav { background: #660101; color: white }
+nav a { padding: 8px 10px; display: block }
+nav li { display: inline-block }

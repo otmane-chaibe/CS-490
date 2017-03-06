@@ -1,5 +1,7 @@
 <?php
 
+# https://web.njit.edu/~sma76/index.php
+
 class NJIT
 {
 
@@ -9,7 +11,7 @@ class NJIT
 		curl_setopt_array($curl, [
 			CURLOPT_FOLLOWLOCATION => true,
 			CURLOPT_RETURNTRANSFER => 1,
-			CURLOPT_URL            => 'https://web.njit.edu/~sma76/index.php',
+			CURLOPT_URL            => 'http://localhost/Middle-end/index.php',
 			CURLOPT_USERAGENT      => 'NJIT Auth Front-end',
 			CURLOPT_POST           => 1,
 			CURLOPT_POSTFIELDS     => [

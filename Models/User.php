@@ -23,7 +23,7 @@ class User
 			'ucid'     => $ucid,
 			'password' => $password,
 			'name'     => $name,
-			'role'     => $role,
+			'role'     => (int) $role,
 		];
 	}
 

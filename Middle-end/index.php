@@ -1,5 +1,5 @@
 <?php
-	
+	# https://web.njit.edu/~ks492/searchform.php
 	header('Content-Type: application/json');
 	# Check Request Method
 	if ($_SERVER['REQUEST_METHOD'] != "POST") {
@@ -19,7 +19,7 @@
 	$curl = curl_init();
 	curl_setopt_array($curl, [
 		CURLOPT_RETURNTRANSFER => 1,
-		CURLOPT_URL            => 'https://web.njit.edu/~ks492/searchform.php',
+		CURLOPT_URL            => 'http://localhost/Back-end/searchform.php',
 		CURLOPT_USERAGENT      => 'NJIT Auth Middle-end',
 		CURLOPT_POST           => 1,
 		CURLOPT_POSTFIELDS     => [
@@ -39,7 +39,7 @@
 	
 	# Return Results
 	echo json_encode([
-		"db"   => $db
+		"db" => $db
 	]);
 
 ?>

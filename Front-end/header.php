@@ -1,19 +1,37 @@
 <!-- Maurice Achtenhagen -->
 
-<?php session_start() ?>
+<?php
+	if (session_status() == PHP_SESSION_NONE) {
+		session_start();
+	}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet">
-		<link rel="stylesheet" href="style.css" />
-		<link rel="stylesheet" href="controls.css" />
-		<link rel="stylesheet" href="question.css" />
-		<link rel="stylesheet" href="instructor.css" />
-		<link rel="stylesheet" href="test.css" />
+		<link rel="stylesheet" href="style/style.css" />
+		<link rel="stylesheet" href="style/controls.css" />
+		<link rel="stylesheet" href="style/question.css" />
+		<link rel="stylesheet" href="style/instructor.css" />
+		<link rel="stylesheet" href="style/test.css" />
 		<title>Online Exam System</title>
 	</head>
 	<body>
 		<header></header>
 		<main>
+			<?php if (isset($_SESSION['user_id'])) { ?>
+			<nav>
+				<ul>
+					<?php if ($_SESSION['role'] == 1) { ?>
+					<li><a href="question.php">Create Question</a></li>
+					<li><a href="instructor.php">Tests</a></li>
+					<?php } else { ?>
+					<li><a href="student.php">Take Tests</a></li>
+					<li><a href="results.php">Test Results</a></li>
+					<?php } ?>
+					<li><a href="logout.php">Logout</a></li>
+				</ul>
+			</nav>
+			<?php } ?>

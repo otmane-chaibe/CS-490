@@ -6,8 +6,8 @@
 # https://github.com/sequelpro/sequelpro
 #
 # Host: 127.0.0.1 (MySQL 5.7.16)
-# Database: ks492
-# Generation Time: 2017-03-06 00:20:51 +0000
+# Database: valhalla
+# Generation Time: 2017-03-05 19:38:12 +0000
 # ************************************************************
 
 
@@ -106,7 +106,6 @@ DROP TABLE IF EXISTS `test_results`;
 
 CREATE TABLE `test_results` (
   `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` tinyint(3) unsigned NOT NULL,
   `test_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `question_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `remark` text NOT NULL,
@@ -138,7 +137,7 @@ DROP TABLE IF EXISTS `unit_test_inputs`;
 
 CREATE TABLE `unit_test_inputs` (
   `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
-  `question_id` tinyint(3) unsigned NOT NULL,
+  `test_id` tinyint(3) unsigned NOT NULL,
   `input` tinyint(3) unsigned NOT NULL,
   `value` text NOT NULL,
   PRIMARY KEY (`id`)

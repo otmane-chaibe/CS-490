@@ -10,6 +10,7 @@ class Question
 	const CATEGORY_CONDITIONAL = 0;
 	const CATEGORY_CONTROL_FLOW = 1;
 	const CATEGORY_RECURSION = 2;
+	const CATEGORY_OTHER = 3;
 
 	const RETURN_INT = 0;
 	const RETURN_FLOAT = 1;
@@ -44,10 +45,28 @@ class Question
 				'category'      => (int) $row['category'],
 				'function_name' => $row['function_name'],
 				'function_type' => $row['function_type'],
+				'description'   => $row['description'],
 				'difficulty'    => $row['difficulty'],
+				'arguments'     => [],
 			];
 		}
 		$stmt->close();
+
+		if (!empty($out)) {
+			$sql = "
+				SELECT question_id, type, `name` FROM args
+				WHERE question_id IN (" . implode(',', array_keys($out)) . ")
+			";
+			$result = $mysqli->query($sql);
+			while ($row = $result->fetch_array(MYSQLI_ASSOC))
+			{
+				$out[(int) $row['question_id']]['arguments'][] = [
+					'type' => (int) $row['type'],
+					'name' => $row['name'],
+				];
+			}
+		}
+
 		return $out;
 	}
 
@@ -89,6 +108,26 @@ class Question
 		}
 
 		$mysqli->query('COMMIT');
+	}
+
+	public static function listAllQuestions()
+	{
+		global $mysqli;
+
+		$sql = "SELECT id, category, function_name, function_type, difficulty FROM questions";
+		$result = $mysqli->query($sql);
+		$out = [];
+		while ($row = $result->fetch_array(MYSQLI_ASSOC))
+		{
+			$out[(int) $row['id']] = [
+				'id'            => (int) $row['id'],
+				'category'      => (int) $row['category'],
+				'function_name' => $row['function_name'],
+				'function_type' => $row['function_type'],
+				'difficulty'    => $row['difficulty'],
+			];
+		}
+		return $out;
 	}
 
 }

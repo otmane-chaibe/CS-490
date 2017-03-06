@@ -36,3 +36,9 @@ function redirect($to)
 	header('Location: ' . $to);
 	exit;
 }
+
+function error($error)
+{
+	header('HTTP/1.1 400 Bad Request');
+	die(json_encode([ 'error' => $error ]));
+}

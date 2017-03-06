@@ -23,9 +23,8 @@ httpRequest.onreadystatechange = function() {
 			status.style.display = "block";
 			return;
 		}
-		if (httpRequest.status === 200) {
-			status.innerHTML = "NJIT: <span class='" + (data.njit.status == 200 ? 'ok' : 'error') + "'>" + data.njit.response + "</span>, ";
-			status.innerHTML += "database: <span class='" + (data.db.status == 200 ? 'ok' : 'error') + "'>" + data.db.response + "</span>";
+		if (httpRequest.status === 200 && data.status == 200) {
+			window.location.reload();
 		} else {
 			status.innerHTML = "<span class='error'>HTTP " + data.status + " - " + data.response + "</span>";
 		}

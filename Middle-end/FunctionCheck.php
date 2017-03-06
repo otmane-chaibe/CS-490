@@ -16,7 +16,7 @@ class FunctionCheck {
 		$this->unit_tests = $unit_tests;
 	}
 	
-	# (1) Parse function
+	# (1) Parse function - Note: function may not be of type void
 	public function parse() {
 		if (empty($this->function)) {
 			throw new InvalidArgumentException("This is not a valid Java method signature.");
@@ -64,7 +64,7 @@ class FunctionCheck {
 		var_dump($test_results);
 	}
 	
-	# Match all parameters in between parenthesis.
+	# Match all parameters in between parenthesis
 	private static function parse_params($param_str) {
 		$params = [];
 		foreach (explode(",", $param_str) as $p) {
@@ -80,11 +80,19 @@ class FunctionCheck {
 		return $params;	
 	}
 	
+	# Generate the unit test to be injected
+	private static function generateUnitTests() {
+		$unit_tests = [];
+		foreach ($this->unit_tests as $test) {
+			$unit_tests[] = $test;	
+		}
+	}
+	
 	public function body() {
 		preg_match('#\({.*?}\)#', $this->function_body, $body);
 	}
 	
-	# Match the function modifier (public|private|static|void).
+	# Match the function modifier (public|private|static|void)
 	private function is_modifier($mod) {
 		if (empty($mod)) { return false; }
 		switch ($mod) {

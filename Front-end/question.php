@@ -1,4 +1,7 @@
-<?php require_once('header.php') ?>
+<?php
+	require_once('../functions.php');
+	require_once('header.php');
+?>
 
 <div id="question-wrapper">
 	<h1>Create Question</h1>
@@ -9,6 +12,7 @@
 			<option value="0" selected>Conditional</option>
 			<option value="1">Control Flow</option>
 			<option value="2">Recursion</option>
+			<option value="3">Other</option>
 		</select>
 		Difficulty
 		<select id="question-difficulty">
@@ -49,6 +53,9 @@
 	</div>
 	<div class="step">
 		<div class="num">5</div>
+
+		<div id="error"></div>
+
 		<button id="submit" type="button" class="green">Submit</button>
 	</div>
 </div>
