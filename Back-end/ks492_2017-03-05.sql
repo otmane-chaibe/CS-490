@@ -1,31 +1,29 @@
+# ************************************************************
+# Sequel Pro SQL dump
+# Version 4541
 #
-# SQL Export
-# Created by Querious (1068)
-# Created: March 5, 2017 at 10:28:48 EST
-# Encoding: Unicode (UTF-8)
+# http://www.sequelpro.com/
+# https://github.com/sequelpro/sequelpro
 #
+# Host: 127.0.0.1 (MySQL 5.7.16)
+# Database: ks492
+# Generation Time: 2017-03-06 00:20:51 +0000
+# ************************************************************
 
 
-CREATE DATABASE IF NOT EXISTS `ks492` DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_unicode_ci;
-USE `ks492`;
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
+# Dump of table args
+# ------------------------------------------------------------
 
-
-SET @PREVIOUS_FOREIGN_KEY_CHECKS = @@FOREIGN_KEY_CHECKS;
-SET FOREIGN_KEY_CHECKS = 0;
-
-
-DROP TABLE IF EXISTS `users`;
-DROP TABLE IF EXISTS `unit_tests`;
-DROP TABLE IF EXISTS `tests`;
-DROP TABLE IF EXISTS `test_results`;
-DROP TABLE IF EXISTS `test_questions`;
-DROP TABLE IF EXISTS `student_tests`;
-DROP TABLE IF EXISTS `released_tests`;
-DROP TABLE IF EXISTS `questions`;
 DROP TABLE IF EXISTS `args`;
-
 
 CREATE TABLE `args` (
   `id` tinyint(4) unsigned NOT NULL AUTO_INCREMENT,
@@ -35,6 +33,12 @@ CREATE TABLE `args` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+
+# Dump of table questions
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `questions`;
 
 CREATE TABLE `questions` (
   `id` tinyint(4) unsigned NOT NULL AUTO_INCREMENT,
@@ -47,8 +51,14 @@ CREATE TABLE `questions` (
   `solution` text NOT NULL COMMENT 'Proposed solution.',
   `template` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+
+# Dump of table released_tests
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `released_tests`;
 
 CREATE TABLE `released_tests` (
   `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
@@ -57,6 +67,12 @@ CREATE TABLE `released_tests` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+
+# Dump of table student_tests
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `student_tests`;
 
 CREATE TABLE `student_tests` (
   `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
@@ -68,16 +84,29 @@ CREATE TABLE `student_tests` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+
+# Dump of table test_questions
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `test_questions`;
+
 CREATE TABLE `test_questions` (
   `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
   `test_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `question_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+
+# Dump of table test_results
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `test_results`;
 
 CREATE TABLE `test_results` (
   `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` tinyint(3) unsigned NOT NULL,
   `test_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `question_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `remark` text NOT NULL,
@@ -86,22 +115,55 @@ CREATE TABLE `test_results` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+
+# Dump of table tests
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `tests`;
+
 CREATE TABLE `tests` (
   `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `name` varchar(75) NOT NULL DEFAULT '',
   `created` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+
+# Dump of table unit_test_inputs
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `unit_test_inputs`;
+
+CREATE TABLE `unit_test_inputs` (
+  `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
+  `question_id` tinyint(3) unsigned NOT NULL,
+  `input` tinyint(3) unsigned NOT NULL,
+  `value` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# Dump of table unit_tests
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `unit_tests`;
 
 CREATE TABLE `unit_tests` (
   `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
   `question_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `unit_text` text NOT NULL,
+  `output` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+
+# Dump of table users
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `users`;
 
 CREATE TABLE `users` (
   `id` tinyint(4) unsigned NOT NULL AUTO_INCREMENT,
@@ -110,11 +172,14 @@ CREATE TABLE `users` (
   `name` varchar(75) NOT NULL DEFAULT '',
   `role` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '(0) Student (1) Instructor',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
 
-SET FOREIGN_KEY_CHECKS = @PREVIOUS_FOREIGN_KEY_CHECKS;
-
-
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
