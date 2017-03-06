@@ -27,7 +27,7 @@ class Test
 		global $mysqli;
 		
 		$out = [];
-		$sql = 'SELECT id, user_id, `name`, created FROM tests WHERE user_id = ?';
+		$sql = 'SELECT id, user_id, `name`, created FROM tests WHERE user_id = ' . $user_id;
 		$result = $mysqli->query($sql);
 		while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
 			$out[] = [
