@@ -13,18 +13,12 @@ $questions = Question::getQuestionsForTest($test_id);
 
 function type_to_string($type) {
 	switch ($type) {
-		case 0:
-			return "Int";
-		case 1:
-			return "Float";
-		case 2:
-			return "Double";
-		case 3;
-			return "String";
-		case 4:
-			return "Boolean";
-		default:
-			return "Int";
+		case 0: return "Int";
+		case 1: return "Float";
+		case 2: return "Double";
+		case 3; return "String";
+		case 4: return "Boolean";
+		default: return "Int";
 	}
 }
 
@@ -40,7 +34,7 @@ if (empty($test)) { die('No Such Test.'); }
 <div id="test-questions-wrapper">
 	<div id="error"></div>
 	<ul id="test-questions">
-		<?php		
+		<?php
 			foreach ($questions as $index => $q) {
 				echo '
 					<li>

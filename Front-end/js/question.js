@@ -71,11 +71,10 @@ byId('submit').onclick = function(e) {
 	var name = encodeURIComponent(byId("function-name").value)
 	var description = encodeURIComponent(byId("description").value)
 	var returns = byId("func-type").selectedIndex
-	var solution = encodeURIComponent(byId("solution").value)
 	var unitTestInputs = document.getElementById("unit-input").value.split(",")
 	var unitTestOutput = document.getElementById("unit-output").value
 
-	var body = "type=" + type + "&difficulty=" + diff + "&name=" + name + "&returns=" + returns + "&solution=" + solution
+	var body = "type=" + type + "&difficulty=" + diff + "&name=" + name + "&returns=" + returns
 	body += "&description=" + description + "&unitout=" + unitTestOutput
 
 	var c = byId("arguments").children
@@ -102,7 +101,7 @@ byId('submit').onclick = function(e) {
 	httpRequest.onreadystatechange = function() {
 		if (httpRequest.readyState === XMLHttpRequest.DONE) {
 			if (httpRequest.status >= 200 && httpRequest.status < 300) {
-				location.reload()
+				// location.reload()
 			} else {
 				var data = JSON.parse(httpRequest.responseText)
 				byId('error').innerHTML = data.error

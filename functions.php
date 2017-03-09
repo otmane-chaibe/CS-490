@@ -2,8 +2,7 @@
 
 require_once('config.php');
 
-if (empty(DB_SERVER) || empty(DB_USER))
-{
+if (empty(DB_SERVER) || empty(DB_USER)) {
 	die('Application not configured.');
 }
 
@@ -15,30 +14,26 @@ spl_autoload_register(function ($class) {
 	}
 });
 
-$mysqli = new \mysqli(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
+$mysqli = new mysqli(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
 if ($mysqli->connect_error) {
 	die('Unable to establish database connection: ' . $mysqli->connect_error);
 }
 $mysqli->set_charset('utf8');
 
-function assertPost()
-{
-	if ($_SERVER['REQUEST_METHOD'] != 'POST')
-	{
+function assertPost() {
+	if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 		header($_SERVER['SERVER_PROTOCOL'] . ' 405 Method Not Allowed');
 		header('Allow: POST');
 		die(json_encode(['status' => 405, 'response' => 'Must Use POST']));
 	}
 }
 
-function redirect($to)
-{
+function redirect($to) {
 	header('Location: ' . $to);
 	exit;
 }
 
-function error($error)
-{
+function error($error) {
 	header('HTTP/1.1 400 Bad Request');
 	die(json_encode([ 'error' => $error ]));
 }
