@@ -1,35 +1,23 @@
 <?php
-	
+
 class UnitTest {
-	
+
 	public static function createUnitTest($question_id, $inputs, $output) {
 		global $mysqli;
-		
 		foreach ($inputs as $input) {
-			$sql = "INSERT INTO unit_test_inputs (question_id, input, value) VALUES (?, ?, ?)";
-			$stmt = null;
-			if (!$stmt = $mysqli->prepare($sql)) {
-				return;
-			}
-			$stmt->bind_param('iis', $question_id, $input["type"], $input["value"]);
-			$stmt->execute();
-			$stmt->close();
+			$type = $input['type'];
+			$val = $input['value'];
+			$sql = "INSERT INTO unit_test_inputs (question_id, input, value) VALUES ($question_id, '$type', '$val')";
+			$mysqli->query($sql);
 		}
-		
-		$sql = "INSERT INTO unit_tests (question_id, output) VALUES (?, ?)";
-		$stmt = null;
-		if (!$stmt = $mysqli->prepare($sql)) {
-			return;
-		}
-		$stmt->bind_param('is', $question_id, $output);
-		$stmt->execute();
-		$stmt->close();
+		$sql = "INSERT INTO unit_tests (question_id, output) VALUES ($question_id, '$output')";
+		$mysqli->query($sql);
 	}
-	
+
 	# Support arg types other than int
 	public static function getUnitTestsForQuestion($question_id) {
 		global $mysqli;
-		$unit_tests = [];		
+		$unit_tests = [];
 		$sql = "SELECT question_id,output FROM unit_tests WHERE question_id = $question_id";
 		$result = $mysqli->query($sql);
 		while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
@@ -40,7 +28,7 @@ class UnitTest {
 		}
 		return $unit_tests;
 	}
-	
+
 	# Todo: return arg type as well
 	private static function getInputsForUnitTest($question_id) {
 		global $mysqli;
@@ -52,7 +40,7 @@ class UnitTest {
 		}
 		return $out;
 	}
-	
+
 	# Get the argument type from string
 	public static function get_type_from($str) {
 		if (empty($str)) { return 0; }
@@ -66,7 +54,7 @@ class UnitTest {
 			case "string":
 				return 3;
 			case "bool":
-				return 4;											
+				return 4;
 			default:
 				return 0;
 		}

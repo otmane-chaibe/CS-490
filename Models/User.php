@@ -1,12 +1,9 @@
 <?php
 
-class User
-{
+class User {
 
-	public static function getUserByUCID($ucid)
-	{
+	public static function getUserByUCID($ucid) {
 		global $mysqli;
-
 		$sql = 'SELECT id, password, `name`, role FROM users WHERE ucid = ?';
 		$stmt = null;
 		if (!$stmt = $mysqli->prepare($sql)) { return null; }
