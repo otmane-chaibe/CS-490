@@ -22,8 +22,7 @@ class Question {
 		$out = [];
 		$sql = "SELECT
 		q.id, q.user_id, q.category, q.function_name, q.function_type,
-		q.difficulty, q.description, q.solution, q.template
-		FROM tests
+		q.difficulty, q.description FROM tests
 		JOIN test_questions AS tq ON tq.test_id = tests.id
 		JOIN questions AS q ON q.id = tq.question_id
 		WHERE tests.id = $test_id";
@@ -60,7 +59,7 @@ class Question {
 		global $mysqli;
 		$sql = "
 			INSERT INTO questions (user_id, category, function_name, function_type, difficulty, description)
-			VALUES ($user_id, $category, $name, $type, $difficulty, $description)
+			VALUES ($user_id, '$category', '$name', '$type', '$difficulty', '$description')
 		";
 		$mysqli->query($sql);
 		$question_id = $mysqli->insert_id;
@@ -68,7 +67,7 @@ class Question {
 			foreach ($args as $arg) {
 				$type = $arg['type'];
 				$name = $arg['name'];
-				$sql = "INSERT INTO args (question_id, type, name) VALUES ($question_id, $type, $name)";
+				$sql = "INSERT INTO args (question_id, type, name) VALUES ($question_id, '$type', '$name')";
 				$mysqli->query($sql);
 			}
 		}

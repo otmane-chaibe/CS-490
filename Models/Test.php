@@ -36,8 +36,7 @@ class Test {
 
 	public static function getTestById($test_id) {
 		global $mysqli;
-
-		$sql = "SELECT user_id, `name`, created FROM tests WHERE id = $test_id";
+		$sql = "SELECT user_id, `name`, created FROM tests WHERE id = $test_id LIMIT 1";
 		$result = $mysqli->query($sql);
 		$row = $result->fetch_array(MYSQLI_ASSOC);
 		if (empty($row['user_id'])) { return []; }
@@ -77,7 +76,7 @@ class Test {
 		global $mysqli;
 		$time = time();
 		$user = $_SESSION['user_id'];
-		$sql = "INSERT INTO tests (user_id, name, created) VALUES ($user, $name, $time)";
+		$sql = "INSERT INTO tests (user_id, name, created) VALUES ($user, '$name', $time)";
 		$mysqli->query($sql);
 		return $mysqli->insert_id;
 	}
@@ -106,7 +105,7 @@ class Test {
 
 	public static function insertQuestionScore($user_id, $test_id, $question_id, $score, $remark = "") {
 		global $mysqli;
-		$sql = "INSERT INTO test_results (user_id, test_id, question_id, remark, score) VALUES ($user_id, $test_id, $question_id, $remark, $score)";
+		$sql = "INSERT INTO test_results (user_id, test_id, question_id, remark, score) VALUES ($user_id, $test_id, $question_id, '$remark', $score)";
 		$mysqli->query($sql);
 	}
 
