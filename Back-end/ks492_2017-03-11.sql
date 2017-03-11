@@ -5,9 +5,9 @@
 # http://www.sequelpro.com/
 # https://github.com/sequelpro/sequelpro
 #
-# Host: 127.0.0.1 (MySQL 5.7.16)
-# Database: ks492
-# Generation Time: 2017-03-06 00:27:16 +0000
+# Host: sql2.njit.edu (MySQL 5.5.29-log)
+# Database: mma93
+# Generation Time: 2017-03-11 16:44:30 +0000
 # ************************************************************
 
 
@@ -48,8 +48,6 @@ CREATE TABLE `questions` (
   `function_type` enum('0','1','2','3') NOT NULL DEFAULT '0' COMMENT 'The datatype of the function.',
   `difficulty` enum('0','1','2') NOT NULL DEFAULT '0' COMMENT '(0) Easy (1) Medium (2) Difficult',
   `description` varchar(128) NOT NULL DEFAULT '' COMMENT 'Additional description of the question.',
-  `solution` text NOT NULL COMMENT 'Proposed solution.',
-  `template` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -109,7 +107,7 @@ CREATE TABLE `test_results` (
   `user_id` tinyint(3) unsigned NOT NULL,
   `test_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `question_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `remark` text NOT NULL,
+  `remark` text,
   `score` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -139,7 +137,7 @@ DROP TABLE IF EXISTS `unit_test_inputs`;
 CREATE TABLE `unit_test_inputs` (
   `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
   `question_id` tinyint(3) unsigned NOT NULL,
-  `input` tinyint(3) unsigned NOT NULL,
+  `input` enum('0','1','2','3','4') NOT NULL DEFAULT '0',
   `value` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
