@@ -4,7 +4,7 @@ class Test {
 
 	public static function getAllTests() {
 		global $mysqli;
-		$sql = 'SELECT id, user_id, `name`, created FROM tests';
+		$sql = "SELECT id, user_id, `name`, created FROM tests";
 		$result = $mysqli->query($sql);
 		$out = [];
 		while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
