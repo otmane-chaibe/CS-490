@@ -18,7 +18,7 @@ class UnitTest {
 	public static function getUnitTestsForQuestion($question_id) {
 		global $mysqli;
 		$unit_tests = [];
-		$sql = "SELECT question_id,output FROM unit_tests WHERE question_id = $question_id";
+		$sql = "SELECT question_id, output FROM unit_tests WHERE question_id = $question_id";
 		$result = $mysqli->query($sql);
 		while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
 			$unit_tests[] = [
@@ -45,18 +45,12 @@ class UnitTest {
 	public static function get_type_from($str) {
 		if (empty($str)) { return 0; }
 		switch ($str) {
-			case "int":
-				return 0;
-			case "float":
-				return 1;
-			case "double":
-				return 2;
-			case "string":
-				return 3;
-			case "bool":
-				return 4;
-			default:
-				return 0;
+			case "int": return 0;
+			case "float": return 1;
+			case "double": return 2;
+			case "string": return 3;
+			case "bool": return 4;
+			default: return 0;
 		}
 	}
 }

@@ -27,14 +27,14 @@ $result = $mysqli->query("SELECT id, role FROM users WHERE ucid = '$ucid' AND pa
 
 if ($row = $result->fetch_array()) {
 	$_SESSION['user_id'] = $row['id'];
-	$_SESSION['role'] = $row['role'];	
+	$_SESSION['role'] = $row['role'];
 	echo json_encode([
-		"status" => 200,
+		"status"   => 200,
 		"response" => "login successful"
 	]);
 } else {
 	echo json_encode([
-		"status" => 403,
+		"status"   => 403,
 		"response" => "login not succesful",
 	]);
 }

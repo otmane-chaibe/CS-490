@@ -4,14 +4,12 @@ class User {
 
 	public static function getUserByUCID($ucid) {
 		global $mysqli;
-		$sql = 'SELECT id, password, `name`, role FROM users WHERE ucid = ?';
+		$sql = "SELECT id, password, `name`, role FROM users WHERE ucid = '$ucid'";
 		$stmt = null;
-		if (!$stmt = $mysqli->prepare($sql)) { return null; }
-		$stmt->bind_param('s', $ucid);
-		$stmt->execute();
+		$mysqli->query($sql);
 		$stmt->bind_result($id, $password, $name, $role);
-		$stmt->fetch();
-		$stmt->close();
+
+		# todo: complete method...
 
 		if (empty($id)) { return null; }
 
@@ -23,5 +21,4 @@ class User {
 			'role'     => (int) $role,
 		];
 	}
-
 }

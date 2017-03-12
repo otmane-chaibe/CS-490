@@ -106,7 +106,7 @@ class Question {
 		return $out;
 	}
 
-	private static function getQuestionArgs ($question_id) {
+	private static function getQuestionArgs($question_id) {
 		global $mysqli;
 		$out = [];
 		$sql = "SELECT question_id, type, `name` FROM args WHERE question_id  = $question_id";
