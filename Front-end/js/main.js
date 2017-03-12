@@ -1,5 +1,3 @@
-// Maurice Achtenhagen
-
 "use strict";
 
 var httpRequest = new XMLHttpRequest();

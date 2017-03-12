@@ -1,10 +1,16 @@
 <?php
 
-require_once('config.php');
+# Maurice Achtenhagen
 
-if (empty(DB_SERVER) || empty(DB_USER)) {
-	die('Application not configured.');
-}
+/*
+	functions.php
+	-----------------------------------------------
+	This file is included by everyone and contains
+	global functions we all use. Not including this
+	file will result in a fatal error.
+	Add anything global into this file.
+	-----------------------------------------------
+*/
 
 spl_autoload_register(function ($class) {
 	$base_dir = __DIR__ . '/Models/';
@@ -14,12 +20,7 @@ spl_autoload_register(function ($class) {
 	}
 });
 
-$mysqli = new mysqli(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
-if ($mysqli->connect_error) {
-	die('Unable to establish database connection: ' . $mysqli->connect_error);
-}
-$mysqli->set_charset('utf8');
-
+# Global function to assure POST is used
 function assertPost() {
 	if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 		header($_SERVER['SERVER_PROTOCOL'] . ' 405 Method Not Allowed');
@@ -28,12 +29,17 @@ function assertPost() {
 	}
 }
 
+# Global secure redirect function
 function redirect($to) {
 	header('Location: ' . $to);
 	exit;
 }
 
+# Global error function
 function error($error) {
-	header('HTTP/1.1 400 Bad Request');
-	die(json_encode([ 'error' => $error ]));
+	header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad Request');
+	die(json_encode([
+		'status'   => 400,
+		'response' => $error
+	]));
 }
