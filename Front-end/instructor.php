@@ -10,7 +10,6 @@ if ($_SESSION['role'] != 1) {
 $tests = Test::getTestsForUser($_SESSION['user_id']);
 
 ?>
-
 <form id="tests-wrapper">
 	<h1>Create New Test</h1>
 	<input id="name" type="text" placeholder="Test Name" />
@@ -21,7 +20,7 @@ $tests = Test::getTestsForUser($_SESSION['user_id']);
 </form>
 <ul class="list" id="tests">
 	<?php
-		foreach($tests as $test) {			
+		foreach($tests as $test) {
 			echo '
 				<li class="item">
 					<a href="test.php?id=' . $test['id'] . '">' . $test['name'] . '</a>
@@ -30,7 +29,6 @@ $tests = Test::getTestsForUser($_SESSION['user_id']);
 		}
 	?>
 </ul>
-
 <?php
 	$js = "instructor";
 	require_once('footer.php');
