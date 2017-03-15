@@ -7,8 +7,11 @@
 	-----------------------------------------------
 */
 
-require_once('../functions.php');
 require_once('header.php');
+
+if (!isset($_SESSION['user_id'])) {
+	redirect("index.php");
+}
 
 # cURL Request -> Middle-end -> student_tests.php
 # TODO: replace mma93 with sma76 in url

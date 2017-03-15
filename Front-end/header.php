@@ -1,6 +1,12 @@
 <?php
+	require_once('../functions.php');
+
 	if (session_status() == PHP_SESSION_NONE) {
 		session_start();
+	}
+
+	if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
+		redirect('index.php');
 	}
 ?>
 

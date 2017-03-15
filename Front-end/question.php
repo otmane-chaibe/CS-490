@@ -1,7 +1,4 @@
-<?php
-	require_once('../functions.php');
-	require_once('header.php');
-?>
+<?php require_once('header.php') ?>
 
 <div id="question-wrapper">
 	<h1>Create Question</h1>
