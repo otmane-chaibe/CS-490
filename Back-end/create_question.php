@@ -1,29 +1,49 @@
 <?php
 
-/*
-	create_question.php
-	-----------------------------------------------
-	This file is called via a cURL request from the
-	middle-end. It will query the db and return its
-	response. Note the call to the model here.
-	-----------------------------------------------
-*/
-
 require_once('../functions.php');
 
 header('Content-Type: application/json');
 
+session_start();
 assertPost();
 
-$user_id=$_POST['user_id'];
-$name=$_POST['function_name'];
-$category=$_POST['category'];
-$difficulty=$_POST['difficulty'];
-$type=$_POST['function_type'];
-$args=$_POST['args'];
-$description=$_POST['description'];
+$args = [];
+$unit_inputs = [];
+$category = $_POST['type'];
+$difficulty = $_POST['difficulty'];
+$name = trim($_POST['name']);
+$description = $_POST['description'];
+$type = $_POST['returns'];
+$unit_out = trim($_POST['unitout']);
 
+foreach ($_POST['unitin'] as $input) { $unit_inputs[] = $input; }
+if (empty($name)) {
+	error('Function name cannot be empty.');
+}
 
-#echo json_encode(Question::listAllQuestions());
-echo json_encode(Question::createQuestion($user_id, $name,$category, $difficulty, $type, $args, $description));
+foreach ($_POST['argname'] as $offset => $argname) {
+	$argname = trim($argname);
+	if (empty($argname)) {
+		error("Argument #" . ($offset + 1) . ": name cannot be empty.");
+	}
+	$argtype = $_POST['argtype'][$offset];
+	if ($argtype == "-1") {
+		error("Argument #" . ($offset + 1) . ": type must be set.");
+	}
+	$args[] = [ 'type' => $argtype, 'name' => $argname ];
+}
 
+$question_id = Question::createQuestion($_SESSION['user_id'], $name, $category, $difficulty, $type, $args, $description);
+if ($question_id > 0) {
+	$inputs = [];
+	foreach ($unit_inputs as $input) {
+		$tmp = explode(" ", $input);
+		$inputs[] = [
+			"type"  => UnitTest::get_type_from(strtolower($tmp[0])),
+			"value" => $tmp[1]
+		];
+	}
+	UnitTest::createUnitTest($question_id, $inputs, $unit_out);
+}
+
+echo(json_encode(true));
