@@ -22,12 +22,10 @@ assertPost();
 $ucid = $_POST['ucid'];
 $pass = $_POST['pass'];
 
-# Check POST Variables
 if (empty($ucid) || empty($pass)) {
 	error("Bad Request");
 }
 
-# Check credentials
 if (strlen($ucid) > 6 || strlen($pass) > 20) {
 	error("Bad Request");
 }

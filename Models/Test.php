@@ -21,7 +21,7 @@ class Test {
 	public static function getTestsForUser($user_id) {
 		global $mysqli;
 		$out = [];
-		$sql = "SELECT id, user_id, `name`, created FROM tests WHERE user_id = $user_id";
+		$sql = "SELECT id, user_id, `name`, created FROM tests WHERE user_id = $user_id ORDER BY id DESC";
 		$result = $mysqli->query($sql);
 		while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
 			$out[] = [
@@ -72,13 +72,15 @@ class Test {
 		}
 	}
 
-	public static function createTest($name) {
+	public static function createTest($name, $user_id) {
 		global $mysqli;
 		$time = time();
-		$user = $_SESSION['user_id'];
-		$sql = "INSERT INTO tests (user_id, name, created) VALUES ($user, '$name', $time)";
+		$sql = "INSERT INTO tests (user_id, name, created) VALUES ($user_id, '$name', $time)";
 		$mysqli->query($sql);
-		return $mysqli->insert_id;
+		return [
+			"test_id" => $mysqli->insert_id,
+			"name"    => $name,
+		];
 	}
 
 	public static function getResultsForUser($user) {

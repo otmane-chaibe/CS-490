@@ -13,8 +13,6 @@
 
 require_once('../functions.php');
 
-header('Content-Type: application/json');
-
 assertPost();
 
 if (!isset($_POST['user_id'])) {

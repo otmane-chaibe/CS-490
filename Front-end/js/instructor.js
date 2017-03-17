@@ -25,5 +25,5 @@ function ajaxThenReload(url, body) {
 byId('submit').onclick = function(e) {
 	var name = encodeURIComponent(byId("name").value)
 	var body = "name=" + name
-	ajaxThenReload("../Middle-end/create_test.php", body)
+	ajaxThenReload("../Front-end/create_test.php", body)
 }

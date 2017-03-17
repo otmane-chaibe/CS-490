@@ -13,8 +13,6 @@
 
 require_once('../functions.php');
 
-header('Content-Type: application/json');
-
 assertPost();
 
 if (empty($_POST['ucid']) || empty($_POST['pass'])) {
