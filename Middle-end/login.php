@@ -29,20 +29,13 @@ if (strlen($ucid) > 6 || strlen($pass) > 20) {
 }
 
 # cURL Request -> Back-end -> login.php
-# TODO: replace mma93 with ks492 in url
-$curl = curl_init();
-curl_setopt_array($curl, [
-	CURLOPT_RETURNTRANSFER => 1,
-	CURLOPT_URL            => 'https://web.njit.edu/~mma93/Back-end/login.php',
-	CURLOPT_POST           => 1,
-	CURLOPT_POSTFIELDS     => [
-		'ucid' => $ucid,
-		'pass' => $pass
-	]
+$cred = http(BACK_END, "login", [
+	"ucid" => $ucid,
+	"pass" => $pass,
 ]);
-$resp = curl_exec($curl);
-curl_close($curl);
-if ($resp === false) {
+
+if ($cred === false) {
 	error("cURL request failed");
 }
-echo $resp;
+
+echo $cred;

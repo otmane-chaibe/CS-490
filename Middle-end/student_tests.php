@@ -18,18 +18,10 @@ header('Content-Type: application/json');
 assertPost();
 
 # cURL Request -> Back-end -> student_tests.php
-# TODO: replace mma93 with ks492 in url
-$curl = curl_init();
-curl_setopt_array($curl, [
-	CURLOPT_FOLLOWLOCATION => true,
-	CURLOPT_RETURNTRANSFER => 1,
-	CURLOPT_URL            => 'https://web.njit.edu/~mma93/Back-end/student_tests.php',
-	CURLOPT_POST           => 1,
-	CURLOPT_POSTFIELDS     => []
-]);
-$resp = curl_exec($curl);
-curl_close($curl);
+$resp = http(UCID_BACK_END, "student_tests");
+
 if ($resp === false) {
 	error("cURL request failed");
 }
+
 echo $resp;

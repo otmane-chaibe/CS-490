@@ -9,19 +9,8 @@
 	-----------------------------------------------
 */
 
-require_once('../config.php');
-
-if (empty(DB_SERVER) || empty(DB_USER)) {
-	die('Application not configured.');
-}
-
+require_once('../mysql.php');
 require_once('../functions.php');
-
-$mysqli = new mysqli(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
-if ($mysqli->connect_error) {
-	die('Unable to establish database connection: ' . $mysqli->connect_error);
-}
-$mysqli->set_charset('utf8');
 
 assertPost();
 

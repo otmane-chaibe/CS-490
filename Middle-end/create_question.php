@@ -9,7 +9,6 @@ assertPost();
 
 $args = [];
 $unit_inputs = [];
-
 $category = $_POST['type'];
 $difficulty = $_POST['difficulty'];
 $name = trim($_POST['name']);

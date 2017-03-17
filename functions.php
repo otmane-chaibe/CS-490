@@ -7,10 +7,17 @@
 	-----------------------------------------------
 	This file is included by everyone and contains
 	global functions we all use. Not including this
-	file will result in a fatal error.
-	Add anything global into this file.
+	file will result in a fatal error. Add anything
+	global into this file.
 	-----------------------------------------------
 */
+
+# Base URL used in every cURL request
+define("BASE_URL", "https://web.njit.edu/~");
+
+# UCID constants for testing purposes
+define("BACK_END", "mma93/Back-end/"); #ks492
+define("MIDDLE_END", "mma93/Middle-end/"); #sma76
 
 spl_autoload_register(function ($class) {
 	$base_dir = __DIR__ . '/Models/';
@@ -29,6 +36,24 @@ function assertPost() {
 	}
 }
 
+# Global function to send cURL requests
+# The response object will be returned in JSON format
+function http($dest, $fname, $params = [], $ext = ".php") {
+	$url = BASE_URL . $dest . $fname . $ext;
+	if (filter_var($url, FILTER_VALIDATE_URL) === false) { return false; }
+	curl_setopt_array($curl = curl_init(), [
+		CURLOPT_FOLLOWLOCATION => true,
+		CURLOPT_RETURNTRANSFER => 1,
+		CURLOPT_URL            => $url,
+		CURLOPT_POST           => 1,
+		CURLOPT_POSTFIELDS     => $params,
+		CURLOPT_TIMEOUT        => 5,
+	]);
+	$resp = curl_exec($curl);
+	curl_close($curl);
+	return $dest == MIDDLE_END ? json_decode($resp, true) : $resp;
+}
+
 # Global secure redirect function
 function redirect($to) {
 	header('Location: ' . $to);
@@ -40,10 +65,11 @@ function error($error) {
 	header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad Request');
 	die(json_encode([
 		'status'   => 400,
-		'response' => $error
+		'response' => $error,
 	]));
 }
 
+# Global type to string function
 function type_to_string($type) {
 	switch ($type) {
 		case 0: return "Int";

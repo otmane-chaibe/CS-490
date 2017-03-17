@@ -1,13 +1,14 @@
 <?php
 
-require_once('../functions.php');
 require_once('header.php');
 
 if ($_SESSION['role'] != 1) {
 	redirect("student.php");
 }
 
-$tests = Test::getTestsForUser($_SESSION['user_id']);
+$tests = http(MIDDLE_END, "get_tests_for_user", [
+	"user_id" => $_SESSION['user_id']
+]);
 
 ?>
 <form id="tests-wrapper">

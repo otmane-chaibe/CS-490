@@ -9,26 +9,12 @@
 
 require_once('header.php');
 
-if (!isset($_SESSION['user_id'])) {
-	redirect("index.php");
-}
-
 # cURL Request -> Middle-end -> student_tests.php
-# TODO: replace mma93 with sma76 in url
-$curl = curl_init();
-curl_setopt_array($curl, [
-	CURLOPT_FOLLOWLOCATION => true,
-	CURLOPT_RETURNTRANSFER => 1,
-	CURLOPT_URL            => 'https://web.njit.edu/~mma93/Middle-end/student_tests.php',
-	CURLOPT_POST           => 1,
-	CURLOPT_POSTFIELDS     => []
-]);
-$resp = curl_exec($curl);
-curl_close($curl);
-if ($resp === false) {
+$tests = http(MIDDLE_END, "student_tests");
+
+if ($tests === false) {
 	error("cURL request failed");
 }
-$tests = json_decode($resp, true);
 
 ?>
 <div id="students-wrapper">

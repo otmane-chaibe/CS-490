@@ -1,13 +1,25 @@
 <?php
-	require_once('../functions.php');
 
-	if (session_status() == PHP_SESSION_NONE) {
-		session_start();
-	}
+/*
+	header.php
+	-----------------------------------------------
+	This file is to be included by every page in
+	the front-end. It will provide access to the
+	navigation bar, the session and functions.php.
+	Note that this excludes dologin.php.
+	-----------------------------------------------
+*/
 
-	if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
-		redirect('index.php');
-	}
+require_once('../functions.php');
+
+if (session_status() == PHP_SESSION_NONE) {
+	session_start();
+}
+
+if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
+	redirect('index.php');
+}
+
 ?>
 
 <!DOCTYPE html>
