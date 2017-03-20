@@ -5,4 +5,4 @@ require_once('../functions.php');
 
 assertPost();
 
-echo json_encode(Test::getAllTests());
+echo json_encode(Question::listAllQuestions());

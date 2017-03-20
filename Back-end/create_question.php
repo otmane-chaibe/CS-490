@@ -17,6 +17,7 @@ $type = $_POST['returns'];
 $unit_out = trim($_POST['unitout']);
 
 foreach ($_POST['unitin'] as $input) { $unit_inputs[] = $input; }
+
 if (empty($name)) {
 	error('Function name cannot be empty.');
 }

@@ -3,8 +3,6 @@
 require_once('../mysql.php');
 require_once('../functions.php');
 
-session_start();
-
 assertPost();
 
 if (empty($_POST['name'])) {

@@ -1,12 +1,5 @@
 <?php
 
-/*
-	student.php
-	-----------------------------------------------
-	This file is shown to users with role 0.
-	-----------------------------------------------
-*/
-
 require_once('header.php');
 
 # cURL Request -> Middle-end -> student_tests.php
@@ -24,7 +17,8 @@ if ($tests === false) {
 			foreach($tests as $test) {
 				echo '
 					<li class="item">
-						<a href="take_test.php?id=' . $test['id'] . '">' . $test['name'] . '</a>
+						<a href="take_test.php?id=' . $test['id'] . '">' .
+						$test['name'] . '</a>
 					</li>
 				';
 			}

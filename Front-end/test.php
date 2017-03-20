@@ -7,9 +7,21 @@ if (empty($test_id)) {
 	redirect("instructor.php");
 }
 
-$test = Test::getTestById($test_id);
+$test = http(MIDDLE_END, "test", [
+	"test_id" => $test_id,
+]);
+
+if ($test === false) {
+	error("cURL request failed");
+}
 
 if (empty($test)) { die('No Such Test.'); }
+
+$test_questions = http(MIDDLE_END, "get_questions_for_test", [
+	"test_id" => $test_id,
+]);
+
+$all_questions = http(MIDDLE_END, "get_all_test_questions");
 
 ?>
 
@@ -19,7 +31,7 @@ if (empty($test)) { die('No Such Test.'); }
 		<tbody>
 		<?php
 			$seen = [];
-			foreach(Question::getQuestionsForTest($test_id) as $id => $question) {
+			foreach($test_questions as $id => $question) {
 				$seen[] = $id;
 				echo '<tr>';
 				echo '<td>' . $question['function_name'] . '</td>';
@@ -32,8 +44,7 @@ if (empty($test)) { die('No Such Test.'); }
 	<hr/>
 	Add a question:
 	<select id="question"><?php
-		$questions = Question::listAllQuestions();
-		foreach ($questions as $q) {
+		foreach ($all_questions as $q) {
 			if (in_array($q['id'], $seen)) { continue; }
 			$id = $q['id'];
 			$name = $q['function_name'];
@@ -47,7 +58,6 @@ if (empty($test)) { die('No Such Test.'); }
 		}
 
 	?></select>
-
 	<button id="submit" type="submit" style="width: 100px" class="green" >Add</button>
 </div>
 <script>

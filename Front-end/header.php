@@ -38,7 +38,6 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
 	<body>
 		<header></header>
 		<main>
-			<?php if (isset($_SESSION['user_id'])) { ?>
 			<nav>
 				<ul>
 					<?php if ($_SESSION['role'] == 1) { ?>
@@ -51,4 +50,3 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
 					<li><a href="logout.php">Logout</a></li>
 				</ul>
 			</nav>
-			<?php } ?>

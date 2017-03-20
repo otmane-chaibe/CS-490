@@ -42,7 +42,7 @@ class Test {
 		if (empty($row['user_id'])) { return []; }
 		return [
 			'id'      => $test_id,
-			'user_id' => (int) $row['$user_id'],
+			'user_id' => (int) $row['user_id'],
 			'name'    => $row['name'],
 			'created' => $row['created']
 		];

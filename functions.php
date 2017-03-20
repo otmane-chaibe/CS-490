@@ -54,7 +54,7 @@ function http($dest, $fname, $params = [], $ext = ".php") {
 	return $dest == MIDDLE_END ? json_decode($resp, true) : $resp;
 }
 
-# Global secure redirect function
+# Global secure redirect
 function redirect($to) {
 	header('Location: ' . $to);
 	exit;

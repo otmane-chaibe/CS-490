@@ -1,14 +1,5 @@
 <?php
 
-/*
-	create_test.php
-	-----------------------------------------------
-	This file is called from the front-end via Ajax
-	in instructor.php. It will send a cURL request
-	to the middle-end with 1 parameter: name.
-	-----------------------------------------------
-*/
-
 require_once('../functions.php');
 
 session_start();
@@ -27,7 +18,6 @@ if (empty($_POST['name'])) {
 
 $name = trim($_POST['name']);
 
-# cURL Request -> Middle-end -> create_test.php
 $test = http(MIDDLE_END, "create_test", [
 	"user_id" => $_SESSION['user_id'],
 	"name"    => $name,
