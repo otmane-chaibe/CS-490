@@ -4,7 +4,7 @@
 	<h1>Create Question</h1>
 	<div class="step">
 		<div class="num">1</div>
-		Question type
+		Question Type
 		<select id="question-type">
 			<option value="0" selected>Conditional</option>
 			<option value="1">Control Flow</option>
@@ -20,7 +20,7 @@
 	</div>
 	<div class="step">
 		<div class="num">2</div>
-		Function name<input id="function-name" type="text">Function type
+		Function Name<input id="function-name" type="text" placeholder="e.g., sum">Function Type
 		<select id="func-type">
 			<option value="0" selected>Int</option>
 			<option value="1">Float</option>
@@ -28,33 +28,30 @@
 			<option value="3">String</option>
 			<option value="4">Bool</option>
 		</select>
-		<p style="margin-top:40px">Question description</p>
-		<textarea id="description"></textarea>
+		<p style="margin-top:40px">Question Description</p>
+		<textarea id="description" placeholder="e.g., which returns the sum of a and b."></textarea>
 	</div>
 	<div class="step">
 		<div class="num">3</div>
-		<p>Function arguments (<span id="argumentCounter">0</span>)</p>
-		<table border="1" width="100%">
-			<thead>
-				<th>Argument Name</th>
-				<th>Argument Type</th>
-				<th>Delete</th>
-			</thead>
+		<p>Function Arguments</p>
+		<table>
 			<tbody id="arguments"></tbody>
 		</table>
-		<hr />
 		<button id="add-arg" type="button" class="blue">Add Argument</button>
 	</div>
 	<div class="step">
 		<div class="num">4</div>
 		<p>Unit Tests</p>
-		<input id="unit-input" type="text" placeholder="Inputs (ex: int 1,int 2)">
-		<input id="unit-output" type="text" placeholder="Output (ex: 3)">
+		<table>
+			<tbody id="unit-tests"></tbody>
+		</table>
+		<button id="add-input" type="button" class="blue">Add Unit Test</button>
 	</div>
 	<div class="step">
 		<div class="num">5</div>
 		<div id="error"></div>
-		<button id="submit" type="button" class="green">Submit</button>
+		<p>Submit Question</p>
+		<button id="submit" type="button" class="green">Let's Go!</button>
 	</div>
 </div>
 

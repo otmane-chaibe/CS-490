@@ -3,7 +3,7 @@
 	float: left;
 	font-size: 16px;
 	padding: 40px 0 0 40px;
-	width: 600px
+	width: 560px
 }
 
 #question-wrapper h1 { margin-bottom: 60px }
@@ -11,7 +11,7 @@
 #question-wrapper .step {
 	border-left: 1px solid rgba(0, 0, 0, .04);
 	margin-bottom: 40px;
-	padding: 0 20px 20px 20px;
+	padding: 0 20px 0 20px;
 	position: relative
 }
 
@@ -25,20 +25,25 @@
 
 #question-wrapper p {
 	font-size: 16px;
-	font-weight: bold;
-	margin-bottom: 40px
+	font-weight: bold
 }
 
 #question-wrapper input {
 	display: inline-block;
-	margin: 0 10px;
-	padding: 0 10px;
-	text-align: center
+	/* margin: 0 10px; */
+	padding: 0 10px
 }
 
-#function-name { width: 110px }
+#question-wrapper table {
+	margin-top: 20px;
+	width: 100%
+}
 
-#add-arg { margin-top: 40px }
+#function-name {
+	margin: 0 10px;
+	text-align: center;
+	width: 110px
+}
 
 #question-wrapper select {
 	background: #fff;
@@ -51,10 +56,36 @@
 	text-align: center
 }
 
-#solution {
-	height: 200px;
-	width: 100%
+#description {
+	height: 120px;
+	margin-top: 20px;
+	min-height: 120px
 }
+
+#arguments input  { width: 250px }
+#arguments select { width: 100px }
+
+#arguments tr, #unit-tests tr { vertical-align: top }
+
+#arguments tr { height: 60px }
+
+#unit-tests tr { height: 120px }
+
+#unit-tests td:last-child,
+#arguments td:last-child { width: 100px }
+
+#unit-tests td:last-child .button,
+#arguments td:last-child .button { height: 35px }
+
+#unit-tests td:last-child .button.red { margin-top: 20px }
+
+.unit-input-txt  { width: 248px !important }
+.unit-output-txt {
+	margin-top: 20px;
+	width: 360px !important
+}
+
+#submit { margin-top: 20px }
 
 #sidebar {
 	border-left: 1px solid #E0E2EA;
@@ -72,6 +103,4 @@
 	margin-bottom: 10px
 }
 
-#unit-input, #unit-output { text-align: left !important }
 #unit-output { margin-top: 20px !important }
-

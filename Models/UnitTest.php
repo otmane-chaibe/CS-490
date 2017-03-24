@@ -12,6 +12,7 @@ class UnitTest {
 		}
 		$sql = "INSERT INTO unit_tests (question_id, output) VALUES ($question_id, '$output')";
 		$mysqli->query($sql);
+		return $mysqli->insert_id;
 	}
 
 	# Support arg types other than int

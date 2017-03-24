@@ -35,7 +35,7 @@ $category = $_POST['category'];
 $difficulty = $_POST['difficulty'];
 $return_type = $_POST['returntype'];
 $description = $_POST['description'];
-$unit_out = trim($_POST['unitout']);
+$unit_outputs = trim($_POST['unitout']);
 
 foreach ($_POST['unitin'] as $input) {
 	$unit_inputs[] = $input;
@@ -86,7 +86,7 @@ if ($question_id > 0) {
 	$resp = http(MIDDLE_END, "create_unit_test", [
 		"question_id" => $question_id,
 		"inputs"      => $inputs,
-		"outputs"     => $unit_out,
+		"outputs"     => $unit_outputs,
 	]);
 	if ($resp === false) {
 		error("cURL request failed");
