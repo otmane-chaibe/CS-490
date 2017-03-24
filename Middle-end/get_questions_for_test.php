@@ -12,12 +12,12 @@ if (empty($_POST['test_id'])) {
 
 $test_id = (int) $_POST['test_id'];
 
-$questions = http(BACK_END, "get_questions_for_test", [
+$resp = http(BACK_END, "get_questions_for_test", [
 	"test_id" => $test_id,
 ]);
 
-if ($questions === false) {
+if ($resp === false) {
 	error("cURL request failed");
 }
 
-echo $questions;
+echo $resp;

@@ -80,3 +80,16 @@ function type_to_string($type) {
 		default: return "Int";
 	}
 }
+
+# Get the argument type from string
+function get_type_from($str) {
+	if (empty($str)) { return 0; }
+	switch ($str) {
+		case "int": return 0;
+		case "float": return 1;
+		case "double": return 2;
+		case "string": return 3;
+		case "bool": return 4;
+		default: return 0;
+	}
+}

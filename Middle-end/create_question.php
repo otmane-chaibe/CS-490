@@ -2,49 +2,48 @@
 
 require_once('../functions.php');
 
-header('Content-Type: application/json');
-
-session_start();
 assertPost();
 
-$args = [];
-$unit_inputs = [];
-$category = $_POST['type'];
+if (!isset($_POST['category'])) {
+	error('Missing Parameter: category.');
+}
+
+if (!isset($_POST['difficulty'])) {
+	error('Missing Parameter: difficulty.');
+}
+
+if (!isset($_POST['fname'])) {
+	error('Missing Parameter: fname.');
+}
+
+if (!isset($_POST['returntype'])) {
+	error('Missing Parameter: returntype.');
+}
+
+if (!isset($_POST['description'])) {
+	error('Missing Parameter: description.');
+}
+
+$user_id = $_POST['user_id'];
+$fname = $_POST['fname'];
+$category = $_POST['category'];
 $difficulty = $_POST['difficulty'];
-$name = trim($_POST['name']);
+$return_type = $_POST['returntype'];
+$args = $_POST['args'];
 $description = $_POST['description'];
-$type = $_POST['returns'];
-$unit_out = trim($_POST['unitout']);
 
-foreach ($_POST['unitin'] as $input) { $unit_inputs[] = $input; }
+$question_id = http(BACK_END, "create_question", [
+	"user_id"     => $user_id,
+	"fname"       => $fname,
+	"category"    => $category,
+	"difficulty"  => $difficulty,
+	"returntype"  => $return_type,
+	"args"        => $args,
+	"description" => $description,
+]);
 
-if (empty($name)) {
-	error('Function name cannot be empty.');
+if ($question_id === false) {
+	error("cURL request failed");
 }
 
-foreach ($_POST['argname'] as $offset => $argname) {
-	$argname = trim($argname);
-	if (empty($argname)) {
-		error("Argument #" . ($offset + 1) . ": name cannot be empty.");
-	}
-	$argtype = $_POST['argtype'][$offset];
-	if ($argtype == "-1") {
-		error("Argument #" . ($offset + 1) . ": type must be set.");
-	}
-	$args[] = [ 'type' => $argtype, 'name' => $argname ];
-}
-
-$question_id = Question::createQuestion($_SESSION['user_id'], $name, $category, $difficulty, $type, $args, $description);
-if ($question_id > 0) {
-	$inputs = [];
-	foreach ($unit_inputs as $input) {
-		$tmp = explode(" ", $input);
-		$inputs[] = [
-			"type"  => UnitTest::get_type_from(strtolower($tmp[0])),
-			"value" => $tmp[1]
-		];
-	}
-	UnitTest::createUnitTest($question_id, $inputs, $unit_out);
-}
-
-echo(json_encode(true));
+echo $question_id;

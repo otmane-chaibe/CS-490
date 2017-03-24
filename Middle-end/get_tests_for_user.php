@@ -12,12 +12,12 @@ if (!isset($_POST['user_id'])) {
 
 $user_id = (int) $_POST['user_id'];
 
-$tests = http(BACK_END, "get_tests_for_user", [
+$resp = http(BACK_END, "get_tests_for_user", [
 	"user_id" => $user_id
 ]);
 
-if ($tests === false) {
+if ($resp === false) {
 	error("cURL request failed");
 }
 
-echo $tests;
+echo $resp;

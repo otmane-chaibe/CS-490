@@ -6,12 +6,12 @@ require_once('../functions.php');
 
 assertPost();
 
-$questions = http(BACK_END, "get_all_test_questions", [
+$resp = http(BACK_END, "get_all_test_questions", [
 	"test_id" => $test_id,
 ]);
 
-if ($questions === false) {
+if ($resp === false) {
 	error("cURL request failed");
 }
 
-echo $questions;
+echo $resp;

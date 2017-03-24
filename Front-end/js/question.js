@@ -70,11 +70,11 @@ byId('submit').onclick = function(e) {
 	var diff = byId("question-difficulty").selectedIndex
 	var name = encodeURIComponent(byId("function-name").value)
 	var description = encodeURIComponent(byId("description").value)
-	var returns = byId("func-type").selectedIndex
+	var returnType = byId("func-type").selectedIndex
 	var unitTestInputs = document.getElementById("unit-input").value.split(",")
 	var unitTestOutput = document.getElementById("unit-output").value
 
-	var body = "type=" + type + "&difficulty=" + diff + "&name=" + name + "&returns=" + returns
+	var body = "category=" + type + "&difficulty=" + diff + "&fname=" + name + "&returntype=" + returnType
 	body += "&description=" + description + "&unitout=" + unitTestOutput
 
 	var c = byId("arguments").children
@@ -94,9 +94,10 @@ byId('submit').onclick = function(e) {
 		i++
 	}
 
-	httpRequest.open("POST", "../Middle-end/create_question.php")
+	httpRequest.open("POST", "../Front-end/create_question.php")
 	httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
-	httpRequest.send(body);
+	httpRequest.send(body)
+	console.log(body)
 
 	httpRequest.onreadystatechange = function() {
 		if (httpRequest.readyState === XMLHttpRequest.DONE) {

@@ -13,13 +13,13 @@ if (empty($_POST['name'])) {
 $user_id = (int) $_POST['user_id'];
 $name = trim($_POST['name']);
 
-$test = http(BACK_END, "create_test", [
+$resp = http(BACK_END, "create_test", [
 	"user_id" => $user_id,
 	"name"    => $name,
 ]);
 
-if ($test === false) {
+if ($resp === false) {
 	error("cURL request failed");
 }
 
-echo $test;
+echo $resp;

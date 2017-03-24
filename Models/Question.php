@@ -57,6 +57,7 @@ class Question {
 
 	public static function createQuestion($user_id, $name = "", $category = 0, $difficulty = 0, $type = 0, $args = [], $description = "") {
 		global $mysqli;
+		$question_id = 0;
 		$sql = "
 			INSERT INTO questions (user_id, category, function_name, function_type, difficulty, description)
 			VALUES ($user_id, '$category', '$name', '$type', '$difficulty', '$description')

@@ -18,13 +18,13 @@ if (empty($_POST['name'])) {
 
 $name = trim($_POST['name']);
 
-$test = http(MIDDLE_END, "create_test", [
+$resp = http(MIDDLE_END, "create_test", [
 	"user_id" => $_SESSION['user_id'],
 	"name"    => $name,
 ]);
 
-if ($test === false) {
+if ($resp === false) {
 	error("cURL request failed");
 }
 
-echo json_encode($test);
+echo json_encode($resp);
