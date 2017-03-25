@@ -1,14 +1,16 @@
 <?php
 
+require_once('../mysql.php');
+
 require_once('../functions.php');
 
-header('Content-Type: application/json');
 
 assertPost()
-$user_id=$_POST['user_id'];
+if(empty($_POST['user_id'])) {
+ error("User id can not be empty");
+}
+$user_id=(int) $_POST['user_id'];
 
-$results = Test::getResultsForUser($user_id);
-
-echo json_encode($results)
+echo json_encode(Test::getResultsForUser($user_id));
 ?>
 
