@@ -23,4 +23,5 @@ if ($tests === false) {
 		?>
 	</ul>
 </div>
+
 <?php require_once('footer.php') ?>

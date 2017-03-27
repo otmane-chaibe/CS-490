@@ -1,4 +1,4 @@
-"use strict";
+"use strict"
 
 var argumentTemplate = '\
 	<tr id="row{ID}">\
@@ -19,19 +19,23 @@ var argumentTemplate = '\
 var unitTestInputTemplate = '\
 	<tr id="inputrow{ID}">\
 		<td>\
-			<input id="inputval{ID}" type="text" class="unit-input-txt" placeholder="Input">\
-			<select id="unittype{ID}">\
-				<option value="0" selected>Int</option>\
-				<option value="1">Float</option>\
-				<option value="2">Double</option>\
-				<option value="3">String</option>\
-				<option value="4">Bool</option>\
-			</select>\
-			<input id="outputval{ID}" class="unit-output-txt" type="text" placeholder="Output">\
-		</td>\
-		<td>\
-			<button id="addinput{ID}" class="button blue">Add Input</button>\
-			<button id="deleteunit{ID}" class="button red">Delete</button>\
+			<ul id="inputs{ID}" class="inputs">\
+				<li>\
+					<input id="inputval{ID}" type="text" class="unit-input-txt" placeholder="Input">\
+					<select id="unittype{ID}">\
+						<option value="0" selected>Int</option>\
+						<option value="1">Float</option>\
+						<option value="2">Double</option>\
+						<option value="3">String</option>\
+						<option value="4">Bool</option>\
+					</select>\
+					<button id="addinput{ID}" class="button blue">Add Input</button>\
+				</li>\
+			</ul>\
+			<div class="output-wrapper">\
+				<input id="outputval{ID}" class="unit-output-txt" type="text" placeholder="Output">\
+				<button id="deleteunit{ID}" class="button red">Delete</button>\
+			</div>\
 		</td>\
 	</tr>\
 ';
@@ -42,16 +46,31 @@ function byId(id) {
 	return document.getElementById(id)
 }
 
+function addUnitTestInput(e) {
+	var id = e.target.id.substring(8)
+	byId("inputs" + id).innerHTML += '\
+		<li>\
+			<input id="inputval{ID}" type="text" class="unit-input-txt" placeholder="Input">\
+			<select id="unittype{ID}">\
+				<option value="0" selected>Int</option>\
+				<option value="1">Float</option>\
+				<option value="2">Double</option>\
+				<option value="3">String</option>\
+				<option value="4">Bool</option>\
+			</select>\
+			<button id="addinput{ID}" class="button blue">Add Input</button>\
+		</li>\
+	';
+}
+
 function deleteArgument(e) {
 	var id = e.target.id.substring(6)
 	byId('row' + id).remove()
-	var count = byId("arguments").children.length
 }
 
 function deleteUnitTest(e) {
 	var id = e.target.id.substring(10)
 	byId('inputrow' + id).remove()
-	var count = byId("unit-tests").children.length
 }
 
 byId('add-arg').onclick = function(e) {
@@ -86,7 +105,7 @@ byId('add-arg').onclick = function(e) {
 	}
 }
 
-byId('add-input').onclick = function(e) {
+byId('add-unit-test').onclick = function(e) {
 	var a = byId("unit-tests")
 	var inputs = []
 	var types = []
@@ -105,14 +124,14 @@ byId('add-input').onclick = function(e) {
 		i++
 	}
 	var count = a.children.length
-	var html = unitTestInputTemplate.replace("{ID}", count).replace("{ID}", count).replace("{ID}", count).replace("{ID}", count).replace("{ID}", count).replace("{ID}", count)
+	var html = unitTestInputTemplate.replace("{ID}", count).replace("{ID}", count).replace("{ID}", count).replace("{ID}", count).replace("{ID}", count).replace("{ID}", count).replace("{ID}", count)
 	a.innerHTML = a.innerHTML + html
 	var i = 0
 	var unitTests = byId("unit-tests").children
 	while (true) {
 		if (unitTests[i] == undefined) { return }
 		var id = unitTests[i].id.substring(8)
-		console.log(id)
+		byId('addinput' + id).onclick = addUnitTestInput
 		byId('deleteunit' + id).onclick = deleteUnitTest
 		byId('inputval' + id).value = (inputs[id] === undefined ? "" : inputs[id])
 		i++

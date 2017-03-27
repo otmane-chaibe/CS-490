@@ -14,5 +14,3 @@ function get_args($args) {
         $str_out = array_map(function($value) { return type_to_string($value); }, $args);
         return implode(', ', $str_out);
 }
-
-

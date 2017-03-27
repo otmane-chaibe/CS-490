@@ -28,9 +28,9 @@ button.delete { background: #ec4a39 url('../images/icon_delete.png') center cent
 button.delete:active { background: #da4131 url('../images/icon_delete.png') center center no-repeat !important; background-size: 24px !important }
 button.delete:hover  { background: #fe4c39 url('../images/icon_delete.png') center center no-repeat; background-size: 24px }
 
-button.red { background: red }
-button.red:active { background: red !important}
-button.red:hover  { background: red }
+button.red { background: #ec4a39 }
+button.red:active { background: #da4131 !important}
+button.red:hover  { background: #fe4c39 }
 
 #delete-btn {
 	display: none;

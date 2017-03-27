@@ -7,7 +7,14 @@ if (empty($test_id)) {
 	redirect("student.php");
 }
 
-$test = Test::getTestById($test_id);
+$test = http(MIDDLE_END, "take_test.php", [
+	"test_id" => $test_id,
+]);
+
+if ($test === false) {
+	error("cURL request failed");
+}
+
 $questions = Question::getQuestionsForTest($test_id);
 
 function get_args($args) {

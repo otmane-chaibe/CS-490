@@ -69,15 +69,36 @@
 
 #arguments tr { height: 60px }
 
-#unit-tests tr { height: 120px }
-
+/*
 #unit-tests td:last-child,
 #arguments td:last-child { width: 100px }
+*/
 
 #unit-tests td:last-child .button,
-#arguments td:last-child .button { height: 35px }
+#arguments td:last-child .button {
+	float: right;
+	height: 35px;
+	width: 100px
+}
 
 #unit-tests td:last-child .button.red { margin-top: 20px }
+
+#unit-tests .inputs li { margin-top: 20px }
+#unit-tests .inputs li:first-child { margin-top: 0 }
+
+#unit-tests .output-wrapper { margin-bottom: 20px }
+
+/*
+#unit-test-inputs {}
+
+#unit-test-inputs li {
+	background: #a9d6ff;
+	border: 1px solid #70baff;
+	border-radius: 4px;
+	color: #333;
+	padding: 10px
+}
+*/
 
 .unit-input-txt  { width: 248px !important }
 .unit-output-txt {

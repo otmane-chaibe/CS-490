@@ -8,7 +8,7 @@ if (empty($test_id)) {
 }
 
 $test = http(MIDDLE_END, "test", [
-	"test_id" => $test_id,
+	"test_id" => $test_id
 ]);
 
 if ($test === false) {
@@ -18,7 +18,7 @@ if ($test === false) {
 if (empty($test)) { die('No Such Test.'); }
 
 $test_questions = http(MIDDLE_END, "get_questions_for_test", [
-	"test_id" => $test_id,
+	"test_id" => $test_id
 ]);
 
 $all_questions = http(MIDDLE_END, "get_all_test_questions");

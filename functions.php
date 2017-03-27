@@ -27,7 +27,7 @@ spl_autoload_register(function ($class) {
 	}
 });
 
-# Global function to assure POST is used
+# Global function to assert POST is used
 function assertPost() {
 	if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 		header($_SERVER['SERVER_PROTOCOL'] . ' 405 Method Not Allowed');

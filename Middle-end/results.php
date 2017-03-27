@@ -1,6 +1,5 @@
 <?php
 
-require_once('../mysql.php');
 require_once('../functions.php');
 
 assertPost();
@@ -11,4 +10,12 @@ if (empty($_POST['user_id'])) {
 
 $user_id = (int) $_POST['user_id'];
 
-echo json_encode(Test::getResultsForUser($user_id));
+$results = http(BACK_END, "results", [
+	"user_id" => $user_id,
+]);
+
+if ($results === false) {
+	error("cURL request failed");
+}
+
+echo $results;

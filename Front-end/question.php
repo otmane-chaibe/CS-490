@@ -45,7 +45,7 @@
 		<table>
 			<tbody id="unit-tests"></tbody>
 		</table>
-		<button id="add-input" type="button" class="blue">Add Unit Test</button>
+		<button id="add-unit-test" type="button" class="blue">Add Unit Test</button>
 	</div>
 	<div class="step">
 		<div class="num">5</div>

@@ -7,7 +7,7 @@ require_once('../functions.php');
 assertPost();
 
 $resp = http(BACK_END, "get_all_test_questions", [
-	"test_id" => $test_id,
+	"test_id" => $test_id
 ]);
 
 if ($resp === false) {

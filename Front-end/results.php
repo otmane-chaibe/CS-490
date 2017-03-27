@@ -3,7 +3,13 @@
 require_once('../functions.php');
 require_once('header.php');
 
-$results = Test::getResultsForUser($_SESSION['user_id']);
+$results = http(MIDDLE_END, "results", [
+	"user_id" => $_SESSION['user_id'],
+]);
+
+if ($results === false) {
+	error("cURL request failed");
+}
 
 ?>
 
