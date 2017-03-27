@@ -75,6 +75,12 @@ class Question {
 		return $question_id;
 	}
 
+	# Khurshid
+	public static function filter($difficulty, $ftype) {
+		global $mysqli;
+		# ...
+	}
+
 	public static function listAllQuestions() {
 		global $mysqli;
 
