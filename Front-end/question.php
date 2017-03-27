@@ -1,4 +1,7 @@
-<?php require_once('header.php') ?>
+<?php
+	require_once('header.php')
+	# Get questions ...
+?>
 
 <div id="question-wrapper">
 	<h1>Create Question</h1>
@@ -54,6 +57,8 @@
 		<button id="submit" type="button" class="green">Let's Go!</button>
 	</div>
 </div>
+
+<!-- Sidebar goes here -->
 
 <?php
 	$js = "question";
