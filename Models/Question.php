@@ -78,7 +78,22 @@ class Question {
 	# Khurshid
 	public static function filter($difficulty, $ftype) {
 		global $mysqli;
-		# ...
+		
+		$sql = "SELECT id, category, function_name, function_type, difficulty FROM questions
+		WHERE  difficulty = $difficulty and function_type = $ftype";
+		$result = $mysqli->query($sql);
+		$out = [];
+		while ($row = $result->fetch_array(MYSQLI_ASSOC)){
+			$out[(int) $row['id']] = [
+				'id'		=> (int) $row['id'];
+			        'category'      => (int) $row['category'],
+				'function_name'	=> $row['function_name'],
+				'function_type' => $row['function_type'],
+				'difficulty'	=> $row['difficulty'],
+
+			];
+		}
+		return $out;
 	}
 
 	public static function listAllQuestions() {
