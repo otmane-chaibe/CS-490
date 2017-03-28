@@ -1,5 +1,7 @@
 <?php
 
+# Maurice Achtenhagen
+
 /*
 	header.php
 	-----------------------------------------------

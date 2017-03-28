@@ -1,4 +1,7 @@
-"use strict";
+
+// Maurice Achtenhagen
+
+"use strict"
 
 function byId(id) {
 	return document.getElementById(id)

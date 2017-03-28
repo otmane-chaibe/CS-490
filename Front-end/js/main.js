@@ -1,4 +1,7 @@
-"use strict";
+
+// Maurice Achtenhagen
+
+"use strict"
 
 var httpRequest = new XMLHttpRequest();
 

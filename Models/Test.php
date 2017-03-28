@@ -1,5 +1,7 @@
 <?php
 
+# Maurice Achtenhagen // Khurshid Sohail
+
 class Test {
 
 	public static function getAllTests() {

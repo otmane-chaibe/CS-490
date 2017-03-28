@@ -1,5 +1,7 @@
 <?php
 
+# Maurice Achtenhagen
+
 /*
 	dologin.php
 	-----------------------------------------------
@@ -30,7 +32,6 @@ if (strlen($ucid) > 6 || strlen($pass) > 20) {
 	error("Bad Request");
 }
 
-# cURL Request -> Middle-end -> login.php
 $cred = http(MIDDLE_END, "login", [
 	"ucid" => $ucid,
 	"pass" => $pass,

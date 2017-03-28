@@ -1,5 +1,7 @@
 <?php
 
+# Maurice Achtenhagen
+
 require_once('header.php');
 
 if ($_SESSION['role'] != 1) {

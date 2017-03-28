@@ -1,5 +1,7 @@
 <?php
 
+# Maurice Achtenhagen // Khurshid Sohail
+
 class Question {
 
 	const DIFFICULTY_EASY = 0;
@@ -75,10 +77,9 @@ class Question {
 		return $question_id;
 	}
 
-	# Khurshid
 	public static function filter($difficulty, $ftype) {
 		global $mysqli;
-		
+
 		$sql = "SELECT id, category, function_name, function_type, difficulty FROM questions
 		WHERE  difficulty = $difficulty and function_type = $ftype";
 		$result = $mysqli->query($sql);

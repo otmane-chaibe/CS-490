@@ -1,5 +1,7 @@
 <?php
 
+# Maurice Achtenhagen
+
 require_once('../functions.php');
 
 header('Content-Type: application/json');
