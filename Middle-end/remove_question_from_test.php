@@ -4,8 +4,6 @@
 
 require_once('../functions.php');
 
-header('Content-Type: application/json');
-
 session_start();
 assertPost();
 

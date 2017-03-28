@@ -146,7 +146,7 @@ class FunctionCheck {
 			$params[] = [
 				"type"     => $type,
 				"type_val" => self::get_type_from(strtolower($type)),
-				"name"     => $name
+				"name"     => $name,
 			];
 		}
 		return $params;

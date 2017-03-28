@@ -33,7 +33,6 @@
 
 #question-wrapper input {
 	display: inline-block;
-	/* margin: 0 10px; */
 	padding: 0 10px
 }
 
@@ -72,11 +71,6 @@
 
 #arguments tr { height: 60px }
 
-/*
-#unit-tests td:last-child,
-#arguments td:last-child { width: 100px }
-*/
-
 #unit-tests td:last-child .button,
 #arguments td:last-child .button {
 	float: right;
@@ -90,18 +84,6 @@
 #unit-tests .inputs li:first-child { margin-top: 0 }
 
 #unit-tests .output-wrapper { margin-bottom: 20px }
-
-/*
-#unit-test-inputs {}
-
-#unit-test-inputs li {
-	background: #a9d6ff;
-	border: 1px solid #70baff;
-	border-radius: 4px;
-	color: #333;
-	padding: 10px
-}
-*/
 
 .unit-input-txt  { width: 248px !important }
 .unit-output-txt {

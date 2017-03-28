@@ -26,7 +26,6 @@ $test_questions = http(MIDDLE_END, "get_questions_for_test", [
 $all_questions = http(MIDDLE_END, "get_all_test_questions");
 
 ?>
-
 <div id="test-wrapper">
 	<h1><?=$test['name']?></h1>
 	<table border="1" id="questions">

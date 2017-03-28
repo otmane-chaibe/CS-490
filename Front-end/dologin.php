@@ -2,17 +2,6 @@
 
 # Maurice Achtenhagen
 
-/*
-	dologin.php
-	-----------------------------------------------
-	This file is called from the front-end via Ajax
-	in index.php. It will send a cURL request to
-	the middle-end with 2 parameters ucid and pass.
-	The session is only used by the front-end and
-	should only be set in this file.
-	-----------------------------------------------
-*/
-
 require_once('../functions.php');
 
 session_start();

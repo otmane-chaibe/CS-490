@@ -20,4 +20,5 @@ if (!isset($_POST['outputs'])) {
 }
 
 $unit_test_id = UnitTest::createUnitTest($_POST['question_id'], $_POST['inputs'], $_POST['outputs']);
+
 echo json_encode($unit_test_id);

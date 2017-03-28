@@ -2,15 +2,6 @@
 
 # Maurice Achtenhagen // Khurshid Sohail
 
-/*
-	login.php
-	-----------------------------------------------
-	This file is called via a cURL request from the
-	middle-end. It will query the db with the given
-	credentials and return a response object.
-	-----------------------------------------------
-*/
-
 require_once('../mysql.php');
 require_once('../functions.php');
 
