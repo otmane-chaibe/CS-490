@@ -48,9 +48,9 @@ class Test {
 		];
 	}
 
-	public static function addQuestionToTest($test_id, $question_id) {
+	public static function addQuestionToTest($test_id, $question_id, $weight = 1.0) {
 		global $mysqli;
-		$sql = "INSERT INTO test_questions (test_id, question_id) VALUES ($test_id, $question_id)";
+		$sql = "INSERT INTO test_questions (test_id, question_id, weight) VALUES ($test_id, $question_id, $weight)";
 		$mysqli->query($sql);
 	}
 
