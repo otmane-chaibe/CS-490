@@ -2,8 +2,6 @@
 
 # Maurice Achtenhagen // Khurshid Sohail
 
-require_once('../mysql.php');
-
 class Test {
 
 	public static function getAllTests() {
@@ -16,7 +14,7 @@ class Test {
 				'id'      => (int) $row['id'],
 				'user_id' => (int) $row['user_id'],
 				'name'    => $row['name'],
-				'created' => (int) $row['created']
+				'created' => (int) $row['created'],
 			];
 		}
 		return $out;
@@ -32,7 +30,7 @@ class Test {
 				'id'      => (int) $row['id'],
 				'user_id' => (int) $row['user_id'],
 				'name'    => $row['name'],
-				'created' => (int) $row['created']
+				'created' => (int) $row['created'],
 			];
 		}
 		return $out;
@@ -48,7 +46,7 @@ class Test {
 			'id'      => $test_id,
 			'user_id' => (int) $row['user_id'],
 			'name'    => $row['name'],
-			'created' => $row['created']
+			'created' => $row['created'],
 		];
 	}
 

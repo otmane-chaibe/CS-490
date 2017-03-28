@@ -11,6 +11,7 @@
 	-----------------------------------------------
 */
 
+require_once('../mysql.php');
 require_once('../functions.php');
 
 header('Content-Type: application/json');

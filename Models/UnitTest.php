@@ -2,8 +2,6 @@
 
 # Maurice Achtenhagen
 
-require_once('../mysql.php');
-
 class UnitTest {
 
 	public static function createUnitTest($question_id, $inputs, $output) {
