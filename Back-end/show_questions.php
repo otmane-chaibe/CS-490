@@ -19,4 +19,3 @@ header('Content-Type: application/json');
 assertPost();
 
 echo json_encode(Question::listAllQuestions());
-
