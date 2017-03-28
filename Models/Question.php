@@ -2,6 +2,8 @@
 
 # Maurice Achtenhagen // Khurshid Sohail
 
+require_once('../mysql.php');
+
 class Question {
 
 	const DIFFICULTY_EASY = 0;

@@ -1,9 +1,8 @@
 <?php
 
-# Khurshid Sohail
+# Maurice Achtenhagen
 
 require_once('../functions.php');
 
 assertPost();
 
-echo json_encode(Test::getAllTests());

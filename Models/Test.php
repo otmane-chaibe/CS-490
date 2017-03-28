@@ -2,6 +2,8 @@
 
 # Maurice Achtenhagen // Khurshid Sohail
 
+require_once('../mysql.php');
+
 class Test {
 
 	public static function getAllTests() {
