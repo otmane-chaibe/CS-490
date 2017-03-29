@@ -27,7 +27,6 @@ function get_args($args) {
 if (empty($test)) { die('No Such Test.'); }
 
 ?>
-
 <div id="test-questions-wrapper">
 	<div id="error"></div>
 	<ul id="test-questions">

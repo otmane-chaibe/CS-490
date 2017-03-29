@@ -14,6 +14,6 @@ $test = Test::getTestById($test_id);
 $questions = Question::getQuestionsForTest($test_id);
 
 function get_args($args) {
-        $str_out = array_map(function($value) { return type_to_string($value); }, $args);
-        return implode(', ', $str_out);
+	$str_out = array_map(function($value) { return type_to_string($value); }, $args);
+	return implode(', ', $str_out);
 }
