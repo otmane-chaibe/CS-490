@@ -20,27 +20,25 @@ var argumentTemplate = '\
 ';
 
 var unitTestInputTemplate = '\
-	<tr id="inputrow{ID}">\
-		<td>\
-			<ul id="inputs{ID}" class="inputs">\
-				<li>\
-					<input id="inputval{ID}" type="text" class="unit-input-txt" placeholder="Input">\
-					<select id="unittype{ID}">\
-						<option value="0" selected>Int</option>\
-						<option value="1">Float</option>\
-						<option value="2">Double</option>\
-						<option value="3">String</option>\
-						<option value="4">Bool</option>\
-					</select>\
-					<button id="addinput{ID}" class="button blue">Add Input</button>\
-				</li>\
-			</ul>\
-			<div class="output-wrapper">\
-				<input id="outputval{ID}" class="unit-output-txt" type="text" placeholder="Output">\
-				<button id="deleteunit{ID}" class="button red">Delete</button>\
-			</div>\
-		</td>\
-	</tr>\
+	<td>\
+		<ul id="inputs{ID}" class="inputs">\
+			<li>\
+				<input id="inputval{ID}" type="text" class="unit-input-txt" placeholder="Input">\
+				<select id="unittype{ID}">\
+					<option value="0" selected>Int</option>\
+					<option value="1">Float</option>\
+					<option value="2">Double</option>\
+					<option value="3">String</option>\
+					<option value="4">Bool</option>\
+				</select>\
+				<button id="addinput{ID}" class="button blue">Add Input</button>\
+			</li>\
+		</ul>\
+		<div class="output-wrapper">\
+			<input id="outputval{ID}" class="unit-output-txt" type="text" placeholder="Output">\
+			<button id="deleteunit{ID}" class="button red">Delete</button>\
+		</div>\
+	</td>\
 ';
 
 var httpRequest = new XMLHttpRequest()
@@ -51,29 +49,32 @@ function byId(id) {
 
 function addUnitTestInput(e) {
 	var id = e.target.id.substring(8)
-	byId("inputs" + id).innerHTML += '\
-		<li>\
-			<input id="inputval{ID}" type="text" class="unit-input-txt" placeholder="Input">\
-			<select id="unittype{ID}">\
-				<option value="0" selected>Int</option>\
-				<option value="1">Float</option>\
-				<option value="2">Double</option>\
-				<option value="3">String</option>\
-				<option value="4">Bool</option>\
-			</select>\
-			<button id="addinput{ID}" class="button blue">Add Input</button>\
-		</li>\
+	var inputs = byId("inputs" + id)
+	var count = byId("unit-tests").children.length
+	var html = '\
+		<input id="inputval{ID}" type="text" class="unit-input-txt" placeholder="Input">\
+		<select id="unittype{ID}">\
+			<option value="0" selected>Int</option>\
+			<option value="1">Float</option>\
+			<option value="2">Double</option>\
+			<option value="3">String</option>\
+			<option value="4">Bool</option>\
+		</select>\
 	';
-}
-
-function deleteArgument(e) {
-	var id = e.target.id.substring(6)
-	byId('row' + id).remove()
+	html = html.replace("{ID}", count).replace("{ID}", count)
+	var li = document.createElement("li")
+	li.innerHTML = html
+	inputs.appendChild(li)
 }
 
 function deleteUnitTest(e) {
 	var id = e.target.id.substring(10)
 	byId('inputrow' + id).remove()
+}
+
+function deleteArgument(e) {
+	var id = e.target.id.substring(6)
+	byId('row' + id).remove()
 }
 
 byId('add-arg').onclick = function(e) {
@@ -128,7 +129,10 @@ byId('add-unit-test').onclick = function(e) {
 	}
 	var count = a.children.length
 	var html = unitTestInputTemplate.replace("{ID}", count).replace("{ID}", count).replace("{ID}", count).replace("{ID}", count).replace("{ID}", count).replace("{ID}", count).replace("{ID}", count)
-	a.innerHTML = a.innerHTML + html
+	var tr = document.createElement("tr")
+	tr.setAttribute("id", "inputrow" + count)
+	tr.innerHTML = html
+	a.appendChild(tr)
 	var i = 0
 	var unitTests = byId("unit-tests").children
 	while (true) {
@@ -136,7 +140,6 @@ byId('add-unit-test').onclick = function(e) {
 		var id = unitTests[i].id.substring(8)
 		byId('addinput' + id).onclick = addUnitTestInput
 		byId('deleteunit' + id).onclick = deleteUnitTest
-		byId('inputval' + id).value = (inputs[id] === undefined ? "" : inputs[id])
 		i++
 	}
 }
