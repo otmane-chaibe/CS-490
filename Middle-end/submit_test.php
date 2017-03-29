@@ -18,7 +18,7 @@ $unit_tests = [];
 foreach ($_POST['solution'] as $input) { $solutions[] = $input; }
 foreach ($_POST['qid'] as $q_id) { $question_ids[] = $q_id; }
 foreach ($question_ids as $q_id) { $unit_tests[] = UnitTest::getUnitTestsForQuestion($q_id); }
-foreach ($question_ids as $q_id) { $q_solutions[] = Question::getQuestionSolution($q_id); }
+foreach ($question_ids as $q_id) { $q_solutions[] = Question::getQuestion($q_id); }
 foreach($solutions as $idx => $input) {
 	try {
 		$f_check = new FunctionCheck($input, $q_solutions[$idx], $unit_tests[$idx]);
