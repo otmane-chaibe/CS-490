@@ -115,7 +115,7 @@ class Question {
 		return $out;
 	}
 
-	public static function getQuestionSolution($q_id) {
+	public static function getQuestion($q_id) {
 		global $mysqli;
 		$sql = "SELECT function_type,function_name FROM questions WHERE id = $q_id LIMIT 1";
 		$result = $mysqli->query($sql);
