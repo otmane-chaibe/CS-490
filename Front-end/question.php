@@ -5,7 +5,7 @@
 	require_once('header.php')
 	# Get questions ...
 ?>
-
+<!-- Sidebar goes here -->
 <div id="question-wrapper">
 	<h1>Create Question</h1>
 	<div class="step">
@@ -26,7 +26,7 @@
 	</div>
 	<div class="step">
 		<div class="num">2</div>
-		Function Name<input id="function-name" type="text" placeholder="e.g., sum">Function Type
+		Function Name<input id="function-name" type="text" placeholder="e.g., sum" required>Function Type
 		<select id="func-type">
 			<option value="0" selected>Int</option>
 			<option value="1">Float</option>
@@ -35,7 +35,7 @@
 			<option value="4">Bool</option>
 		</select>
 		<p style="margin-top:40px">Question Description</p>
-		<textarea id="description" placeholder="e.g., which returns the sum of a and b."></textarea>
+		<textarea id="description" placeholder="e.g., which returns the sum of a and b." required></textarea>
 	</div>
 	<div class="step">
 		<div class="num">3</div>
@@ -60,9 +60,6 @@
 		<button id="submit" type="button" class="green">Let's Go!</button>
 	</div>
 </div>
-
-<!-- Sidebar goes here -->
-
 <?php
 	$js = "question";
 	require_once('footer.php');

@@ -5,8 +5,6 @@
 require_once('../functions.php');
 require_once('FunctionCheck.php');
 
-header('Content-Type: application/json');
-
 assertPost();
 session_start();
 
@@ -41,4 +39,4 @@ foreach($solutions as $idx => $input) {
 foreach($scores as $s) { $final_score =+ $s; }
 Test::insertTestScore($_SESSION['user_id'], $_POST['test_id'], $final_score / count($question_ids));
 
-echo(json_encode(true));
+echo json_encode(true);

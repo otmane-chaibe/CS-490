@@ -78,18 +78,18 @@
 	width: 100px
 }
 
-#unit-tests td:last-child .button.red { margin-top: 20px }
-
-#unit-tests .inputs li { margin-top: 20px }
 #unit-tests .inputs li:first-child { margin-top: 0 }
+
+#unit-tests .input-type-selector { margin-right: 0 }
 
 #unit-tests .output-wrapper { margin-bottom: 20px }
 
-.unit-input-txt  { width: 248px !important }
-.unit-output-txt {
-	margin-top: 20px;
-	width: 360px !important
+#unit-tests .unit-input-txt  {
+	margin-bottom: 20px;
+	width: 360px
 }
+
+#unit-tests .unit-output-txt { width: 360px }
 
 #submit { margin-top: 20px }
 

@@ -4,12 +4,11 @@
 
 class UnitTest {
 
-	public static function createUnitTest($question_id, $inputs, $output) {
+	public static function createUnitTest($question_id, $inputs, $types, $output) {
 		global $mysqli;
-		foreach ($inputs as $input) {
-			$type = $input['type'];
-			$val = $input['value'];
-			$sql = "INSERT INTO unit_test_inputs (question_id, input, value) VALUES ($question_id, '$type', '$val')";
+		foreach ($inputs as $idx => $input) {
+			$type = (int) $types[$idx];
+			$sql = "INSERT INTO unit_test_inputs (question_id, input, value) VALUES ($question_id, '$type', '$input')";
 			$mysqli->query($sql);
 		}
 		$sql = "INSERT INTO unit_tests (question_id, output) VALUES ($question_id, '$output')";
@@ -26,7 +25,7 @@ class UnitTest {
 		while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
 			$unit_tests[] = [
 				'inputs' => self::getInputsForUnitTest($question_id),
-				'output' => (int)$row['output']
+				'output' => (int) $row['output']
 			];
 		}
 		return $unit_tests;
@@ -39,7 +38,7 @@ class UnitTest {
 		$result = $mysqli->query($sql);
 		$out = [];
 		while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-			$out[] = (int)$row['value'];
+			$out[] = (int) $row['value'];
 		}
 		return $out;
 	}

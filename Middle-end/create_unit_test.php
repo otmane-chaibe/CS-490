@@ -10,21 +10,24 @@ if (!isset($_POST['question_id'])) {
 	error("Missing Parameter: question_id.");
 }
 
-if (!isset($_POST['inputs'])) {
-	error("Missing Parameter: inputs.");
+if (!isset($_POST['input'])) {
+	error("Missing Parameter: input.");
 }
 
-if (!isset($_POST['outputs'])) {
-	error("Missing Parameter: outputs.");
+if (!isset($_POST['input_type'])) {
+	error("Missing Parameter: input_type.");
+}
+
+if (!isset($_POST['output'])) {
+	error("Missing Parameter: output.");
 }
 
 $unit_test_id = http(BACK_END, "create_unit_test", [
 	'question_id' => $_POST['question_id'],
-	'inputs'      => $_POST['inputs'],
-	'outputs'     => $_POST['outputs'],
+	"input"       => $_POST['input'],
+	"input_type"  => $_POST['input_type'],
+	'output'      => $_POST['output'],
 ]);
-
-var_dump($_POST['inputs']);
 
 if ($unit_test_id === false) {
 	error("cURL request failed");

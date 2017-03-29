@@ -57,16 +57,16 @@ class Question {
 		return $out;
 	}
 
-	public static function createQuestion($user_id, $name = "", $category = 0, $difficulty = 0, $type = 0, $description = "", $args = []) {
+	public static function createQuestion($user_id, $fname, $category = 0, $difficulty = 0, $type = 0, $description = "", $args = []) {
 		global $mysqli;
 		$question_id = 0;
 		$sql = "
 			INSERT INTO questions (user_id, category, function_name, function_type, difficulty, description)
-			VALUES ($user_id, '$category', '$name', '$type', '$difficulty', '$description')
+			VALUES ($user_id, '$category', '$fname', '$type', '$difficulty', '$description')
 		";
 		$mysqli->query($sql);
 		$question_id = $mysqli->insert_id;
-		if (count($args) > 0) {
+		if ($question_id > 0 && count($args) > 0) {
 			foreach ($args as $arg) {
 				$type = $arg['type'];
 				$name = $arg['name'];

@@ -18,20 +18,19 @@ if (!isset($_POST['fname'])) {
 	error('Missing Parameter: fname.');
 }
 
-if (!isset($_POST['returntype'])) {
-	error('Missing Parameter: returntype.');
+if (!isset($_POST['return_type'])) {
+	error('Missing Parameter: return_type.');
 }
 
 if (!isset($_POST['description'])) {
 	error('Missing Parameter: description.');
 }
 
-$user_id = $_POST['user_id'];
+$user_id = (int) $_POST['user_id'];
 $fname = $_POST['fname'];
-$category = $_POST['category'];
-$difficulty = $_POST['difficulty'];
-$return_type = $_POST['returntype'];
-$args = $_POST['args'];
+$category = (int) $_POST['category'];
+$difficulty = (int) $_POST['difficulty'];
+$return_type = (int) $_POST['return_type'];
 $description = $_POST['description'];
 
 $question_id = http(BACK_END, "create_question", [
@@ -39,9 +38,10 @@ $question_id = http(BACK_END, "create_question", [
 	"fname"       => $fname,
 	"category"    => $category,
 	"difficulty"  => $difficulty,
-	"returntype"  => $return_type,
-	"args"        => $args,
+	"return_type" => $return_type,
 	"description" => $description,
+	"arg_name"    => $_POST['arg_name'],
+	"arg_type"    => $_POST['arg_type'],
 ]);
 
 if ($question_id === false) {

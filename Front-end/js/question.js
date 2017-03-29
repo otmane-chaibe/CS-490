@@ -5,7 +5,7 @@
 
 var argumentTemplate = '\
 	<tr id="row{ID}">\
-		<td><input id="argname{ID}" type="text" placeholder="Argument" /></td>\
+		<td><input id="argname{ID}" type="text" placeholder="Argument" required></td>\
 		<td>\
 			<select id="argtype{ID}">\
 				<option value="0" selected>Int</option>\
@@ -21,19 +21,7 @@ var argumentTemplate = '\
 
 var unitTestInputTemplate = '\
 	<td>\
-		<ul id="inputs{ID}" class="inputs">\
-			<li>\
-				<input id="inputval{ID}" type="text" class="unit-input-txt" placeholder="Input">\
-				<select id="unittype{ID}">\
-					<option value="0" selected>Int</option>\
-					<option value="1">Float</option>\
-					<option value="2">Double</option>\
-					<option value="3">String</option>\
-					<option value="4">Bool</option>\
-				</select>\
-				<button id="addinput{ID}" class="button blue">Add Input</button>\
-			</li>\
-		</ul>\
+		<ul id="inputs{ID}" class="inputs"></ul>\
 		<div class="output-wrapper">\
 			<input id="outputval{ID}" class="unit-output-txt" type="text" placeholder="Output">\
 			<button id="deleteunit{ID}" class="button red">Delete</button>\
@@ -41,19 +29,14 @@ var unitTestInputTemplate = '\
 	</td>\
 ';
 
-var httpRequest = new XMLHttpRequest()
-
 function byId(id) {
 	return document.getElementById(id)
 }
 
-function addUnitTestInput(e) {
-	var id = e.target.id.substring(8)
-	var inputs = byId("inputs" + id)
-	var count = byId("unit-tests").children.length
+function addUnitTestInput(list) {
 	var html = '\
-		<input id="inputval{ID}" type="text" class="unit-input-txt" placeholder="Input">\
-		<select id="unittype{ID}">\
+		<input type="text" class="unit-input-txt" placeholder="Input" required>\
+		<select class="input-type-selector">\
 			<option value="0" selected>Int</option>\
 			<option value="1">Float</option>\
 			<option value="2">Double</option>\
@@ -61,10 +44,9 @@ function addUnitTestInput(e) {
 			<option value="4">Bool</option>\
 		</select>\
 	';
-	html = html.replace("{ID}", count).replace("{ID}", count)
 	var li = document.createElement("li")
 	li.innerHTML = html
-	inputs.appendChild(li)
+	list.appendChild(li)
 }
 
 function deleteUnitTest(e) {
@@ -110,69 +92,47 @@ byId('add-arg').onclick = function(e) {
 }
 
 byId('add-unit-test').onclick = function(e) {
-	var a = byId("unit-tests")
-	var inputs = []
-	var types = []
-	var i = 0
-	while (true) {
-		if (a.children[i] == undefined) { break }
-		var id = a.children[i].id.substring(8)
-		inputs[id] = byId('inputval' + id).value
-		var j = 0
-		var options = byId('unittype' + id).options
-		while (true) {
-			if (options[j] == undefined) { break }
-			if (options[j].selected) { types[id] = options[j].value }
-			j++
-		}
-		i++
-	}
-	var count = a.children.length
-	var html = unitTestInputTemplate.replace("{ID}", count).replace("{ID}", count).replace("{ID}", count).replace("{ID}", count).replace("{ID}", count).replace("{ID}", count).replace("{ID}", count)
+	var tests = byId("unit-tests")
+	var count = tests.children.length
+	var html = unitTestInputTemplate.replace("{ID}", count).replace("{ID}", count).replace("{ID}", count).replace("{ID}", count).replace("{ID}", count).replace("{ID}", count)
 	var tr = document.createElement("tr")
 	tr.setAttribute("id", "inputrow" + count)
 	tr.innerHTML = html
-	a.appendChild(tr)
+	tests.appendChild(tr)
+	// Add the same number of unit test inputs as function arguments
+	var list = byId("inputs" + count)
+	var argCount = byId("arguments").children.length
+	for (var i = 0; i < argCount; i++) {
+		addUnitTestInput(list)
+	}
 	var i = 0
 	var unitTests = byId("unit-tests").children
 	while (true) {
 		if (unitTests[i] == undefined) { return }
 		var id = unitTests[i].id.substring(8)
-		byId('addinput' + id).onclick = addUnitTestInput
 		byId('deleteunit' + id).onclick = deleteUnitTest
 		i++
 	}
 }
 
 byId('submit').onclick = function(e) {
+	var httpRequest = new XMLHttpRequest()
 	var type = byId("question-type").selectedIndex
 	var diff = byId("question-difficulty").selectedIndex
 	var name = encodeURIComponent(byId("function-name").value)
 	var description = encodeURIComponent(byId("description").value)
 	var returnType = byId("func-type").selectedIndex
-	var unitTestInputs = document.getElementById("unit-input").value.split(",")
-	var unitTestOutput = document.getElementById("unit-output").value
-
-	var body = "category=" + type + "&difficulty=" + diff + "&fname=" + name + "&returntype=" + returnType
-	body += "&description=" + description + "&unitout=" + unitTestOutput
-
-	var c = byId("arguments").children
+	var body = "category=" + type + "&difficulty=" + diff + "&fname=" + name + "&return_type=" + returnType + "&description=" + description
+	var args = byId("arguments").children
 	var i = 0
 	while (true) {
-		if (c[i] == undefined) { break }
-		var id = c[i].id.substring(3)
+		if (args[i] == undefined) { break }
+		var id = args[i].id.substring(3)
 		var name = encodeURIComponent(byId("argname" + id).value)
 		var type = byId("argtype" + id).selectedIndex
-		body += "&argname[]=" + name + "&argtype[]=" + type
+		body += "&arg_name[]=" + name + "&arg_type[]=" + type
 		i++
 	}
-	i = 0
-	while (true) {
-		if (i == unitTestInputs.length) { break }
-		body += "&unitin[]=" + unitTestInputs[i]
-		i++
-	}
-
 	httpRequest.open("POST", "../Front-end/create_question.php")
 	httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
 	httpRequest.send(body)
@@ -180,7 +140,42 @@ byId('submit').onclick = function(e) {
 	httpRequest.onreadystatechange = function() {
 		if (httpRequest.readyState === XMLHttpRequest.DONE) {
 			if (httpRequest.status >= 200 && httpRequest.status < 300) {
-				// location.reload()
+				var question_id = JSON.parse(httpRequest.responseText)
+				createUnitTest(question_id)
+			} else {
+				var data = JSON.parse(httpRequest.responseText)
+				byId('error').innerHTML = data.error
+			}
+		}
+	}
+}
+
+function createUnitTest(question_id) {
+	var httpRequest = new XMLHttpRequest()
+	var unitTests = byId("unit-tests").children
+	for (var i = 0; i < unitTests.length; i++) {
+		if (unitTests[i] == undefined) { break }
+		var httpRequest = new XMLHttpRequest()
+		var id = unitTests[i].id.substring(8)
+		var output = byId("outputval" + id).value
+		var body = "question_id=" + question_id + "&output=" + encodeURIComponent(output)
+		var inputs = byId("inputs" + id).children
+		for (var j = 0; j < inputs.length; j++) {
+			var inputTexts = inputs[j].getElementsByClassName('unit-input-txt')
+			var inputSelectors = inputs[j].getElementsByClassName('input-type-selector')
+			var input = encodeURIComponent(inputTexts[0].value)
+			var type = inputSelectors[0].selectedIndex
+			body += "&input[]=" + input + "&input_type[]=" + type
+		}
+		httpRequest.open("POST", "../Front-end/create_unit_test.php")
+		httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+		httpRequest.send(body)
+	}
+
+	httpRequest.onreadystatechange = function() {
+		if (httpRequest.readyState === XMLHttpRequest.DONE) {
+			if (httpRequest.status >= 200 && httpRequest.status < 300) {
+				location.reload()
 			} else {
 				var data = JSON.parse(httpRequest.responseText)
 				byId('error').innerHTML = data.error
