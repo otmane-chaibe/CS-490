@@ -8,7 +8,7 @@ class UnitTest {
 		global $mysqli;
 		foreach ($inputs as $idx => $input) {
 			$type = (int) $types[$idx];
-			$sql = "INSERT INTO unit_test_inputs (question_id, input, value) VALUES ($question_id, '$type', '$input')";
+			$sql = "INSERT INTO unit_test_inputs (question_id, type, value) VALUES ($question_id, '$type', '$input')";
 			$mysqli->query($sql);
 		}
 		$sql = "INSERT INTO unit_tests (question_id, output) VALUES ($question_id, '$output')";
