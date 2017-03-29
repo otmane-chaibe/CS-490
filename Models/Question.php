@@ -57,7 +57,7 @@ class Question {
 		return $out;
 	}
 
-	public static function createQuestion($user_id, $name = "", $category = 0, $difficulty = 0, $type = 0, $args = [], $description = "") {
+	public static function createQuestion($user_id, $name = "", $category = 0, $difficulty = 0, $type = 0, $description = "", $args = []) {
 		global $mysqli;
 		$question_id = 0;
 		$sql = "
@@ -86,8 +86,8 @@ class Question {
 		$out = [];
 		while ($row = $result->fetch_array(MYSQLI_ASSOC)){
 			$out[(int) $row['id']] = [
-				'id'		=> (int) $row['id'];
-			        'category'      => (int) $row['category'],
+				'id' 			=> (int) $row['id'],
+			    'category'      => (int) $row['category'],
 				'function_name'	=> $row['function_name'],
 				'function_type' => $row['function_type'],
 				'difficulty'	=> $row['difficulty'],
