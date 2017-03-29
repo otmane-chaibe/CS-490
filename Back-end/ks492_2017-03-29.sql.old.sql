@@ -7,7 +7,7 @@
 #
 # Host: sql2.njit.edu (MySQL 5.5.29-log)
 # Database: ks492
-# Generation Time: 2017-03-29 23:12:25 +0000
+# Generation Time: 2017-03-29 21:30:19 +0000
 # ************************************************************
 
 
@@ -23,8 +23,6 @@
 # Dump of table args
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `args`;
-
 CREATE TABLE `args` (
   `id` tinyint(4) unsigned NOT NULL AUTO_INCREMENT,
   `question_id` tinyint(4) unsigned NOT NULL DEFAULT '0',
@@ -38,8 +36,6 @@ CREATE TABLE `args` (
 # Dump of table questions
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `questions`;
-
 CREATE TABLE `questions` (
   `id` tinyint(4) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` tinyint(4) unsigned NOT NULL DEFAULT '0',
@@ -47,7 +43,7 @@ CREATE TABLE `questions` (
   `function_name` varchar(25) NOT NULL DEFAULT '',
   `function_type` enum('0','1','2','3') NOT NULL DEFAULT '0' COMMENT 'The datatype of the function.',
   `difficulty` enum('0','1','2') NOT NULL DEFAULT '0' COMMENT '(0) Easy (1) Medium (2) Difficult',
-  `description` text NOT NULL COMMENT 'Additional description of the question.',
+  `description` varchar(128) NOT NULL DEFAULT '' COMMENT 'Additional description of the question.',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -55,8 +51,6 @@ CREATE TABLE `questions` (
 
 # Dump of table released_tests
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `released_tests`;
 
 CREATE TABLE `released_tests` (
   `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
@@ -69,8 +63,6 @@ CREATE TABLE `released_tests` (
 
 # Dump of table student_tests
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `student_tests`;
 
 CREATE TABLE `student_tests` (
   `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
@@ -86,8 +78,6 @@ CREATE TABLE `student_tests` (
 # Dump of table test_questions
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `test_questions`;
-
 CREATE TABLE `test_questions` (
   `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
   `test_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
@@ -100,8 +90,6 @@ CREATE TABLE `test_questions` (
 
 # Dump of table test_results
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `test_results`;
 
 CREATE TABLE `test_results` (
   `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
@@ -119,8 +107,6 @@ CREATE TABLE `test_results` (
 # Dump of table tests
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `tests`;
-
 CREATE TABLE `tests` (
   `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
@@ -129,12 +115,22 @@ CREATE TABLE `tests` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+LOCK TABLES `tests` WRITE;
+/*!40000 ALTER TABLE `tests` DISABLE KEYS */;
+
+INSERT INTO `tests` (`id`, `user_id`, `name`, `created`)
+VALUES
+	(1,2,'Sample Exam',1489773450),
+	(2,2,'Midterm Exam',1489773548),
+	(3,2,'123',1489792102),
+	(4,2,'New',1489942155);
+
+/*!40000 ALTER TABLE `tests` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table unit_test_inputs
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `unit_test_inputs`;
 
 CREATE TABLE `unit_test_inputs` (
   `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
@@ -149,8 +145,6 @@ CREATE TABLE `unit_test_inputs` (
 # Dump of table unit_tests
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `unit_tests`;
-
 CREATE TABLE `unit_tests` (
   `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
   `question_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
@@ -163,8 +157,6 @@ CREATE TABLE `unit_tests` (
 # Dump of table users
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `users`;
-
 CREATE TABLE `users` (
   `id` tinyint(4) unsigned NOT NULL AUTO_INCREMENT,
   `ucid` varchar(6) NOT NULL DEFAULT '',
@@ -174,6 +166,16 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+
+INSERT INTO `users` (`id`, `ucid`, `password`, `name`, `role`)
+VALUES
+	(1,'mma93','*23AE809DDACAF96AF0FD78ED04B6A265E05AA257','Maurice A.',0),
+	(2,'prof','*23AE809DDACAF96AF0FD78ED04B6A265E05AA257','John Smith',1);
+
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 
