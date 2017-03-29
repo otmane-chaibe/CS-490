@@ -107,9 +107,12 @@ class Test {
 		return $out;
 	}
 
-	public static function insertQuestionScore($user_id, $test_id, $question_id, $score, $remark = "") {
+	public static function insertQuestionScore($user_id, $test_id,
+	$question_id, $score, $solution, $remark = "") {
 		global $mysqli;
-		$sql = "INSERT INTO test_results (user_id, test_id, question_id, remark, score) VALUES ($user_id, $test_id, $question_id, '$remark', $score)";
+		$sql = "INSERT INTO test_results (user_id, test_id,
+		question_id, solution, remark, score) VALUES ($user_id,
+		$test_id, $question_id, '$solution', '$remark', $score)";
 		$mysqli->query($sql);
 	}
 

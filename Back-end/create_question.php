@@ -1,6 +1,6 @@
 <?php
 
-# Maurice Achtenhagen
+# Khurshid Sohail // Maurice Achtenhagen 
 
 require_once('../mysql.php');
 require_once('../functions.php');
