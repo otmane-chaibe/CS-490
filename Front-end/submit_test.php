@@ -33,13 +33,13 @@ foreach ($_POST['qid'] as $q_id) {
 }
 
 foreach ($question_ids as $q_id) {
-	$unit_test = http(MIDDLE_END, "", [
+	$unit_test = http(MIDDLE_END, "get_unit_tests_for_question", [
 		"question_id" => $q_id
 	]);
 	if ($unit_test === false) {
 		error("cURL request failed.");
 	}
-	$unit_tests[] = $unit_test; #UnitTest::getUnitTestsForQuestion($q_id);
+	$unit_tests[] = $unit_test;
 }
 
 foreach ($question_ids as $q_id) {
@@ -49,7 +49,7 @@ foreach ($question_ids as $q_id) {
 	if ($question === false) {
 		error("cURL request failed.");
 	}
-	$q_solutions[] = $question; #Question::getQuestion($q_id);
+	$q_solutions[] = $question;
 }
 
 foreach($solutions as $idx => $input) {
