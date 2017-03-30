@@ -14,4 +14,4 @@ if(!isset($_POST['q_id']))
 
 $q_id=$_POST['q_id'];
 
-echo json_encode(Question::getQuestions($q_id));
+echo json_encode(Question::getQuestion($q_id));
