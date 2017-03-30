@@ -25,7 +25,7 @@ function ajaxThenReload(url, body) {
 
 function handleDelete(id) {
 	var body = "test_id=" + test_id + "&question_id=" + id
-	ajaxThenReload("../Middle-end/remove_question_from_test.php", body)
+	ajaxThenReload("../Front-end/remove_question_from_test.php", body)
 }
 
 questions.forEach(function(id) {
@@ -34,5 +34,5 @@ questions.forEach(function(id) {
 
 byId('submit').onclick = function(e) {
 	var body = "test_id=" + test_id + "&question_id=" + byId('question').value
-	ajaxThenReload("../Middle-end/add_question_to_test.php", body)
+	ajaxThenReload("../Front-end/add_question_to_test.php", body)
 }
