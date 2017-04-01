@@ -12,6 +12,10 @@ $tests = http(MIDDLE_END, "get_tests_for_user", [
 	"user_id" => $_SESSION['user_id']
 ]);
 
+if ($tests === false) {
+	error("cURL request failed");
+}
+
 ?>
 <form id="tests-wrapper">
 	<h1>Create New Test</h1>

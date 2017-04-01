@@ -5,8 +5,9 @@
 require_once('../functions.php');
 require_once('FunctionCheck.php');
 
-assertPost();
 session_start();
+
+assertPost();
 
 if (!isset($_POST['qid'])) {
 	error("Missing Parameter: qid.");
