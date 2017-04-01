@@ -7,7 +7,7 @@
 #
 # Host: sql2.njit.edu (MySQL 5.5.29-log)
 # Database: mma93
-# Generation Time: 2017-04-01 20:55:00 +0000
+# Generation Time: 2017-04-01 21:50:45 +0000
 # ************************************************************
 
 
@@ -60,7 +60,8 @@ DROP TABLE IF EXISTS `student_solutions`;
 
 CREATE TABLE `student_solutions` (
   `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Row ID',
-  `q_id` tinyint(3) unsigned NOT NULL COMMENT 'Question ID',
+  `user_id` int(11) DEFAULT NULL COMMENT 'User ID (student)',
+  `question_id` tinyint(3) unsigned NOT NULL COMMENT 'Question ID',
   `solution` text NOT NULL COMMENT 'Question solution (student)',
   `has_correct_function_modifier` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT 'Grading rubric - 1 (10 pts)',
   `has_correct_function_type` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT 'Grading rubric - 2 (10 pts)',
@@ -85,8 +86,8 @@ CREATE TABLE `student_tests` (
   `user_id` tinyint(3) unsigned NOT NULL COMMENT 'User ID (student)',
   `test_id` tinyint(3) unsigned NOT NULL COMMENT 'Test ID',
   `score` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT 'Test Score (out of 100)',
-  `completed` tinyint(1) NOT NULL DEFAULT '0' COMMENT '(0) Open (1) Completed / Read-only',
-  `released` tinyint(1) NOT NULL DEFAULT '0' COMMENT '(0) Unreleased (1) Released',
+  `completed` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '(0) Open (1) Completed / Read-only',
+  `released` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '(0) Unreleased (1) Released',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
