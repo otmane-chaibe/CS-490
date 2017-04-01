@@ -43,8 +43,8 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
 			<nav>
 				<ul>
 					<?php if ($_SESSION['role'] == 1) { ?>
-					<li><a href="question.php">Create Question</a></li>
 					<li><a href="instructor.php">Tests</a></li>
+					<li><a href="question.php">Create Question</a></li>
 					<?php } else { ?>
 					<li><a href="student.php">Take Tests</a></li>
 					<li><a href="results.php">Test Results</a></li>
