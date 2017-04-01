@@ -12,6 +12,10 @@ if (!isset($_POST['qid'])) {
 	error("Missing Parameter: qid.");
 }
 
+if (!isset($_POST['test_id'])) {
+	error("Missing Parameter: test_id");
+}
+
 if (!isset($_POST['solution'])) {
 	error("Missing Parameter: solution.");
 }
@@ -19,13 +23,16 @@ if (!isset($_POST['solution'])) {
 $final_score = 0;
 $scores = [];
 
-$solutions = []; # student solutions
-$q_solutions = []; # question solutions
+$student_solutions = [];
+$questions = [];
 $question_ids = [];
 $unit_tests = [];
 
-foreach ($_POST['solution'] as $input) {
-	$solutions[] = $input;
+$q_id = (int) $_POST['qid'];
+$test_id = (int) $_POST['test_id'];
+
+foreach ($_POST['solution'] as $solution) {
+	$student_solutions[] = $solution;
 }
 
 foreach ($_POST['qid'] as $q_id) {
@@ -49,27 +56,40 @@ foreach ($question_ids as $q_id) {
 	if ($question === false) {
 		error("cURL request failed.");
 	}
-	$q_solutions[] = $question;
+	$questions[] = $question;
 }
 
-foreach($solutions as $idx => $input) {
+foreach($student_solutions as $idx => $solution) {
+	$remark = "";
 	try {
-		$f_check = new FunctionCheck($input, $q_solutions[$idx], $unit_tests[$idx]);
+		$f_check = new FunctionCheck($solution, $questions[$idx], $unit_tests[$idx]);
 		$f_check->parse();
 		$f_check->compile();
 		$f_check->run_tests();
-		Test::insertQuestionScore($_SESSION['user_id'], $_POST['test_id'], $_POST['qid'], $f_check->score);
+		$score_id = http(MIDDLE_END, "insert_question_score", [
+			"user_id"  => $_SESSION['user_id'],
+			"q_id"     => $q_id,
+			"test_id"  => $test_id,
+			"solution" => $solution,
+			"score"    => $f_check->score,
+		]);
+		if ($score_id === false) {
+			error("cURL request failed.");
+		}
 		$scores[] = $f_check->score;
 	} catch (InvalidArgumentException $ex) {
-		echo $ex->getMessage();
+		$remark = $ex->getMessage();
 	} catch (BadModifierException $ex) {
-		echo $ex->getMessage();
+		$remark = $ex->getMessage();
 	} catch (BadFunctionNameException $ex) {
-		echo $ex->getMessage();
+		$remark = $ex->getMessage();
 	}
 }
 
-foreach($scores as $s) { $final_score += $s; }
+foreach($scores as $s) {
+	$final_score += $s;
+}
+
 Test::insertTestScore($_SESSION['user_id'], $_POST['test_id'], $final_score / count($question_ids));
 
 echo json_encode(true);
