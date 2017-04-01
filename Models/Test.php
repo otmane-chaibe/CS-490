@@ -23,7 +23,7 @@ class Test {
 	public static function getTestsForUser($user_id) {
 		global $mysqli;
 		$out = [];
-		$sql = "SELECT id, user_id, `name`, created FROM tests WHERE user_id = $user_id ORDER BY id DESC";
+		$sql = "SELECT id,user_id,`name`,created FROM tests WHERE user_id = $user_id ORDER BY id DESC";
 		$result = $mysqli->query($sql);
 		while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
 			$out[] = [
@@ -38,7 +38,7 @@ class Test {
 
 	public static function getTestById($test_id) {
 		global $mysqli;
-		$sql = "SELECT user_id, `name`, created FROM tests WHERE id = $test_id LIMIT 1";
+		$sql = "SELECT user_id,`name`,created FROM tests WHERE id = $test_id LIMIT 1";
 		$result = $mysqli->query($sql);
 		$row = $result->fetch_array(MYSQLI_ASSOC);
 		if (empty($row['user_id'])) { return []; }
@@ -60,18 +60,6 @@ class Test {
 		global $mysqli;
 		$sql = "DELETE FROM test_questions WHERE test_id = $test_id AND question_id = $question_id";
 		$mysqli->query($sql);
-	}
-
-	public static function releaseTest($test_id, $user_id) {
-		global $mysqli;
-		$sql = "SELECT COUNT(id) FROM released_tests WHERE test_id = $test_id AND user_id = $user_id";
-		$mysqli->query($sql);
-		$row = $result->fetch_array(MYSQLI_ASSOC);
-		$count = $row['COUNT(id)'];
-		if ($count == 0) {
-			$sql = "INSERT INTO released_tests (test_id, user_id) VALUES ($test_id, $user_id)";
-			$mysqli->query($sql);
-		}
 	}
 
 	public static function createTest($name, $user_id) {
@@ -107,18 +95,25 @@ class Test {
 		return $out;
 	}
 
-	public static function insertQuestionScore($user_id, $test_id,
-	$question_id, $score, $solution, $remark = "") {
+	public static function insertQuestionSolution($user_id, $question_id, $solution, $remark = "", $score) {
 		global $mysqli;
-		$sql = "INSERT INTO test_results (user_id, test_id,
-		question_id, solution, remark, score) VALUES ($user_id,
-		$test_id, $question_id, '$solution', '$remark', $score)";
+		$sql = "INSERT INTO student_solutions (user_id, question_id, solution, has_correct_function_modifier, has_correct_function_type,
+				has_correct_function_name, has_correct_function_params, does_compile, passes_unit_tests, remark, score)
+				VALUES ($user_id, $test_id, $question_id, '$solution', '$remark', $score)";
 		$mysqli->query($sql);
+		return $mysqli->insert_id;
 	}
 
 	public static function insertTestScore($user_id, $test_id, $score) {
 		global $mysqli;
-		$sql = "INSERT INTO student_tests (user_id, test_id, test_grade) VALUES ($user_id, $test_id, $score)";
+		$sql = "INSERT INTO student_tests (user_id, test_id, score, completed, released) VALUES ($user_id, $test_id, $score, 1, 0)";
+		$mysqli->query($sql);
+		return $mysqli->insert_id;
+	}
+
+	public static function releaseTest($test_id, $user_id) {
+		global $mysqli;
+		$sql = "UPDATE student_tests SET released = 1 WHERE completed = 1 AND test_id = $test_id AND user_id = $user_id";
 		$mysqli->query($sql);
 	}
 }

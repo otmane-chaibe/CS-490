@@ -4,6 +4,8 @@
 
 class Question {
 
+	/* Constant values are the same in MySQL */
+
 	const DIFFICULTY_EASY = 0;
 	const DIFFICULTY_MEDIUM = 1;
 	const DIFFICULTY_DIFFICULT = 2;
@@ -22,12 +24,9 @@ class Question {
 	public static function getQuestionsForTest($test_id) {
 		global $mysqli;
 		$out = [];
-		$sql = "SELECT
-		q.id, q.user_id, q.category, q.function_name, q.function_type,
-		q.difficulty, q.description FROM tests
-		JOIN test_questions AS tq ON tq.test_id = tests.id
-		JOIN questions AS q ON q.id = tq.question_id
-		WHERE tests.id = $test_id";
+		$sql = "SELECT q.id, q.user_id, q.category, q.function_name, q.function_type, q.difficulty, q.description, tq.weight FROM tests
+				JOIN test_questions AS tq ON tq.test_id = tests.id
+				JOIN questions AS q ON q.id = tq.question_id WHERE tests.id = $test_id";
 		$result = $mysqli->query($sql);
 		while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
 			$out[(int) $row['id']] = [
@@ -38,6 +37,7 @@ class Question {
 				'function_type' => $row['function_type'],
 				'description'   => $row['description'],
 				'difficulty'    => $row['difficulty'],
+				'weight'        => $row['weight'],
 				'arguments'     => [],
 			];
 		}
@@ -79,9 +79,8 @@ class Question {
 
 	public static function filter($difficulty, $ftype) {
 		global $mysqli;
-
-		$sql = "SELECT id, category, function_name, function_type, difficulty FROM questions
-		WHERE  difficulty = $difficulty and function_type = $ftype";
+		$sql = "SELECT id, category, function_name, function_type, difficulty, description FROM questions
+		WHERE  difficulty = $difficulty and function_type = '$ftype'";
 		$result = $mysqli->query($sql);
 		$out = [];
 		while ($row = $result->fetch_array(MYSQLI_ASSOC)){
@@ -89,8 +88,9 @@ class Question {
 				'id' 			=> (int) $row['id'],
 			    'category'      => (int) $row['category'],
 				'function_name'	=> $row['function_name'],
-				'function_type' => $row['function_type'],
-				'difficulty'	=> $row['difficulty'],
+				'function_type' => (int) $row['function_type'],
+				'difficulty'	=> (int) $row['difficulty'],
+				'description'   => $row['description']
 
 			];
 		}
@@ -99,8 +99,7 @@ class Question {
 
 	public static function listAllQuestions() {
 		global $mysqli;
-
-		$sql = "SELECT id, category, function_name, function_type, difficulty FROM questions";
+		$sql = "SELECT id, category, function_name, function_type, difficulty, description FROM questions";
 		$result = $mysqli->query($sql);
 		$out = [];
 		while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
@@ -108,8 +107,9 @@ class Question {
 				'id'            => (int) $row['id'],
 				'category'      => (int) $row['category'],
 				'function_name' => $row['function_name'],
-				'function_type' => $row['function_type'],
-				'difficulty'    => $row['difficulty'],
+				'function_type' => (int) $row['function_type'],
+				'difficulty'    => (int) $row['difficulty'],
+				'description'   => $row['description']
 			];
 		}
 		return $out;
@@ -143,8 +143,8 @@ class Question {
 		return $out;
 	}
 
-	public static function get_str_from_type($int) {
-		switch ($int) {
+	public static function get_str_from_type($type) {
+		switch ($type) {
 			case 0: return "int";
 			case 1: return "float";
 			case 2: return "double";
