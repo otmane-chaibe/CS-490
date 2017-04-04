@@ -6,14 +6,15 @@ class UnitTest {
 
 	public static function createUnitTest($question_id, $inputs, $types, $output) {
 		global $mysqli;
-		foreach ($inputs as $idx => $input) {
-			$type = (int) $types[$idx];
-			$sql = "INSERT INTO unit_test_inputs (question_id, type, input) VALUES ($question_id, '$type', '$input')";
-			$mysqli->query($sql);
-		}
 		$sql = "INSERT INTO unit_tests (question_id, output) VALUES ($question_id, '$output')";
 		$mysqli->query($sql);
-		return $mysqli->insert_id;
+		$unit_test_id = $mysqli->insert_id;
+		foreach ($inputs as $idx => $input) {
+			$type = (int) $types[$idx];
+			$sql = "INSERT INTO unit_test_inputs (unit_test_id, type, input) VALUES ($unit_test_id, '$type', '$input')";
+			$mysqli->query($sql);
+		}
+		return $unit_test_id;
 	}
 
 	public static function getUnitTestsForQuestion($question_id) {
@@ -24,7 +25,7 @@ class UnitTest {
 		while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
 			$unit_tests[] = [
 				'inputs' => self::getInputsForUnitTest($question_id),
-				'output' => $row['output']
+				'output' => $row['output'],
 			];
 		}
 		return $unit_tests;
