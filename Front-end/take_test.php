@@ -35,6 +35,7 @@ function get_args($args) {
 
 ?>
 <div id="test-questions-wrapper">
+	<div id="note"><strong>Please note:</strong>&nbsp;all answers must be provided in Java code.</div>
 	<div id="error"></div>
 	<ul id="test-questions">
 		<?php
@@ -43,8 +44,7 @@ function get_args($args) {
 				$idx++;
 				echo '
 					<li>
-						' . $idx .'. Write a function named <strong>' . $q['function_name'] . '</strong>
-						of type <strong>' . type_to_string($q['function_type']) . '</strong>
+						' . $idx .'. Write a function of type <strong>' . type_to_string($q['function_type']) . '</strong> named <strong>' . $q['function_name'] . '</strong>
 						accepting ' . count($q['arguments']) . ' argument(s), of type(s): <b>' . get_args($q['arguments']) . ' </b>' . $q['description'] . '
 						<textarea id="solution-' . $q['id'] . '"></textarea>
 					</li>
@@ -52,7 +52,7 @@ function get_args($args) {
 			}
 		?>
 	</ul>
-	<button id="submit-btn" class="button green" type="button">Submit</button>
+	<button id="submit-btn" class="button green" type="button">Submit Answers</button>
 </div>
 <script type="text/javascript">
 	var elems = [<?php foreach ($questions as $idx => $q) { echo "'solution-" . $idx . "'"; if ($idx !== count($questions) -1 ) { echo ","; } } ?>]
