@@ -2,9 +2,9 @@
 
 # Maurice Achtenhagen
 
-require_once('header.php');
+require_once('../functions.php');
 
-assert_post();
+assertPost();
 
 if (!isset($_POST['test_id'])) {
 	error("Missing Parameter: test_id.");
@@ -12,7 +12,7 @@ if (!isset($_POST['test_id'])) {
 
 $test_id = (int) $_POST['test_id'];
 
-$test = http(BACK_END, "take_test.php", [
+$test = http(BACK_END, "take_test", [
 	"test_id" => $test_id,
 ]);
 

@@ -4,12 +4,13 @@
 
 require_once('header.php');
 
-$test_id = (int) $_GET['id'];
-if (empty($test_id)) {
+if (!isset($_GET['id'])) {
 	redirect("student.php");
 }
 
-$test = http(MIDDLE_END, "take_test.php", [
+$test_id = (int) $_GET['id'];
+
+$test = http(MIDDLE_END, "take_test", [
 	"test_id" => $test_id,
 ]);
 
@@ -17,14 +18,20 @@ if ($test === false) {
 	error("cURL request failed");
 }
 
-$questions = Question::getQuestionsForTest($test_id);
+if (empty($test)) { die('No Such Test.'); }
+
+$questions = http(MIDDLE_END, "get_questions_for_test", [
+	"test_id" => $test_id,
+]);
+
+if ($questions === false) {
+	error("cURL request failed");
+}
 
 function get_args($args) {
 	$str_out = array_map(function($value) { return type_to_string($value); }, $args);
 	return implode(', ', $str_out);
 }
-
-if (empty($test)) { die('No Such Test.'); }
 
 ?>
 <div id="test-questions-wrapper">
