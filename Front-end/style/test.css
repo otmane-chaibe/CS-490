@@ -37,6 +37,13 @@
 	min-height: 200px
 }
 
+#test-questions li strong {
+	background: #f1f8ff;
+	border: 1px solid #c8e1ff;
+	border-radius: 4px;
+	padding: 0 10px
+}
+
 #submit-btn { margin: 40px auto }
 
 #note {
