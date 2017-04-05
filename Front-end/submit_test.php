@@ -7,6 +7,8 @@ require_once('FunctionCheck.php');
 
 session_start();
 
+header('Content-Type: application/json');
+
 assertPost();
 
 if (!isset($_POST['qid'])) {
@@ -60,7 +62,7 @@ foreach ($question_ids as $q_id) {
 	$questions[] = $question;
 }
 
-foreach($student_solutions as $idx => $solution) {
+foreach ($student_solutions as $idx => $solution) {
 	$remark = "";
 	try {
 		$f_check = new FunctionCheck($solution, $questions[$idx], $unit_tests[$idx]);
@@ -87,10 +89,18 @@ foreach($student_solutions as $idx => $solution) {
 	}
 }
 
-foreach($scores as $s) {
+foreach ($scores as $s) {
 	$final_score += $s;
 }
 
-Test::insertTestScore($_SESSION['user_id'], $_POST['test_id'], $final_score / count($question_ids));
+$score_id = http(MIDDLE_END, "insert_test_score", [
+	"user_id" => $_SESSION['user_id'],
+	"test_id" => $test_id,
+	"score"   => $final_score / count($question_ids),
+]);
 
-echo json_encode(true);
+if ($score_id === false) {
+	error("cURL request failed.");
+}
+
+echo json_encode($score_id);

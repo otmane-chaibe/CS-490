@@ -55,9 +55,8 @@ function get_args($args) {
 	<button id="submit-btn" class="button green" type="button">Submit Answers</button>
 </div>
 <script type="text/javascript">
-	var elems = [<?php foreach ($questions as $idx => $q) { echo "'solution-" . $idx . "'"; if ($idx !== count($questions) -1 ) { echo ","; } } ?>]
-	var ids = [<?php foreach ($questions as $idx => $q) { echo $q['id']; if ($idx !== count($questions) -1 ) { echo ","; } } ?>]
-	var testID = <?php echo $test_id ?>
+	let questions =  JSON.parse('<?=json_encode($questions)?>') // Object.keys(questions)
+	var testID = <?=$test_id?>
 </script>
 <?php
 	$js = "take_test";
