@@ -1,0 +1,133 @@
+Questions.
+Easy
+- Write a method in Java to check if a number is even or odd in Java. Return 1 for even and 0 for odd. 
+public static int evenOdd(int n){
+	if (n%2==0)
+		return 1;
+	else 
+		return 0;
+}
+- Write a function to print the 3rd word in a string.
+public static void thirdWord(String s){
+	String[] parts;
+	parts = s.split(" ");
+	System.out.println(parts[2]);
+}
+- Write a function to print the 3rd letter in a word. 
+public static void thirdLetter(String s){
+	System.out.println(s.charAt(2));
+}
+- Write a function avg to find the average of 3 integers x,y,z. Function should accept 3 ints x,y,z and return the average in double with two deci.
+
+public static double avg(int x,int y,int z){
+	double pro;
+	sum=(x+y+z);
+	sum=sum/3;
+	return pro;
+}
+- Write a funtion to find the product of three integers passed in as its parameters. Return the product.
+public static int prod(int x,int y,int z){
+	int pro;
+	pro=(x*y*z);
+	return pro;
+}
+Medium.
+- Write a function to sum integers from 1 through n. Use a loop. Print sum.
+public static int sum(int n){
+	int sum=0;
+	for(int i=1;i<=n;i++){
+		sum=sum+i;
+	}
+	return sum;
+}
+- Write a function to print first letter of the everyword in a string.
+public static void printChars(String s){
+	String[] parts;
+	parts=s.split(" ");
+	for(int i=0;i<parts.length;i++){
+		System.out.println(parts[i].charAt(0));
+	}
+	
+}
+- Write a function to print all the numbers in a string. 
+public static void printNum(String s){
+	for(char c:s.toCharArray()){
+		if(Character.isDigit(c)){
+			System.out.println(c);
+		}
+	}
+	
+}
+- Write Java program to check if a number is palindrome in Java.
+public static boolean pal(int n){
+	String s = Integer.toString(n);
+	int i1 = 0;
+	int i2 = s.length() - 1;
+    	while (i2 > i1) {
+        	if (s.charAt(i1) != s.charAt(i2)) {
+            		return false;
+        	}
+        i1++;
+        i2--;
+    	}
+    return true;
+}
+
+- Given an array of characters, write a swap funtion to swap two character in the array. Hint swap(char[]a,int i,int j).
+public void swap(char[] a, int i, int j) {
+    char c;
+    c = a[i]; 
+    a[i] = a[j]; 
+    a[j] = c;
+ }
+
+
+
+Hard
+-Write a function to sum integers from 1 through nth integer. Use recursion. Return sum. Hint: public int sum(int n)
+public int sum(int n) {
+     if(n==0) // base case
+        return 0;
+     else // recursive case
+        return sum(n-1) + n; 
+ }
+
+- Write a function to Remove consecutive duplicates from a string recursively. Hint: public String removeDuplicates(String word)
+public String removeDuplicates(String word) {
+     if(word == null || word.length() <= 1)
+        return word;
+     else if( word.charAt(0) == word.charAt(1) )
+        return removeDuplicates(word.substring(1, word.length()));
+     else
+        return word.charAt(0) + 
+            removeDuplicates(word.substring(1, word.length()));
+   }
+
+- Write a function to Merge two strings that are ordered alphabetically. The result should also be alphabetical. Hint: public String merge(String first, String second)
+public String merge(String first, String second) {
+     if(first ==null || first.equals(""))
+          return second==null? first:second;
+     else if (second == null || second.equals(""))
+          return first;
+     else if(first.charAt(0) < second.charAt(0))
+          return first.charAt(0) + merge( first.substring(1, first.length()), second);
+     else
+          return second.charAt(0) + merge(first, second.substring(1, second.length()));
+}
+
+- Write a funtion that uses selection sort to sort the array of integers. Return the array. Hint: public static int[] selectionSort(int[] arr)
+public static int[] selectionSort(int[] arr){
+         
+        for (int i = 0; i < arr.length - 1; i++)
+        {
+            int index = i;
+            for (int j = i + 1; j < arr.length; j++)
+                if (arr[j] < arr[index])
+                    index = j;
+      
+            int smallerNumber = arr[index]; 
+            arr[index] = arr[i];
+            arr[i] = smallerNumber;
+        }
+        return arr;
+    }
