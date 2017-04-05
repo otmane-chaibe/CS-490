@@ -46,4 +46,7 @@ if (isset($_SESSION['user_id'])) {
 				</form>
 				<button id="submit" type="button">Submit</button>
 			</div>
-<?php require_once('footer.php') ?>
+<?php
+	$js = "main";
+	require_once('footer.php');
+?>
