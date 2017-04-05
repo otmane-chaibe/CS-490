@@ -31,7 +31,6 @@ $questions = [];
 $question_ids = [];
 $unit_tests = [];
 
-$q_id = (int) $_POST['qid'];
 $test_id = (int) $_POST['test_id'];
 
 foreach ($_POST['solution'] as $solution) {
@@ -63,7 +62,6 @@ foreach ($question_ids as $q_id) {
 }
 
 foreach ($student_solutions as $idx => $solution) {
-	$remark = "";
 	try {
 		$f_check = new FunctionCheck($solution, $questions[$idx], $unit_tests[$idx]);
 		$f_check->parse();
@@ -71,7 +69,7 @@ foreach ($student_solutions as $idx => $solution) {
 		$f_check->run_tests();
 		$score_id = http(MIDDLE_END, "insert_question_score", [
 			"user_id"  => $_SESSION['user_id'],
-			"q_id"     => $q_id,
+			"q_id"     => $question_ids[$idx],
 			"test_id"  => $test_id,
 			"solution" => $solution,
 			"score"    => $f_check->score,
@@ -81,11 +79,11 @@ foreach ($student_solutions as $idx => $solution) {
 		}
 		$scores[] = $f_check->score;
 	} catch (InvalidArgumentException $ex) {
-		$remark = $ex->getMessage();
+		# $remark = $ex->getMessage();
 	} catch (BadModifierException $ex) {
-		$remark = $ex->getMessage();
+		# $remark = $ex->getMessage();
 	} catch (BadFunctionNameException $ex) {
-		$remark = $ex->getMessage();
+		# $remark = $ex->getMessage();
 	}
 }
 

@@ -55,7 +55,8 @@ function get_args($args) {
 	<button id="submit-btn" class="button green" type="button">Submit Answers</button>
 </div>
 <script type="text/javascript">
-	let questions =  JSON.parse('<?=json_encode($questions)?>') // Object.keys(questions)
+	let questions =  JSON.parse('<?=json_encode($questions)?>')
+	let identifiers = Object.keys(questions)
 	var testID = <?=$test_id?>
 </script>
 <?php
