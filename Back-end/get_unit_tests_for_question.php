@@ -9,9 +9,9 @@ assertPost();
 
 if(!isset($_POST['q_id']))
 {
-	error('Missing Parameter');
+	error("Missing Parameter");
 }
 
-$q_id=(int)$_POST['q_id'];
+$q_id=(int) $_POST['q_id'];
 
-echo json_encode(Question::getQuestion($q_id));
+echo json_encode(UnitTest::getUnitTestsForQuestion($q_id));

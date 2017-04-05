@@ -57,7 +57,6 @@ $all_questions = http(MIDDLE_END, "get_all_test_questions");
 			}
 			echo sprintf('<option value="%d">%s (%s)</option>', $id, $name, $diff);
 		}
-
 	?></select>
 	<button id="submit" type="submit" style="width: 100px" class="green" >Add</button>
 </div>

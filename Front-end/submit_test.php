@@ -3,7 +3,7 @@
 # Maurice Achtenhagen
 
 require_once('../functions.php');
-require_once('FunctionCheck.php');
+require_once('../Middle-end/FunctionCheck.php');
 
 session_start();
 
@@ -43,7 +43,7 @@ foreach ($_POST['qid'] as $q_id) {
 
 foreach ($question_ids as $q_id) {
 	$unit_test = http(MIDDLE_END, "get_unit_tests_for_question", [
-		"question_id" => $q_id
+		"q_id" => $q_id
 	]);
 	if ($unit_test === false) {
 		error("cURL request failed.");
@@ -79,11 +79,15 @@ foreach ($student_solutions as $idx => $solution) {
 		}
 		$scores[] = $f_check->score;
 	} catch (InvalidArgumentException $ex) {
-		# $remark = $ex->getMessage();
+		die(json_encode($ex->getMessage()));
 	} catch (BadModifierException $ex) {
-		# $remark = $ex->getMessage();
+		die(json_encode($ex->getMessage()));
 	} catch (BadFunctionNameException $ex) {
-		# $remark = $ex->getMessage();
+		die(json_encode($ex->getMessage()));
+	} catch (FileWriteException $ex) {
+		die(json_encode($ex->getMessage()));
+	} catch (Exception $ex) {
+		die(json_encode($ex->getMessage()));
 	}
 }
 

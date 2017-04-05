@@ -12,6 +12,9 @@
 	-----------------------------------------------
 */
 
+error_reporting(E_ALL);
+ini_set('display_errors', 'On');
+
 # Base URL used in every cURL request
 define("BASE_URL", "https://web.njit.edu/~");
 

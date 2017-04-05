@@ -20,11 +20,12 @@ class UnitTest {
 	public static function getUnitTestsForQuestion($question_id) {
 		global $mysqli;
 		$unit_tests = [];
-		$sql = "SELECT question_id,output FROM unit_tests WHERE question_id = $question_id";
+		$sql = "SELECT id,output FROM unit_tests WHERE question_id = $question_id";
 		$result = $mysqli->query($sql);
 		while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+			$unit_test_id = (int) $row['id'];
 			$unit_tests[] = [
-				'inputs' => self::getInputsForUnitTest($question_id),
+				'inputs' => self::getInputsForUnitTest($unit_test_id),
 				'output' => $row['output'],
 			];
 		}
@@ -32,13 +33,16 @@ class UnitTest {
 	}
 
 	# Todo: return arg type as well
-	private static function getInputsForUnitTest($question_id) {
+	private static function getInputsForUnitTest($unit_test_id) {
 		global $mysqli;
-		$sql = "SELECT type,input FROM unit_test_inputs WHERE question_id = $question_id";
+		$sql = "SELECT type,input FROM unit_test_inputs WHERE unit_test_id = $unit_test_id";
 		$result = $mysqli->query($sql);
 		$out = [];
 		while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-			$out[] = $row['input'];
+			$out[] = [
+				'type'  => (int) $row['type'],
+				'value' => $row['input'],
+			];
 		}
 		return $out;
 	}

@@ -46,7 +46,7 @@ function get_args($args) {
 					<li>
 						' . $idx .'. Write a function of type <strong>' . type_to_string($q['function_type']) . '</strong> named <strong>' . $q['function_name'] . '</strong>
 						accepting ' . count($q['arguments']) . ' argument(s), of type(s): <b>' . get_args($q['arguments']) . ' </b>' . $q['description'] . '
-						<textarea id="solution-' . $q['id'] . '"></textarea>
+						<textarea id="solution-' . $q['id'] . '">public int sum (int a, int b) { return a + b; }</textarea>
 					</li>
 				';
 			}

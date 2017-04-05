@@ -4,10 +4,10 @@
 
 class FunctionCheck {
 
-	private $source_class = "MainDriver.class";
-	private $source_file  = "MainDriver.java";
+	private $source_class = "/tmp/MainDriver.class";
+	private $source_file  = "/tmp/MainDriver.java";
 	private $source_name  = "MainDriver";
-	private $function, $function_name, $function_body;
+	private $student_solution, $function_name, $function_body;
 	private $modifiers, $function_params, $unit_tests;
 	private $return_type;
 	private $solution;
@@ -26,25 +26,26 @@ class FunctionCheck {
 		Total                           100 pts
 	*/
 
-	function __construct($function, $solution, $unit_tests) {
-		$this->function = trim($function);
-		$this->solution = $solution;
+	function __construct($student_solution, $question_solution, $unit_tests) {
+		$this->student_solution = trim($student_solution);
+		$this->solution = $question_solution;
 		$this->unit_tests = $unit_tests;
 	}
 
 	# (1) Parse function
 	# Note: function may not be of type void
+	# Code may throw here because if it fails, it will never compile
 	public function parse() {
-		if (empty($this->function)) {
+		if (empty($this->student_solution)) {
 			throw new InvalidArgumentException("This is not a valid Java method signature.");
 		}
 
-		$brace_pos = strpos($this->function, "{");
+		$brace_pos = strpos($this->student_solution, "{");
 		if (!$brace_pos) {
 			throw new InvalidArgumentException("This is not a valid Java method signature.");
 		}
 
-		$signature = substr($this->function, 0, $brace_pos);
+		$signature = substr($this->student_solution, 0, $brace_pos);
 		preg_match('/(public|private)(?: )*(static)?(?: )+(void|int|float|double|string|boolean)(?: )*([a-z](?:\w|\d)*) ?\((.*?)\)/i', $signature, $matches);
 
 		if (empty($matches)) {
@@ -65,9 +66,9 @@ class FunctionCheck {
 		$this->function_params = self::parse_params($matches[count($matches)-1]);
 
 		# Extract function body
-		$first_brace = strpos($this->function, "{") + 1;
-		$last_brace = strrpos($this->function, "}");
-		$this->function_body = trim(substr($this->function, $first_brace, $last_brace - $first_brace));
+		$first_brace = strpos($this->student_solution, "{") + 1;
+		$last_brace = strrpos($this->student_solution, "}");
+		$this->function_body = trim(substr($this->student_solution, $first_brace, $last_brace - $first_brace));
 	}
 
 	# (2) Compile Java code
@@ -85,7 +86,7 @@ class FunctionCheck {
 			if ($index !== count($tests)-1) { $unit_test_str .= "\n\t\t"; }
 		}
 		$code  = "class MainDriver {\n\tpublic static void main(String[] args) {\n\t\t";
-		$code .= "MainDriver main = new MainDriver();" . $unit_test_str . "\n\t}\n\n\t" . $this->function . "\n}";
+		$code .= "MainDriver main = new MainDriver();" . $unit_test_str . "\n\t}\n\n\t" . $this->student_solution . "\n}";
 		$code = trim($code);
 		if (!file_put_contents($this->source_file, $code)) {
 			throw new FileWriteException("PHP failed to write the file.");
@@ -131,8 +132,12 @@ class FunctionCheck {
 	# Generate the unit test(s) to be injected
 	private function generateUnitTests() {
 		$tests = [];
+		$inputs = [];
 		foreach ($this->unit_tests as $test) {
-			$params = implode(",", $test["inputs"]);
+			foreach ($test["inputs"] as $input) {
+				$inputs[] = ($input["type"] === 3 ? "\"" . $input["value"] . "\"" : $input["value"]);
+			}
+			$params = implode(",", $inputs);
 			$tests[] = "System.out.println(main." . $this->function_name . "(" . $params . "));";
 		}
 		return $tests;
@@ -199,6 +204,6 @@ class FunctionCheck {
 	}
 
 	public function __toString() {
-		return $this->function;
+		return $this->student_solution;
 	}
 }

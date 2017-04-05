@@ -22,14 +22,14 @@ byId('submit-btn').onclick = function(e) {
 	}
 	if (body == "") { return }
 	body += "&test_id=" + testID
-	console.log(body)
 	httpRequest.open("POST", "../Front-end/submit_test.php")
 	httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
-	// httpRequest.send(body);
+	httpRequest.send(body);
 	httpRequest.onreadystatechange = function() {
 		if (httpRequest.readyState === XMLHttpRequest.DONE) {
 			if (httpRequest.status >= 200 && httpRequest.status < 300) {
 				// location.reload()
+				console.log(JSON.parse(httpRequest.responseText))
 			} else {
 				var data = JSON.parse(httpRequest.responseText)
 				byId('error').innerHTML = data.error

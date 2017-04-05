@@ -7,16 +7,14 @@ require_once('../functions.php');
 
 assertPost();
 
-# Check for filters ...
-if (empty($_POST['difficulty'] && $_POST['ftype']))
+if (!isset($_POST['difficulty']) && !isset($_POST['ftype']))
 	{
 	 echo json_encode(Question::listAllQuestions());
 	}
 
 else
 	{
-	 $difficulty = $_POST['difficulty'];
-	 $ftype = $_POST['ftype'];
-
+	 $difficulty = (int)$_POST['difficulty'];
+	 $ftype = (int)$_POST['ftype'];
 	 echo json_encode(Question::filter($difficulty, $ftype));
 	}

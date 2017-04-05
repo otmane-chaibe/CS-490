@@ -26,13 +26,22 @@ if (!isset($_POST['score'])) {
 	error("Missing Parameters: score.");
 }
 
-$remark = "";
-if (isset($_POST['remark'])) {
-	$remark = $_POST['remark'];
-}
-
 $user_id = (int) $_POST['user_id'];
 $test_id = (int) $_POST['test_id'];
 $question_id = (int) $_POST['question_id'];
 $solution = $_POST['solution'];
 $score = $_POST['score'];
+
+$score_id = http(BACK_END, "insert_question_score", [
+	"user_id"  => $user_id,
+	"test_id"  => $test_id,
+	"q_id"     => $question_id,
+	"solution" => $solution,
+	"score"    => $score,
+]);
+
+if ($score_id === false) {
+	error("cURL request failed.");
+}
+
+echo $score_id;
