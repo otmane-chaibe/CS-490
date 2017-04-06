@@ -1,11 +1,7 @@
 <?php
-
 # Maurice Achtenhagen
-
 require_once('../functions.php');
-
 session_start();
-
 if (isset($_SESSION['user_id'])) {
 	if (isset($_SESSION['role'])) {
 		if ($_SESSION['role'] == 1) {
@@ -15,7 +11,6 @@ if (isset($_SESSION['user_id'])) {
 		}
 	}
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,9 +24,26 @@ if (isset($_SESSION['user_id'])) {
 		<link rel="stylesheet" href="style/student.css" />
 		<link rel="stylesheet" href="style/test.css" />
 		<title>Online Exam System</title>
+		<style>
+			fieldset{
+				float: right;
+				font-style: oblique;
+				font-size: 14px;
+				text-align: justify;
+				display: block;
+				border-radius: 4px;
+				color: #4d4d4d;
+			}
+		</style>
 	</head>
 	<body>
 		<header></header>
+		<fieldset>
+			<legend><strong>Work Division:</strong></legend>
+			<strong>Saad Anwar</strong> - Front-End <br><hr>
+			<strong>Maurice Achtenhagen</strong> - Middle-End <br><hr>
+			<strong>Khurshid Sohail</strong> - Back-End <br>
+		</fieldset>
 		<main>
 			<div id="login">
 				<h1>Authentication Service</h1>
