@@ -2,6 +2,24 @@
 
 # Maurice Achtenhagen
 
+/*
+	Grading Rubric
+	---------------------------------------
+	Correct function modifier(s)  -> 10 pts
+	Correct function type         -> 10 pts
+	Correct function name         -> 10 pts
+	Correct function parameters   -> 10 pts
+	Does the code compile?        -> 10 pts
+	Does the code pass unit tests -> 50 pts
+	---------------------------------------
+	Total                           100 pts
+*/
+
+define("INVALID_SIGNATURE", "This is not a valid method signature.");
+define("INVALID_MODIFIER", "This is not a valid function modifier.");
+define("INVALID_BODY", "This is not a valid function body.");
+define("INVALID_NAME", "This is not a valid function name.");
+
 class FunctionCheck {
 
 	private $source_class = "/tmp/MainDriver.class";
@@ -11,20 +29,13 @@ class FunctionCheck {
 	private $modifiers, $function_params, $unit_tests;
 	private $return_type;
 	private $solution;
+	public $has_correct_function_modifier = false;
+	public $has_correct_function_type = false;
+	public $has_correct_function_name = false;
+	public $has_correct_function_params = false;
+	public $does_compile = false;
+	public $passes_unit_tests = false;
 	public $score = 0;
-
-	/*
-		Grading Rubric
-		---------------------------------------
-		Correct function modifier(s)  -> 10 pts
-		Correct function type         -> 10 pts
-		Correct function name         -> 10 pts
-		Correct function parameters   -> 10 pts
-		Does the code compile?        -> 10 pts
-		Does the code pass unit tests -> 50 pts
-		---------------------------------------
-		Total                           100 pts
-	*/
 
 	function __construct($student_solution, $question_solution, $unit_tests) {
 		$this->student_solution = trim($student_solution);
@@ -33,33 +44,38 @@ class FunctionCheck {
 	}
 
 	# (1) Parse function
-	# Note: function may not be of type void
-	# Code may throw here because if it fails, it will never compile
+	# Note: function must always return a value (may not be of type void).
 	public function parse() {
 		if (empty($this->student_solution)) {
-			throw new InvalidArgumentException("This is not a valid Java method signature.");
+			return INVALID_SIGNATURE;
 		}
 
 		$brace_pos = strpos($this->student_solution, "{");
 		if (!$brace_pos) {
-			throw new InvalidArgumentException("This is not a valid Java method signature.");
+			return INVALID_SIGNATURE;
 		}
 
+		# Match method signature
 		$signature = substr($this->student_solution, 0, $brace_pos);
 		preg_match('/(public|private)(?: )*(static)?(?: )+(void|int|float|double|string|boolean)(?: )*([a-z](?:\w|\d)*) ?\((.*?)\)/i', $signature, $matches);
-
 		if (empty($matches)) {
-			throw new InvalidArgumentException("This is not a valid Java method signature.");
+			return INVALID_SIGNATURE;
 		}
 
 		# Extract function modifiers
 		$this->modifiers[] = $matches[1];
-		if (!empty($matches[2])) { $this->modifiers[] = $matches[2]; }
+		if (empty($matches[2])) {
+			return INVALID_MODIFIER;
+		}
+		$this->modifiers[] = $matches[2];
 
 		# Extract function type
 		$this->return_type = $matches[3];
 
 		# Extract function name
+		if (self::is_valid_name($matches[count($matches)-2]) === false) {
+			return INVALID_NAME;
+		}
 		$this->function_name = $matches[count($matches)-2];
 
 		# Extract function parameters
@@ -68,7 +84,15 @@ class FunctionCheck {
 		# Extract function body
 		$first_brace = strpos($this->student_solution, "{") + 1;
 		$last_brace = strrpos($this->student_solution, "}");
-		$this->function_body = trim(substr($this->student_solution, $first_brace, $last_brace - $first_brace));
+		if ($first_brace === false || $last_brace === false) {
+			return INVALID_BODY;
+		}
+		$body = trim(substr($this->student_solution, $first_brace, $last_brace - $first_brace));
+		if ($body === false) {
+			return INVALID_BODY;
+		}
+		$this->function_body = $body;
+		return true;
 	}
 
 	# (2) Compile Java code
@@ -108,25 +132,62 @@ class FunctionCheck {
 	private function verify_tests($results) {
 		$test_pass = true;
 		foreach ($this->unit_tests as $test) {
-			if (in_array($test["output"], $results) === false) { $test_pass = false; }
+			if (in_array($test["output"], $results) === false) {
+				$test_pass = false;
+			}
 		}
-		if ($test_pass) { $this->score += 50; }
+		if ($test_pass) {
+			$this->passes_unit_tests = true;
+			$this->score += 50;
+		}
 		self::score();
 	}
 
 	# (5) Assign score to solution
 	public function score() {
-		if (strcasecmp($this->solution["modifiers"][0], $this->modifiers[0]) == 0) { $this->score += 10; }
+		if (strcasecmp($this->solution["modifiers"][0], $this->modifiers[0]) == 0) {
+			$this->has_correct_function_modifier = true;
+			$this->score += 10;
+		}
+
 		$param_names = $s_param_names = [];
 		$param_types = $s_param_types = [];
-		foreach($this->function_params as $param) { $param_names[] = strtolower($param["name"]); }
-		foreach ($this->solution["params"] as $param) { $s_param_names[] = strtolower($param["name"]); }
-		foreach($this->function_params as $param) { $param_types[] = strtolower($param["type"]); }
-		foreach ($this->solution["params"] as $param) { $s_param_types[] = strtolower($param["type"]); }
-		if ($param_names == $s_param_names && $param_types == $s_param_types) { $this->score += 10; }
-		if (file_exists($this->source_class)) { $this->score += 10; }
-		if (strcasecmp($this->return_type, $this->solution["type"]) == 0)   { $this->score += 10; }
-		if (strcasecmp($this->function_name, $this->solution["name"]) == 0) { $this->score += 10; }
+
+		foreach($this->function_params as $param) {
+			$param_names[] = strtolower($param["name"]);
+		}
+
+		foreach ($this->solution["params"] as $param) {
+			$s_param_names[] = strtolower($param["name"]);
+		}
+
+		foreach($this->function_params as $param) {
+			$param_types[] = strtolower($param["type"]);
+		}
+
+		foreach ($this->solution["params"] as $param) {
+			$s_param_types[] = strtolower($param["type"]);
+		}
+
+		if ($param_names == $s_param_names && $param_types == $s_param_types) {
+			$this->has_correct_function_params = true;
+			$this->score += 10;
+		}
+
+		if (file_exists($this->source_class)) {
+			$this->does_compile = true;
+			$this->score += 10;
+		}
+
+		if (strcasecmp($this->return_type, $this->solution["type"]) == 0)   {
+			$this->has_correct_function_type = true;
+			$this->score += 10;
+		}
+
+		if (strcasecmp($this->function_name, $this->solution["name"]) == 0) {
+			$this->has_correct_function_name = true;
+			$this->score += 10;
+		}
 	}
 
 	# Generate the unit test(s) to be injected
@@ -163,23 +224,23 @@ class FunctionCheck {
 	private function is_modifier($mod) {
 		if (empty($mod)) { return false; }
 		switch ($mod) {
-			case "public": return true;
+			case "public":  return true;
 			case "private": return true;
-			case "static": return true;
-			case "void": return true;
-			default: return false;
+			case "static":  return true;
+			case "void":    return true;
+			default:        return false;
 		}
 	}
 
 	# Match the function return type.
 	private static function is_type($type) {
 		switch ($type) {
-			case "int": return true;
-			case "float": return true;
+			case "int":    return true;
+			case "float":  return true;
 			case "double": return true;
 			case "string": return true;
-			case "bool": return true;
-			default: return false;
+			case "bool":   return true;
+			default:       return false;
 		}
 	}
 
@@ -194,15 +255,16 @@ class FunctionCheck {
 	private static function get_type_from($str) {
 		if (empty($str)) { return 0; }
 		switch ($str) {
-			case "int": return 0;
-			case "float": return 1;
+			case "int":    return 0;
+			case "float":  return 1;
 			case "double": return 2;
 			case "string": return 3;
-			case "bool": return 4;
-			default: return 0;
+			case "bool":   return 4;
+			default:       return 0;
 		}
 	}
 
+	# String representation of class
 	public function __toString() {
 		return $this->student_solution;
 	}

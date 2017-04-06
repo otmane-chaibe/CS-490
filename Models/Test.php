@@ -95,11 +95,18 @@ class Test {
 		return $out;
 	}
 
-	public static function insertQuestionSolution($user_id, $question_id, $solution, $remark = "", $score) {
+	public static function insertQuestionSolution($user_id, $question_id, $solution, $results, $score) {
 		global $mysqli;
+		$has_correct_function_modifier = (int) $results->has_correct_function_modifier;
+		$has_correct_function_type = (int) $results->has_correct_function_type;
+		$has_correct_function_name = (int) $results->has_correct_function_name;
+		$has_correct_function_params = (int) $results->has_correct_function_params;
+		$does_compile = (int) $results->does_compile;
+		$passes_unit_tests = (int) $results->passes_unit_tests;
 		$sql = "INSERT INTO student_solutions (user_id, question_id, solution, has_correct_function_modifier, has_correct_function_type,
-				has_correct_function_name, has_correct_function_params, does_compile, passes_unit_tests, remark, score)
-				VALUES ($user_id, $test_id, $question_id, '$solution', '$remark', $score)";
+				has_correct_function_name, has_correct_function_params, does_compile, passes_unit_tests, score)
+				VALUES ($user_id, $question_id, '$solution', $has_correct_function_modifier, $has_correct_function_type, $has_correct_function_name,
+				$has_correct_function_params, $does_compile, $passes_unit_tests, $score)";
 		$mysqli->query($sql);
 		return $mysqli->insert_id;
 	}

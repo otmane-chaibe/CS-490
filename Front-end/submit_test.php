@@ -64,26 +64,30 @@ foreach ($question_ids as $q_id) {
 foreach ($student_solutions as $idx => $solution) {
 	try {
 		$f_check = new FunctionCheck($solution, $questions[$idx], $unit_tests[$idx]);
-		$f_check->parse();
-		$f_check->compile();
-		$f_check->run_tests();
-		$score_id = http(MIDDLE_END, "insert_question_score", [
+		if ($f_check->parse() === true) {
+			$f_check->compile();
+			$f_check->run_tests();
+		}
+		$results = [
+			"has_correct_function_modifier" => (int) $f_check->has_correct_function_modifier,
+			"has_correct_function_type"     => (int) $f_check->has_correct_function_type,
+			"has_correct_function_name"     => (int) $f_check->has_correct_function_name,
+			"has_correct_function_params"   => (int) $f_check->has_correct_function_params,
+			"does_compile"                  => (int) $f_check->does_compile,
+			"passes_unit_tests"             => (int) $f_check->passes_unit_tests,
+		];
+		$score_id = http(MIDDLE_END, "insert_question_solution", [
 			"user_id"  => $_SESSION['user_id'],
 			"q_id"     => $question_ids[$idx],
-			"test_id"  => $test_id,
 			"solution" => $solution,
-			"score"    => $f_check->score,
+			"results"  => json_encode($results),
+			"score"    => (int) $f_check->score,
 		]);
 		if ($score_id === false) {
 			error("cURL request failed.");
 		}
 		$scores[] = $f_check->score;
-	} catch (InvalidArgumentException $ex) {
-		die(json_encode($ex->getMessage()));
-	} catch (BadModifierException $ex) {
-		die(json_encode($ex->getMessage()));
-	} catch (BadFunctionNameException $ex) {
-		die(json_encode($ex->getMessage()));
+		unset($f_check);
 	} catch (FileWriteException $ex) {
 		die(json_encode($ex->getMessage()));
 	} catch (Exception $ex) {
