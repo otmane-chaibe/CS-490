@@ -111,6 +111,14 @@ class Test {
 		return $mysqli->insert_id;
 	}
 
+	public static function insertRemark($id, $remark) {
+		global $mysqli;
+		$sql = "UPDATE `ks492`.`student_solutions` SET `remark` = $remark WHERE
+		`student_solutions`.`id` = $id";
+		$mysqli->query($sql);
+		
+	}
+
 	public static function insertTestScore($user_id, $test_id, $score) {
 		global $mysqli;
 		$sql = "INSERT INTO student_tests (user_id, test_id, score) VALUES ($user_id, $test_id, $score)";
