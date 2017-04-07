@@ -6,19 +6,19 @@ require_once('../functions.php');
 
 assertPost();
 
-if (!isset($_POST['q_id'])) {
-	error("Missing Parameter: q_id.");
+if (!isset($_POST['id'])) {
+	error("Missing Parameter: id.");
 }
 
 if (!isset($_POST['remark'])) {
 	error("Missing Parameter: remark.");
 }
 
-$q_id = (int) $_POST['q_id'];
+$id = (int) $_POST['id'];
 $remark = $_POST['remark'];
 
 $resp = http(BACK_END, "insert_remark", [
-	'q_id'   => $q_id,
+	'id'     => $id,
 	'remark' => $remark,
 ]);
 
