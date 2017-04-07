@@ -28,7 +28,7 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
 		<link rel="stylesheet" href="style/style.css" />
 		<link rel="stylesheet" href="style/controls.css" />
 		<link rel="stylesheet" href="style/question.css" />
