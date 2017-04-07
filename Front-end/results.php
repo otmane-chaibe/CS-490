@@ -25,8 +25,8 @@ if ($results === false) {
 		foreach ($results as $result) {
 			echo '<tr>';
 			echo '<td>' . $result['test_name'] . '</td>';
-			echo '<td><meter min="0" max="100" value="' . $result['test_grade'] . '">' . $result['test_grade'] . '%</meter></td>';
-			echo '<td style="text-align: center">&' . ($result['completed'] ? 'check' : 'cross') . ';';
+			echo '<td><meter min="0" max="100" value="' . $result['score'] . '">' . $result['score'] . '%</meter></td>';
+			echo '<td style="text-align: center">&' . ($result['released'] ? 'check' : 'cross') . ';';
 			echo '</tr>';
 		}
 		?>
