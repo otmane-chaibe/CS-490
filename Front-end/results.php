@@ -6,7 +6,7 @@ require_once('../functions.php');
 require_once('header.php');
 
 $results = http(MIDDLE_END, "results", [
-	"user_id" => $_SESSION['user_id'],
+	"user_id" => $_SESSION['user_id']
 ]);
 
 if ($results === false) {

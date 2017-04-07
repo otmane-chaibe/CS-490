@@ -68,28 +68,28 @@ class Test {
 		$sql = "INSERT INTO tests (user_id, name, created) VALUES ($user_id, '$name', $time)";
 		$mysqli->query($sql);
 		return [
-			"test_id" => $mysqli->insert_id,
-			"name"    => $name,
+			'test_id' => $mysqli->insert_id,
+			'name'    => $name,
 		];
 	}
 
-	public static function getResultsForUser($user) {
+	public static function getResultsForUser($user_id) {
 		global $mysqli;
 		$sql = "
-			SELECT st.test_id, t.name, st.test_grade, st.completed
-			FROM student_tests AS st
-			JOIN released_tests AS rt ON rt.test_id = st.test_id
-			JOIN tests AS t ON t.id = rt.test_id
-			WHERE st.user_id = $user
+			SELECT users.name AS user_name,st.test_id, t.name AS test_name, st.score, st.released
+			FROM student_tests AS st JOIN tests AS t ON t.id = st.test_id
+			JOIN users ON st.user_id = users.id
+			WHERE st.user_id = $user_id
 		";
-		$mysqli->query($sql);
+		$result = $mysqli->query($sql);
 		$out = [];
 		while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
 			$out[] = [
+				'user_name'  => $row['user_name'],
 				'test_id'    => (int) $row['test_id'],
-				'test_name'  => $row['name'],
-				'test_grade' => (int) $row['test_grade'],
-				'completed'  => ($row['completed'] == 1),
+				'test_name'  => $row['test_name'],
+				'score'      => (int) $row['score'],
+				'released'   => ($row['released'] == 1),
 			];
 		}
 		return $out;
@@ -113,14 +113,14 @@ class Test {
 
 	public static function insertTestScore($user_id, $test_id, $score) {
 		global $mysqli;
-		$sql = "INSERT INTO student_tests (user_id, test_id, score, completed, released) VALUES ($user_id, $test_id, $score, 1, 0)";
+		$sql = "INSERT INTO student_tests (user_id, test_id, score) VALUES ($user_id, $test_id, $score)";
 		$mysqli->query($sql);
 		return $mysqli->insert_id;
 	}
 
 	public static function releaseTest($test_id, $user_id) {
 		global $mysqli;
-		$sql = "UPDATE student_tests SET released = 1 WHERE completed = 1 AND test_id = $test_id AND user_id = $user_id";
+		$sql = "UPDATE student_tests SET released = 1 WHERE test_id = $test_id AND user_id = $user_id";
 		$mysqli->query($sql);
 	}
 }
