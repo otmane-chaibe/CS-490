@@ -1,6 +1,6 @@
 <?php
 
-# Khurshid SOhail
+# Khurshid Sohail
 
 require_once('../mysql.php');
 require_once('../functions.php');
@@ -9,7 +9,7 @@ assertPost();
 
 if(!isset($_POST['id']) || !isset($_POST['remark']))
 {
-	error("Missin Parameters");
+	error("Missing Parameters");
 }
 
 $id=(int) $_POST['id'];
