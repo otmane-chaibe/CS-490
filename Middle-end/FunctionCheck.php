@@ -63,11 +63,13 @@ class FunctionCheck {
 		}
 
 		# Extract function modifiers
-		$this->modifiers[] = $matches[1];
-		if (empty($matches[2])) {
+		if (empty($matches[1])) {
 			return INVALID_MODIFIER;
 		}
-		$this->modifiers[] = $matches[2];
+		$this->modifiers[] = $matches[1];
+		if (empty($matches[2])) {
+			$this->modifiers[] = $matches[2];
+		}
 
 		# Extract function type
 		$this->return_type = $matches[3];
@@ -122,6 +124,7 @@ class FunctionCheck {
 
 	# (3) Run unit tests against code
 	public function run_tests() {
+		chdir("/tmp");
 		$cmd = "java " . $this->source_name;
 		exec($cmd, $test_results);
 		self::verify_tests($test_results);
@@ -196,7 +199,7 @@ class FunctionCheck {
 		$inputs = [];
 		foreach ($this->unit_tests as $test) {
 			foreach ($test["inputs"] as $input) {
-				$inputs[] = ($input["type"] === 3 ? "\"" . $input["value"] . "\"" : $input["value"]);
+				$inputs[] = ($input["type"] === 3 ? "\"" . $input["value"] . "\"" : (int) $input["value"]);
 			}
 			$params = implode(",", $inputs);
 			$tests[] = "System.out.println(main." . $this->function_name . "(" . $params . "));";
