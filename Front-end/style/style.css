@@ -176,7 +176,7 @@ nav    { background: #660101; color: white }
 nav a  { padding: 8px 10px; display: block }
 nav li { display: inline-block }
 
-fieldset {
+#fieldset {
 	float: right;
 	font-style: oblique;
 	font-size: 14px;
