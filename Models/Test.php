@@ -111,10 +111,10 @@ class Test {
 		return $mysqli->insert_id;
 	}
 
-	public static function insertRemark($q_id, $remark) {
+	public static function insertRemark($id, $remark) {
 		global $mysqli;
 		$sql = "UPDATE `ks492`.`student_solutions` SET `remark` = $remark WHERE
-		`student_solutions`.`q_id` = $q_id";
+		`student_solutions`.`id` = $id";
 		$mysqli->query($sql);
 		
 	}
