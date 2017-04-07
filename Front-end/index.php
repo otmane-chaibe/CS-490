@@ -23,12 +23,12 @@ if (isset($_SESSION['user_id'])) {
 	</head>
 	<body>
 		<header></header>
+		<br><br><br><br>
 		<fieldset id="fieldset">
-			<br><br><br>
 			<legend><strong>Work Division:</strong></legend>
-			<strong>Saad Anwar</strong> - Front-End <br><hr>
-			<strong>Maurice Achtenhagen</strong> - Middle-End <br><hr>
-			<strong>Khurshid Sohail</strong> - Back-End 
+			<strong>Saad Anwar</strong> - Front-End <hr/>
+			<strong>Maurice Achtenhagen</strong> - Middle-End <hr/>
+			<strong>Khurshid Sohail</strong> - Back-End
 		</fieldset>
 		<main>
 			<div id="login">
