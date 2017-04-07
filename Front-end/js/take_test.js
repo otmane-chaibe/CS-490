@@ -28,8 +28,7 @@ byId('submit-btn').onclick = function(e) {
 	httpRequest.onreadystatechange = function() {
 		if (httpRequest.readyState === XMLHttpRequest.DONE) {
 			if (httpRequest.status >= 200 && httpRequest.status < 300) {
-				// location.reload()
-				console.log(JSON.parse(httpRequest.responseText))
+				window.location.href = 'student.php'
 			} else {
 				var data = JSON.parse(httpRequest.responseText)
 				byId('error').innerHTML = data.error

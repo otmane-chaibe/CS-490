@@ -29,7 +29,9 @@ if ($questions === false) {
 }
 
 function get_args($args) {
-	$str_out = array_map(function($value) { return type_to_string($value); }, $args);
+	$str_out = array_map(function($value) {
+		return '<strong>' . type_to_string($value) . '</strong>';
+	}, $args);
 	return implode(', ', $str_out);
 }
 
@@ -45,7 +47,7 @@ function get_args($args) {
 				echo '
 					<li>
 						' . $idx .'. Write a function of type <strong>' . type_to_string($q['function_type']) . '</strong> named <strong>' . $q['function_name'] . '</strong>
-						accepting ' . count($q['arguments']) . ' argument(s), of type(s): <b>' . get_args($q['arguments']) . ' </b>' . $q['description'] . '
+						that accepts ' . count($q['arguments']) . ' arguments of type (' . get_args($q['arguments']) . '), ' . $q['description'] . '
 						<textarea id="solution-' . $q['id'] . '">public int sum (int a, int b) { return a + b; }</textarea>
 					</li>
 				';
