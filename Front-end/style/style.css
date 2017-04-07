@@ -172,8 +172,11 @@ main {
 	margin: 2px 25px 0 0;
 }
 
-nav { background: #660101; color: white }
-#homelegend{
+nav    { background: #660101; color: white }
+nav a  { padding: 8px 10px; display: block }
+nav li { display: inline-block }
+
+fieldset {
 	float: right;
 	font-style: oblique;
 	font-size: 14px;
@@ -182,6 +185,3 @@ nav { background: #660101; color: white }
 	border-radius: 4px;
 	color: #4d4d4d;
 }
-nav a { padding: 8px 10px; display: block }
-nav li { display: inline-block }
-

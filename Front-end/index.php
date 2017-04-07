@@ -19,16 +19,11 @@ if (isset($_SESSION['user_id'])) {
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet">
 		<link rel="stylesheet" href="style/style.css" />
 		<link rel="stylesheet" href="style/controls.css" />
-		<link rel="stylesheet" href="style/question.css" />
-		<link rel="stylesheet" href="style/instructor.css" />
-		<link rel="stylesheet" href="style/student.css" />
-		<link rel="stylesheet" href="style/test.css" />
 		<title>Online Exam System</title>
 	</head>
 	<body>
 		<header></header>
-		<fieldset id = "homelegend">
-			<br><br><br>
+		<fieldset>
 			<legend><strong>Work Division:</strong></legend>
 			<strong>Saad Anwar</strong> - Front-End <br><hr>
 			<strong>Maurice Achtenhagen</strong> - Middle-End <br><hr>
