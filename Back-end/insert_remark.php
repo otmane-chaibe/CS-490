@@ -7,12 +7,12 @@ require_once('../functions.php');
 
 assertPost();
 
-if(!isset($_POST['id']) || !isset($_POST['remark']))
+if(!isset($_POST['q_id']) || !isset($_POST['remark']))
 {
 	error("Missing Parameters");
 }
 
-$id=(int) $_POST['id'];
+$q_id=(int) $_POST['q_id'];
 $remark=$_POST['remark'];
 
-echo json_encode(Test::insertRemark($id, $remark));
+echo json_encode(Test::insertRemark($q_id, $remark));
