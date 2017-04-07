@@ -25,15 +25,6 @@ if ($tests === false) {
 		<button id="submit" type="button" class="green">Submit</button>
 	</div>
 </form>
-<script language="javascript" type="text/javascript">
-            function checkfunction(){
-                if(document.getElementById("$test['id']").checked){
-				$resp = http(MIDDLE_END, "release_test", [
-					'test_id' => $test_id
-					]);
-				}
-            }
-</script>
 <ul class="list" id="tests">
 	<?php
 		foreach($tests as $test) {
@@ -41,15 +32,10 @@ if ($tests === false) {
 				<li class="item">
 					<a href="test.php?id=' . $test['id'] . '">' . $test['name'] . '</a>
 				</li>
-				<li>
-				<label><input type="checkbox" id=' . $test['id'] . '></label> 
-				<button onclick="checkfunction()"> Release</button>
-				</li>
 			';
 		}
 	?>
 </ul>
-
 <?php
 	$js = "instructor";
 	require_once('footer.php');
