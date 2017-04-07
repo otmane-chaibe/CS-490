@@ -176,12 +176,11 @@ nav    { background: #660101; color: white }
 nav a  { padding: 8px 10px; display: block }
 nav li { display: inline-block }
 
-#fieldset {
+fieldset {
+	border: 1px solid #aaa;
 	float: right;
 	font-style: oblique;
 	font-size: 14px;
 	text-align: justify;
-	display: block;
 	border-radius: 4px;
-	color: #4d4d4d;
 }
