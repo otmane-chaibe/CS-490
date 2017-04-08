@@ -176,6 +176,9 @@ nav    { background: #660101; color: white }
 nav a  { padding: 8px 10px; display: block }
 nav li { display: inline-block }
 
+#fieldset{
+	margin-top:70px;	
+}
 fieldset {
 	border: 1px solid #aaa;
 	float: right;
@@ -184,3 +187,4 @@ fieldset {
 	text-align: justify;
 	border-radius: 4px;
 }
+
