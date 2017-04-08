@@ -1,7 +1,11 @@
 <?php
-# Maurice Achtenhagen
+
+# Maurice Achtenhagen // Saad Anwar
+
 require_once('../functions.php');
+
 session_start();
+
 if (isset($_SESSION['user_id'])) {
 	if (isset($_SESSION['role'])) {
 		if ($_SESSION['role'] == 1) {
@@ -11,6 +15,7 @@ if (isset($_SESSION['user_id'])) {
 		}
 	}
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,14 +28,13 @@ if (isset($_SESSION['user_id'])) {
 	</head>
 	<body>
 		<header></header>
-		<div id="fieldset">
-		<fieldset>
+		<fieldset id="fieldset">
+			<br><br><br>
 			<legend><strong>Work Division:</strong></legend>
-			<strong>Saad Anwar</strong> - Front-End <hr/>
-			<strong>Maurice Achtenhagen</strong> - Middle-End <hr/>
+			<strong>Saad Anwar</strong> - Front-End <br><hr>
+			<strong>Maurice Achtenhagen</strong> - Middle-End <br><hr>
 			<strong>Khurshid Sohail</strong> - Back-End
 		</fieldset>
-		</div>
 		<main>
 			<div id="login">
 				<h1>Authentication Service</h1>
