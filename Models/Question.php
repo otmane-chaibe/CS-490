@@ -4,8 +4,6 @@
 
 class Question {
 
-	/* Constant values are the same in MySQL */
-
 	const DIFFICULTY_EASY = 0;
 	const DIFFICULTY_MEDIUM = 1;
 	const DIFFICULTY_DIFFICULT = 2;
@@ -97,6 +95,41 @@ class Question {
 		return $out;
 	}
 
+	public static function search($keyword) {
+		global $mysqli;
+		$sql = "
+			SELECT id, category, function_name, function_type, difficulty, description
+			FROM questions WHERE function_name like \"%" . $keyword . "%\" OR description like \"%" . $keyword . "%\"
+		";
+		$result = $mysqli->query($sql);
+		$out = [];
+		while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+			$out[(int) $row['id']] = [
+				'id'            => (int) $row['id'],
+				'category'      => (int) $row['category'],
+				'function_name' => $row['function_name'],
+				'function_type' => type_to_string((int) $row['function_type']),
+				'difficulty'    => (int) $row['difficulty'],
+				'description'   => $row['description'],
+				'arguments'     => [],
+			];
+		}
+		if (!empty($out)) {
+			$sql = "
+				SELECT question_id, type, `name` FROM args
+				WHERE question_id IN (" . implode(',', array_keys($out)) . ")
+			";
+			$result = $mysqli->query($sql);
+			while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+				$out[(int) $row['question_id']]['arguments'][] = [
+					'type' => type_to_string((int) $row['type']),
+					'name' => $row['name'],
+				];
+			}
+		}
+		return $out;
+	}
+
 	public static function listAllQuestions() {
 		global $mysqli;
 		$sql = "SELECT id, category, function_name, function_type, difficulty, description FROM questions";
@@ -109,8 +142,22 @@ class Question {
 				'function_name' => $row['function_name'],
 				'function_type' => (int) $row['function_type'],
 				'difficulty'    => (int) $row['difficulty'],
-				'description'   => $row['description']
+				'description'   => $row['description'],
+				'arguments'     => [],
 			];
+		}
+		if (!empty($out)) {
+			$sql = "
+				SELECT question_id, type, `name` FROM args
+				WHERE question_id IN (" . implode(',', array_keys($out)) . ")
+			";
+			$result = $mysqli->query($sql);
+			while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+				$out[(int) $row['question_id']]['arguments'][] = [
+					'type' => (int) $row['type'],
+					'name' => $row['name'],
+				];
+			}
 		}
 		return $out;
 	}
@@ -151,6 +198,17 @@ class Question {
 			case 3: return "string";
 			case 4: return "bool";
 			default: return "int";
+		}
+	}
+
+	function type_to_string($type) {
+		switch ($type) {
+			case 0: return "Int";
+			case 1: return "Float";
+			case 2: return "Double";
+			case 3; return "String";
+			case 4: return "Boolean";
+			default: return "Int";
 		}
 	}
 }
