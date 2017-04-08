@@ -17,15 +17,25 @@ class UnitTest {
 		return $unit_test_id;
 	}
 
-	public static function createUnitTestResult($unit_test_id, $output, $expected) {
+	public static function insertUnitTestResult($unit_test_id, $output, $expected) {
 		global $mysqli;
 		$sql = "INSERT INTO unit_test_results (unit_test_id, output, expected) VALUES ($unit_test_id, '$output', '$expected')";
 		$mysqli->query($sql);
 		return $mysqli->insert_id;
 	}
 
-	public static function getUnitTestResults() {
-
+	public static function getUnitTestResults($unit_test_id) {
+		global $mysqli;
+		$unit_test_results = [];
+		$sql = "SELECT output,expected FROM unit_test_results WHERE unit_test_id = $unit_test_id";
+		$result = $mysqli->query($sql);
+		while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+			$unit_test_results[] = [
+				'output'   => $row['output'],
+				'expected' => $row['expected'],
+			];
+		}
+		return $unit_test_results;
 	}
 
 	public static function getUnitTestsForQuestion($question_id) {
