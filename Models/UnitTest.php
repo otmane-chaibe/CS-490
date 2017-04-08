@@ -17,6 +17,17 @@ class UnitTest {
 		return $unit_test_id;
 	}
 
+	public static function createUnitTestResult($unit_test_id, $output, $expected) {
+		global $mysqli;
+		$sql = "INSERT INTO unit_test_results (unit_test_id, output, expected) VALUES ($unit_test_id, '$output', '$expected')";
+		$mysqli->query($sql);
+		return $mysqli->insert_id;
+	}
+
+	public static function getUnitTestResults() {
+
+	}
+
 	public static function getUnitTestsForQuestion($question_id) {
 		global $mysqli;
 		$unit_tests = [];
@@ -32,7 +43,6 @@ class UnitTest {
 		return $unit_tests;
 	}
 
-	# Todo: return arg type as well
 	private static function getInputsForUnitTest($unit_test_id) {
 		global $mysqli;
 		$sql = "SELECT type,input FROM unit_test_inputs WHERE unit_test_id = $unit_test_id";
