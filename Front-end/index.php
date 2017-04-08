@@ -29,7 +29,6 @@ if (isset($_SESSION['user_id'])) {
 	<body>
 		<header></header>
 		<fieldset id="fieldset">
-			<br><br><br>
 			<legend><strong>Work Division:</strong></legend>
 			<strong>Saad Anwar</strong> - Front-End <br><hr>
 			<strong>Maurice Achtenhagen</strong> - Middle-End <br><hr>
