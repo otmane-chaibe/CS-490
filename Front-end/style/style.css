@@ -177,7 +177,9 @@ nav a  { padding: 8px 10px; display: block }
 nav li { display: inline-block }
 
 #fieldset{
-	margin-top:70px;	
+	position: absolute;
+	top:80px;
+	right:20px;
 }
 fieldset {
 	border: 1px solid #aaa;
