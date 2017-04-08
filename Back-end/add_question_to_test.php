@@ -15,9 +15,14 @@ if (!isset($_POST['question_id'])) {
 	error("Missing Parameter: question_id.");
 }
 
+$weight = 1.0;
+
+if(isset($_POST['weight'])) {
+	$weight = (double) $_POST['weight'];
+}
+
 $test_id = (int) $_POST['test_id'];
 $question_id = (int) $_POST['question_id'];
-$weight = (double) $_POST['weight'];
 
 Test::addQuestionToTest($test_id, $question_id, $weight);
 
