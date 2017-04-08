@@ -75,10 +75,12 @@ class Question {
 		return $question_id;
 	}
 
-	public static function filter($difficulty, $ftype) {
+	public static function filter($category, $difficulty) {
 		global $mysqli;
-		$sql = "SELECT id, category, function_name, function_type, difficulty, description FROM questions
-		WHERE  difficulty = $difficulty and function_type = '$ftype'";
+		$sql = "
+			SELECT id, category, function_name, function_type, difficulty, description
+			FROM questions WHERE category = '$category' AND difficulty = '$difficulty'
+		";
 		$result = $mysqli->query($sql);
 		$out = [];
 		while ($row = $result->fetch_array(MYSQLI_ASSOC)){
@@ -91,6 +93,19 @@ class Question {
 				'description'   => $row['description']
 
 			];
+		}
+		if (!empty($out)) {
+			$sql = "
+				SELECT question_id, type, `name` FROM args
+				WHERE question_id IN (" . implode(',', array_keys($out)) . ")
+			";
+			$result = $mysqli->query($sql);
+			while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+				$out[(int) $row['question_id']]['arguments'][] = [
+					'type' => type_to_string((int) $row['type']),
+					'name' => $row['name'],
+				];
+			}
 		}
 		return $out;
 	}

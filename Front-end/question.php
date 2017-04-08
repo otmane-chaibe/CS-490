@@ -28,14 +28,10 @@ function get_args($args) {
 
 function get_difficulty($diff) {
 	switch ($diff) {
-		case 0:
-			return "easy";
-		case 1:
-			return "medium";
-		case 2:
-			return "difficult";
-		default:
-			return "easy";
+		case 0: return "easy";
+		case 1: return "medium";
+		case 2: return "difficult";
+		default: return "easy";
 	}
 }
 
@@ -45,20 +41,22 @@ function get_difficulty($diff) {
 		<input id="filter-search" type="text" placeholder="Search Questions" />
 		<button id="filter-search-btn" type="button" class="button blue">Search</button>
 		<div class="selector">
-			<span>Type</span>
+			<span id="filter-type-label">Category</span>
 			<select id="filter-type">
-				<option value="0" selected>Conditional</option>
-				<option value="1">Control Flow</option>
-				<option value="2">Recursion</option>
-				<option value="3">Other</option>
+				<option value="0">All Categories</option>
+				<option value="1">Conditional</option>
+				<option value="2">Control Flow</option>
+				<option value="3">Recursion</option>
+				<option value="4">Other</option>
 			</select>
 		</div>
 		<div class="selector">
-			<span>Difficulty</span>
+			<span id="filter-difficulty-label">Difficulty</span>
 			<select id="filter-difficulty">
-				<option value="0" selected>Easy</option>
-				<option value="1">Medium</option>
-				<option value="2">Difficult</option>
+				<option value="0" selected>Any Difficulty</option>
+				<option value="1">Easy</option>
+				<option value="2">Medium</option>
+				<option value="3">Difficult</option>
 			</select>
 		</div>
 		<div class="clear"></div>

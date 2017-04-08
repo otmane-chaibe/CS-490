@@ -205,6 +205,31 @@ byId('filter-search-btn').onclick = function(e) {
 	}
 }
 
+byId('filter-type').onchange = function() {
+	var type = "Conditional"
+	switch (this.selectedIndex) {
+		case 0: type = "Question Type"; break
+		case 1: type = "Conditional"; break
+		case 2: type = "Control Flow"; break
+		case 3: type = "Recursion"; break
+		case 4: type = "Other"; break
+		default: type = "Question Type"; break
+	}
+	byId('filter-type-label').innerHTML = type
+}
+
+byId('filter-difficulty').onchange = function() {
+	var type = "Difficulty"
+	switch (this.selectedIndex) {
+		case 0: type = "Difficulty"; break
+		case 1: type = "Easy"; break
+		case 2: type = "Medium"; break
+		case 3: type = "Difficult"; break
+		default: type = "Difficulty"; break
+	}
+	byId('filter-difficulty-label').innerHTML = type
+}
+
 function performSearch(results) {
 	let list = byId('question-list')
 	while (list.firstChild) {
