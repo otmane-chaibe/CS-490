@@ -221,10 +221,14 @@ function performSearch(results) {
 }
 
 function generateQuestionDescription(question) {
+	var argumentStr = "arguments"
+	if (question.arguments.length == 1) {
+		argumentStr = "argument"
+	}
 	return '\
 		Write a function of type <strong>' + question.function_type + '</strong>\
 		 named <strong>' + question.function_name + '</strong>\
-		that accepts ' + question.arguments.length + ' arguments of type (' + getArgs(question.arguments) + '), ' + question.description
+		that accepts ' + question.arguments.length + ' ' + argumentStr + '  of type (' + getArgs(question.arguments) + '), ' + question.description
 }
 
 function getArgs(args) {

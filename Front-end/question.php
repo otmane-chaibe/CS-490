@@ -14,7 +14,7 @@ function generateQuestionDescription($q) {
 	$question = '
 		Write a function of type <strong>' . type_to_string($q['function_type']) . '</strong>
 		 named <strong>' . $q['function_name'] . '</strong>
-		that accepts ' . count($q['arguments']) . ' arguments of type (' . get_args($q['arguments']) . '), ' . $q['description'];
+		that accepts ' . count($q['arguments']) . ' ' . (count($q['arguments']) === 1 ? 'argument' : 'arguments') . ' of type (' . get_args($q['arguments']) . '), ' . $q['description'];
 	return $question;
 }
 
