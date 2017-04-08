@@ -108,8 +108,8 @@ class Question {
 				'id'            => (int) $row['id'],
 				'category'      => (int) $row['category'],
 				'function_name' => $row['function_name'],
-				'function_type' => type_to_string((int) $row['function_type']),
-				'difficulty'    => (int) $row['difficulty'],
+				'function_type' => self::type_to_string((int) $row['function_type']),
+				'difficulty'    => self::difficulty_to_string((int) $row['difficulty']),
 				'description'   => $row['description'],
 				'arguments'     => [],
 			];
@@ -183,7 +183,7 @@ class Question {
 		$result = $mysqli->query($sql);
 		while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
 			$out[] = [
-				'type' => self::get_str_from_type((int)$row['type']),
+				'type' => self::get_str_from_type((int) $row['type']),
 				'name' => $row['name'],
 			];
 		}
@@ -201,7 +201,16 @@ class Question {
 		}
 	}
 
-	function type_to_string($type) {
+	public static function difficulty_to_string($difficulty) {
+		switch ($difficulty) {
+			case 0: return "easy";
+			case 1: return "medium";
+			case 2: return "difficult";
+			default: return "easy";
+		}
+	}
+
+	public static function type_to_string($type) {
 		switch ($type) {
 			case 0: return "Int";
 			case 1: return "Float";

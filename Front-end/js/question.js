@@ -213,7 +213,7 @@ function performSearch(results) {
 	for (let i in results) {
     	var li = document.createElement('li')
     	var p = document.createElement('p')
-    	p.classList.add('easy')
+    	p.classList.add(results[i].difficulty)
     	p.innerHTML = generateQuestionDescription(results[i])
     	li.appendChild(p)
     	list.appendChild(li)

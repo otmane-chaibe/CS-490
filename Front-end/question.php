@@ -19,10 +19,11 @@ function generateQuestionDescription($q) {
 }
 
 function get_args($args) {
-	$str_out = array_map(function($value) {
-		return '<strong>' . type_to_string($value) . '</strong>';
-	}, $args);
-	return implode(', ', $str_out);
+	$arg_arr = [];
+	foreach($args as $arg) {
+		$arg_arr[] = '<strong>' . type_to_string($arg['type']) . '</strong>';
+	}
+	return implode(', ', $arg_arr);
 }
 
 function get_difficulty($diff) {
