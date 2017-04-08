@@ -18,7 +18,7 @@ if ($results === false) {
 	<thead>
 		<th>Test Name</th>
 		<th>Grade</th>
-		<th>Completed?</th>
+		<th>Released</th>
 	</thead>
 	<tbody>
 		<?php

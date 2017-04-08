@@ -3,9 +3,16 @@
 # Maurice Achtenhagen
 
 	require_once('header.php')
-	# Get questions ...
+
+	# Get questions for sidebar...
 ?>
-<!-- Sidebar goes here -->
+<div id="sidebar">
+	<ul>
+		<li>
+			<p>Question description</p>
+		</li>
+	</ul>
+</div>
 <div id="question-wrapper">
 	<h1>Create Question</h1>
 	<div class="step">
