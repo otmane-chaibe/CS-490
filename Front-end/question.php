@@ -2,14 +2,76 @@
 
 # Maurice Achtenhagen
 
-	require_once('header.php')
+require_once('header.php');
 
-	# Get questions for sidebar...
+$questions = http(MIDDLE_END, "get_all_test_questions");
+
+if ($questions === false) {
+	error("cURL request failed");
+}
+
+function generateQuestionDescription($q) {
+	$question = '
+		Write a function of type <strong>' . type_to_string($q['function_type']) . '</strong>
+		 named <strong>' . $q['function_name'] . '</strong>
+		that accepts ' . count($q['arguments']) . ' arguments of type (' . get_args($q['arguments']) . '), ' . $q['description'];
+	return $question;
+}
+
+function get_args($args) {
+	$str_out = array_map(function($value) {
+		return '<strong>' . type_to_string($value) . '</strong>';
+	}, $args);
+	return implode(', ', $str_out);
+}
+
+function get_difficulty($diff) {
+	switch ($diff) {
+		case 0:
+			return "easy";
+		case 1:
+			return "medium";
+		case 2:
+			return "difficult";
+		default:
+			return "easy";
+	}
+}
+
 ?>
 <div id="sidebar">
-	<ul>
-		<li>
-			<p>Question description</p>
+	<div id="filter">
+		<input id="filter-search" type="text" placeholder="Search Questions" />
+		<button id="filter-search-btn" type="button" class="button blue">Search</button>
+		<div class="selector">
+			<span>Type</span>
+			<select id="filter-type">
+				<option value="0" selected>Conditional</option>
+				<option value="1">Control Flow</option>
+				<option value="2">Recursion</option>
+				<option value="3">Other</option>
+			</select>
+		</div>
+		<div class="selector">
+			<span>Difficulty</span>
+			<select id="filter-difficulty">
+				<option value="0" selected>Easy</option>
+				<option value="1">Medium</option>
+				<option value="2">Difficult</option>
+			</select>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<ul id="question-list">
+		<?php
+			foreach ($questions as $question) {
+				echo '
+					<li>
+						<p class="' . get_difficulty($question['difficulty']) . '">' . generateQuestionDescription($question) . '</p>
+					</li>
+				';
+			}
+		?>
 		</li>
 	</ul>
 </div>

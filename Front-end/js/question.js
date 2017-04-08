@@ -183,3 +183,55 @@ function createUnitTest(question_id) {
 		}
 	}
 }
+
+byId('filter-search-btn').onclick = function(e) {
+	var httpRequest = new XMLHttpRequest()
+	var keyword = encodeURIComponent(byId("filter-search").value)
+	var body = "keyword=" + keyword
+	var args = byId("arguments").children
+	httpRequest.open("POST", "../Front-end/search_for_question.php")
+	httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+	httpRequest.send(body)
+
+	httpRequest.onreadystatechange = function() {
+		if (httpRequest.readyState === XMLHttpRequest.DONE) {
+			if (httpRequest.status >= 200 && httpRequest.status < 300) {
+				performSearch(JSON.parse(httpRequest.responseText))
+			} else {
+				// var data = JSON.parse(httpRequest.responseText)
+				// byId('error').innerHTML = data.error
+			}
+		}
+	}
+}
+
+function performSearch(results) {
+	let list = byId('question-list')
+	while (list.firstChild) {
+	    list.removeChild(list.firstChild);
+	}
+	for (let i in results) {
+    	var li = document.createElement('li')
+    	var p = document.createElement('p')
+    	p.classList.add('easy')
+    	p.innerHTML = generateQuestionDescription(results[i])
+    	li.appendChild(p)
+    	list.appendChild(li)
+	}
+}
+
+function generateQuestionDescription(question) {
+	return '\
+		Write a function of type <strong>' + question.function_type + '</strong>\
+		 named <strong>' + question.function_name + '</strong>\
+		that accepts ' + question.arguments.length + ' arguments of type (' + getArgs(question.arguments) + '), ' + question.description
+}
+
+function getArgs(args) {
+	var argStr = ""
+	for (let i in args) {
+		argStr += "<strong>" + args[i].type + "</strong>"
+		if (i != args.length - 1) { argStr += ", " }
+	}
+	return argStr
+}
