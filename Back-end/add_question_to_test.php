@@ -17,7 +17,7 @@ if (!isset($_POST['question_id'])) {
 
 $test_id = (int) $_POST['test_id'];
 $question_id = (int) $_POST['question_id'];
-$weight = (int) $_POST['weight'];
+$weight = (double) $_POST['weight'];
 
 Test::addQuestionToTest($test_id, $question_id, $weight);
 
