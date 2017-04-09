@@ -208,7 +208,7 @@ byId('filter-search-btn').onclick = function(e) {
 byId('filter-type').onchange = function() {
 	var type = "Conditional"
 	switch (this.selectedIndex) {
-		case 0: type = "Question Type"; break
+		case 0: type = "Category"; break
 		case 1: type = "Conditional"; break
 		case 2: type = "Control Flow"; break
 		case 3: type = "Recursion"; break
@@ -216,6 +216,7 @@ byId('filter-type').onchange = function() {
 		default: type = "Question Type"; break
 	}
 	byId('filter-type-label').innerHTML = type
+	performFilter()
 }
 
 byId('filter-difficulty').onchange = function() {
@@ -228,6 +229,29 @@ byId('filter-difficulty').onchange = function() {
 		default: type = "Difficulty"; break
 	}
 	byId('filter-difficulty-label').innerHTML = type
+	performFilter()
+}
+
+function performFilter() {
+	let category = byId('filter-type').value
+	let difficulty = byId('filter-difficulty').value
+	let body = "category=" + category + "&difficulty=" + difficulty
+	var httpRequest = new XMLHttpRequest()
+	httpRequest.open("POST", "../Front-end/filter_questions.php")
+	httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+	httpRequest.send(body)
+	console.log(body)
+	httpRequest.onreadystatechange = function() {
+		if (httpRequest.readyState === XMLHttpRequest.DONE) {
+			if (httpRequest.status >= 200 && httpRequest.status < 300) {
+				console.log(JSON.parse(httpRequest.responseText))
+				performSearch(JSON.parse(httpRequest.responseText))
+			} else {
+				// var data = JSON.parse(httpRequest.responseText)
+				// byId('error').innerHTML = data.error
+			}
+		}
+	}
 }
 
 function performSearch(results) {
@@ -238,7 +262,7 @@ function performSearch(results) {
 	for (let i in results) {
     	var li = document.createElement('li')
     	var p = document.createElement('p')
-    	p.classList.add(results[i].difficulty)
+    	p.classList.add(results[i].difficulty_str)
     	p.innerHTML = generateQuestionDescription(results[i])
     	li.appendChild(p)
     	list.appendChild(li)
@@ -251,7 +275,7 @@ function generateQuestionDescription(question) {
 		argumentStr = "argument"
 	}
 	return '\
-		Write a function of type <strong>' + question.function_type + '</strong>\
+		Write a function of type <strong>' + question.function_type_str + '</strong>\
 		 named <strong>' + question.function_name + '</strong>\
 		that accepts ' + question.arguments.length + ' ' + argumentStr + '  of type (' + getArgs(question.arguments) + '), ' + question.description
 }

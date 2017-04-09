@@ -12,7 +12,7 @@ if ($questions === false) {
 
 function generateQuestionDescription($q) {
 	$question = '
-		Write a function of type <strong>' . type_to_string($q['function_type']) . '</strong>
+		Write a function of type <strong>' . $q['function_type_str'] . '</strong>
 		 named <strong>' . $q['function_name'] . '</strong>
 		that accepts ' . count($q['arguments']) . ' ' . (count($q['arguments']) === 1 ? 'argument' : 'arguments') . ' of type (' . get_args($q['arguments']) . '), ' . $q['description'];
 	return $question;
@@ -43,20 +43,20 @@ function get_difficulty($diff) {
 		<div class="selector">
 			<span id="filter-type-label">Category</span>
 			<select id="filter-type">
-				<option value="0">All Categories</option>
-				<option value="1">Conditional</option>
-				<option value="2">Control Flow</option>
-				<option value="3">Recursion</option>
-				<option value="4">Other</option>
+				<option value="4">All Categories</option>
+				<option value="0">Conditional</option>
+				<option value="1">Control Flow</option>
+				<option value="2">Recursion</option>
+				<option value="3">Other</option>
 			</select>
 		</div>
 		<div class="selector">
 			<span id="filter-difficulty-label">Difficulty</span>
 			<select id="filter-difficulty">
-				<option value="0" selected>Any Difficulty</option>
-				<option value="1">Easy</option>
-				<option value="2">Medium</option>
-				<option value="3">Difficult</option>
+				<option value="3" selected>Any Difficulty</option>
+				<option value="0">Easy</option>
+				<option value="1">Medium</option>
+				<option value="2">Difficult</option>
 			</select>
 		</div>
 		<div class="clear"></div>
@@ -66,7 +66,7 @@ function get_difficulty($diff) {
 			foreach ($questions as $question) {
 				echo '
 					<li>
-						<p class="' . get_difficulty($question['difficulty']) . '">' . generateQuestionDescription($question) . '</p>
+						<p class="' . $question['difficulty_str'] . '">' . generateQuestionDescription($question) . '</p>
 					</li>
 				';
 			}
