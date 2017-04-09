@@ -148,4 +148,22 @@ class Test {
 		$sql = "UPDATE student_tests SET released = 1 WHERE test_id = $test_id AND user_id = $user_id";
 		$mysqli->query($sql);
 	}
+	
+	public static function getReleasedTests($released) {
+		global $mysqli;
+		$sql = "SELECT `id`, `user_id`, `test_id`, `score` 
+			FROM `student_tests`
+			WHERE `released`=1";
+		$results = $mysql->query($sql);
+                while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+			$out[] = [
+				'id'	  => (int) $row['id'],
+				'user_id' => (int) $row['user_id'],
+				'test_id' => (int) $row['test_id'],
+				'score'   => (int) $row['score'],					];
+	            }									        return $out;
+	
+				
+	}
+
 }
