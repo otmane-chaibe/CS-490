@@ -37,9 +37,10 @@ function get_difficulty($diff) {
 
 ?>
 <div id="sidebar">
+<!-- 	<div class="header"></div> -->
 	<div id="filter">
 		<input id="filter-search" type="text" placeholder="Search Questions" />
-		<button id="filter-search-btn" type="button" class="button blue">Search</button>
+		<button id="filter-search-btn" type="button" class="button red">Search</button>
 		<div class="selector">
 			<span id="filter-type-label">Category</span>
 			<select id="filter-type">
@@ -66,7 +67,8 @@ function get_difficulty($diff) {
 			foreach ($questions as $question) {
 				echo '
 					<li>
-						<p class="' . $question['difficulty_str'] . '">' . generateQuestionDescription($question) . '</p>
+						<p class="' . $question['difficulty_str'] . '">' .
+						generateQuestionDescription($question) . '</p>
 					</li>
 				';
 			}

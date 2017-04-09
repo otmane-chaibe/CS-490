@@ -4,15 +4,12 @@
 #question-wrapper {
 	color: #333;
 	font-size: 16px;
-	height: 100%;
-	left: 0;
 	overflow-y: scroll;
-	padding: 120px 0 0 40px;
-	position: absolute;
-	top: 0
+	padding-top: 40px;
+	width: 60%
 }
 
-#question-wrapper h1 { margin-bottom: 60px }
+#question-wrapper h1 { margin: 0 0 60px 20px }
 
 #question-wrapper .step {
 	border-left: 1px solid rgba(0, 0, 0, .04);
@@ -97,15 +94,20 @@
 #submit { margin-top: 20px }
 
 #sidebar {
+	background: #fff;
 	box-shadow: -2px 0 4px rgba(0, 0, 0, .1);
 	height: 100%;
 	overflow-y: scroll;
-	padding-top: 90px;
 	position: fixed;
 	right: 0;
 	top: 0;
-	width: 320px;
-	z-index: 0
+	width: 40%;
+	z-index: 1
+}
+
+#sidebar .header {
+	height: 60px;
+	background: #8A0000
 }
 
 #filter {
@@ -140,23 +142,23 @@
 
 #filter .selector { -webkit-font-smoothing: subpixel-antialiased }
 #filter .selector {
-	border: 1px solid #3498db;
+	border: 1px solid #8A0000;
 	border-radius: 4px;
-	color: #3598dc;
+	color: #8A0000;
 	float: left;
 	height: 30px;
 	overflow: hidden;
 	position: relative;
-	width: 145px
+	width: 49%
 }
 
-#filter .selector:nth-of-type(2) { margin-left: 10px }
+#filter .selector:nth-of-type(2) { margin-left: 2% }
 
 #filter .selector,
 #filter .selector:hover { transition: all .3s ease-in-out }
 
 #filter .selector:hover {
-	background: #3498db;
+	background: #8A0000;
 	color: #fff
 }
 
@@ -183,11 +185,11 @@
 
 #question-list li:first-child { border-top: 1px solid rgba(0, 0, 0, .1) }
 
-#question-list li:first-child:hover { border-top: 1px solid #c8e1ff }
+#question-list li:first-child:hover { border-top: 1px solid #ffc8c8 }
 
 #question-list li:hover {
-	background-color: #f1f8ff;
-	border-bottom: 1px solid #c8e1ff
+	background: #fff1f1;
+	border-bottom: 1px solid #ffc8c8;
 }
 
 #question-list li p {

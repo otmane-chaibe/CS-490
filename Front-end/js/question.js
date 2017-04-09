@@ -240,11 +240,9 @@ function performFilter() {
 	httpRequest.open("POST", "../Front-end/filter_questions.php")
 	httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
 	httpRequest.send(body)
-	console.log(body)
 	httpRequest.onreadystatechange = function() {
 		if (httpRequest.readyState === XMLHttpRequest.DONE) {
 			if (httpRequest.status >= 200 && httpRequest.status < 300) {
-				console.log(JSON.parse(httpRequest.responseText))
 				performSearch(JSON.parse(httpRequest.responseText))
 			} else {
 				// var data = JSON.parse(httpRequest.responseText)

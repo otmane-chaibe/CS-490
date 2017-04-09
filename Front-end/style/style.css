@@ -41,8 +41,7 @@ header {
 	height: 60px;
 	position: absolute;
 	top: 0;
-	width: 100%;
-	z-index: 1
+	width: 100%
 }
 
 main {
@@ -176,8 +175,7 @@ main {
 nav    {
 	background: #660101;
 	color: #fff;
-	position: relative;
-	z-index: 1
+	position: relative
 }
 nav a  { padding: 8px 10px; display: block }
 nav li { display: inline-block }
