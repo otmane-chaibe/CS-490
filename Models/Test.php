@@ -129,11 +129,11 @@ class Test {
 		return $mysqli->insert_id;
 	}
 
-	public static function updateQuestionScore($id, $passes_unit_tests, $score) {
+	public static function updateScore($id, $score) {
 		global $mysqli;
 		$sql = "UPDATE `ks492`.`student_solutions`
-			SET `passes_unit_tests` = $passes_unit_tests, `score` =
-			$score WHERE `student_solutions`.`id` = $id";
+			SET `score` = $score 
+			WHERE `student_solutions`.`id` = $id";
 		$mysqli->query($sql);
 		
 	}
