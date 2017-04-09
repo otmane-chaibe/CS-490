@@ -24,7 +24,7 @@ class Test {
 		global $mysqli;
 		$sql = "SELECT `id`, `user_id`, `test_id`, `score` 
 			FROM `student_tests`
-			WHERE `released=0`";
+			WHERE `released`=0";
 		$result = $mysqli->query($sql);
 		while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
 			$out[] = [
@@ -36,6 +36,7 @@ class Test {
 		}
 		return $out;
 	}
+
 
 	public static function getTestsForUser($user_id) {
 		global $mysqli;
@@ -128,6 +129,15 @@ class Test {
 		return $mysqli->insert_id;
 	}
 
+	public static function updateQuestionScore($id, $passes_unit_tests, $score) {
+		global $mysqli;
+		$sql = "UPDATE `ks492`.`student_solutions`
+			SET `passes_unit_tests` = $passes_unit_tests, `score` =
+			$score WHERE `student_solutions`.`id` = $id";
+		$mysqli->query($sql);
+		
+	}
+
 	public static function insertRemark($id, $remark) {
 		global $mysqli;
 		$sql = "UPDATE `ks492`.`student_solutions` SET `remark` = $remark WHERE
@@ -149,12 +159,12 @@ class Test {
 		$mysqli->query($sql);
 	}
 	
-	public static function getReleasedTests($released) {
+	public static function getReleasedTests() {
 		global $mysqli;
 		$sql = "SELECT `id`, `user_id`, `test_id`, `score` 
 			FROM `student_tests`
 			WHERE `released`=1";
-		$results = $mysql->query($sql);
+		$result = $mysqli->query($sql);
                 while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
 			$out[] = [
 				'id'	  => (int) $row['id'],
