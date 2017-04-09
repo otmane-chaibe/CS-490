@@ -20,6 +20,23 @@ class Test {
 		return $out;
 	}
 
+	public static function getPendingTests() {
+		global $mysqli;
+		$sql = "SELECT `id`, `user_id`, `test_id`, `score` 
+			FROM `student_tests`
+			WHERE `released=0`";
+		$result = $mysqli->query($sql);
+		while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+			$out[] = [
+				'id'	  => (int) $row['id'],
+				'user_id' => (int) $row['user_id'],
+				'test_id' => (int) $row['test_id'],
+				'score'   => (int) $row['score'],
+			];		
+		}
+		return $out;
+	}
+
 	public static function getTestsForUser($user_id) {
 		global $mysqli;
 		$out = [];
