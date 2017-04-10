@@ -23,8 +23,12 @@ if ($results === false) {
 	<tbody>
 		<?php
 		foreach ($results as $result) {
+			$str = $result['test_name'];
+			if ($result['released'] == 1) {
+				$str = '<a href="view_results.php?id=' . $result['test_id'] . '">' . $result['test_name'] . '</a>';
+			}
 			echo '<tr>';
-			echo '<td>' . $result['test_name'] . '</td>';
+			echo '<td>' . $str . '</td>';
 			echo '<td><meter min="0" max="100" value="' . $result['score'] . '">' . $result['score'] . '%</meter></td>';
 			echo '<td style="text-align: center">&' . ($result['released'] ? 'check' : 'cross') . ';';
 			echo '</tr>';
