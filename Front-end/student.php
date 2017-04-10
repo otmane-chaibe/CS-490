@@ -26,7 +26,6 @@ if ($tests === false) {
 			if (empty($tests)) {
 				echo "<p>There are currently no tests available.</p>";
 			}
-
 			foreach($tests as $test) {
 				echo '
 					<li class="item">

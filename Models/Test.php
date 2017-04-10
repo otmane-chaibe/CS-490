@@ -58,6 +58,11 @@ class Test {
 				'name'    => $row['name'],
 			];
 		}
+
+		if (empty($out)) {
+			$out = self::getAllTests();
+		}
+
 		return $out;
 	}
 
