@@ -34,7 +34,7 @@ class Question {
 			'description'       => isset($row['description']) ? $row['description'] : null,
 			'difficulty'        => isset($row['difficulty']) ? (int) $row['difficulty'] : null,
 			'difficulty_str'    => isset($row['difficulty']) ? self::difficulty_to_string((int) $row['difficulty']) : null,
-			'weight'            => isset($row['weight']) ? (double) $row['weight'] : null,
+			'weight'            => isset($row['weight']) ? $row['weight'] : null,
 			'arguments'         => [],
 		];
 	}

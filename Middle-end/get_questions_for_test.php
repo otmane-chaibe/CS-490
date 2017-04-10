@@ -7,7 +7,7 @@ require_once('../functions.php');
 assertPost();
 
 if (empty($_POST['test_id'])) {
-	error('Test id cannot be empty.');
+	error('Missing Parameter: test_id.');
 }
 
 $test_id = (int) $_POST['test_id'];

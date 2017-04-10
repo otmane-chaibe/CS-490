@@ -28,11 +28,24 @@ function handleDelete(id) {
 	ajaxThenReload("../Front-end/remove_question_from_test.php", body)
 }
 
+function updateQuestionWeight(id) {
+	var body = "q_id=" + id + "&weight=" + byId('weight-' + id).value
+	ajaxThenReload("../Front-end/update_question_weight.php", body)
+}
+
 questions.forEach(function(id) {
 	byId('delete' + id).onclick = function(e) { handleDelete(id) }
+	byId('weight-' + id).onkeyup = function(e) {
+		if (e.keyCode == 13) {
+			updateQuestionWeight(id)
+		}
+	}
 })
 
-byId('submit').onclick = function(e) {
-	var body = "test_id=" + test_id + "&question_id=" + byId('question').value
-	ajaxThenReload("../Front-end/add_question_to_test.php", body)
-}
+question_bank.forEach(function(id) {
+	let li = byId('q-' + id)
+	li.onclick = function(e) {
+		var body = "test_id=" + test_id + "&question_id=" + id
+		ajaxThenReload("../Front-end/add_question_to_test.php", body)
+	}
+})
