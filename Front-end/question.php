@@ -4,6 +4,10 @@
 
 require_once('header.php');
 
+if ($_SESSION['role'] != 1) {
+	redirect("student.php");
+}
+
 $questions = http(MIDDLE_END, "get_all_test_questions");
 
 if ($questions === false) {
