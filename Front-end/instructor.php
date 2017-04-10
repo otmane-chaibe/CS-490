@@ -8,6 +8,7 @@ if ($_SESSION['role'] != 1) {
 	redirect("student.php");
 }
 
+$tests = [];
 $tests = http(MIDDLE_END, "get_tests_for_user", [
 	"user_id" => $_SESSION['user_id']
 ]);
@@ -16,6 +17,7 @@ if ($tests === false) {
 	error("cURL request failed");
 }
 
+$pending_tests = [];
 $pending_tests = http(MIDDLE_END, "get_pending_tests", [
 	'user_id' => (int) $_SESSION['user_id']
 ]);
@@ -25,15 +27,6 @@ if ($pending_tests === false) {
 }
 
 $test_ids = [];
-
-/*
-  {
-    "id": 1,
-    "user_id": 1,
-    "test_id": 1,
-    "score": 100
-  }
-*/
 
 ?>
 <div id="tests-wrapper">
@@ -67,6 +60,15 @@ $test_ids = [];
 		</thead>
 		<tbody>
 		<?php
+			if (empty($pending_tests)) {
+				echo '
+					<tr>
+						<td></td>
+						<td>There are no pending tests.</td>
+						<td></td>
+					</tr>
+				';
+			}
 			foreach($pending_tests as $test) {
 				$test_ids[] = $test['id'];
 				echo '

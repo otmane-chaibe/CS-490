@@ -5,8 +5,6 @@
 
 function byId(id) { return document.getElementById(id) }
 
-var httpRequest = new XMLHttpRequest()
-
 byId('submit-btn').onclick = function(e) {
 	var body = ""
 	var i = 0
@@ -22,6 +20,7 @@ byId('submit-btn').onclick = function(e) {
 	}
 	if (body == "") { return }
 	body += "&test_id=" + testID
+	var httpRequest = new XMLHttpRequest()
 	httpRequest.open("POST", "../Front-end/submit_test.php")
 	httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
 	httpRequest.send(body);

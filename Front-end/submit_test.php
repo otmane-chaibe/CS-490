@@ -77,12 +77,10 @@ foreach ($student_solutions as $idx => $solution) {
 			"does_compile"                  => (int) $f_check->does_compile,
 			"passes_unit_tests"             => (int) $f_check->passes_unit_tests,
 		];
-		# die(var_dump($unit_tests[$q_id][$idx]));
-		# die(print_r($f_check->unit_test_results));
 		# Insert unit test results
-		foreach ($f_check->unit_test_results as $result) {
+		foreach ($f_check->unit_test_results as $key => $result) {
 			$unit_test_result_id = http(MIDDLE_END, "insert_unit_test_result", [
-				'unit_test_id' => $unit_tests[$q_id][$idx]['id'],
+				'unit_test_id' => $unit_tests[$q_id][$key]['id'],
 				'output'       => $result['output'],
 				'expected'     => $result['expected'],
 			]);
@@ -90,7 +88,7 @@ foreach ($student_solutions as $idx => $solution) {
 				error("cURL request failed.");
 			}
 		}
-
+		# Insert question solution
 		$score_id = http(MIDDLE_END, "insert_question_solution", [
 			"user_id"  => $_SESSION['user_id'],
 			"test_id"  => $test_id,
@@ -116,7 +114,7 @@ foreach ($student_solutions as $idx => $solution) {
 foreach ($scores as $s) {
 	$final_score += $s;
 }
-
+# Insert Test score
 $score_id = http(MIDDLE_END, "insert_test_score", [
 	"user_id" => $_SESSION['user_id'],
 	"test_id" => $test_id,

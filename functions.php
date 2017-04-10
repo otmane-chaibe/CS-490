@@ -77,7 +77,8 @@ function generate_question_description($q) {
 	$question = '
 		Write a function of type <strong>' . $q['function_type_str'] . '</strong>
 		 named <strong>' . $q['function_name'] . '</strong>
-		that accepts ' . count($q['arguments']) . ' ' . (count($q['arguments']) === 1 ? 'argument' : 'arguments') . ' of type (' . get_args($q['arguments']) . '), ' . $q['description'];
+		that accepts ' . count($q['arguments']) . ' ' . (count($q['arguments']) === 1 ? 'argument' : 'arguments') .
+		' of type (' . get_args($q['arguments']) . '), ' . $q['description'];
 	return $question;
 }
 

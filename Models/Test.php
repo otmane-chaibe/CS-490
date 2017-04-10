@@ -6,6 +6,7 @@ class Test {
 
 	public static function getAllTests() {
 		global $mysqli;
+		$out = [];
 		$sql = "SELECT id, user_id, `name`, created FROM tests";
 		$result = $mysqli->query($sql);
 		$out = [];
@@ -22,6 +23,7 @@ class Test {
 
 	public static function getPendingTests() {
 		global $mysqli;
+		$out = [];
 		$sql = "
 			SELECT student_tests.id, student_tests.user_id, student_tests.test_id, tests.name AS name, student_tests.score
 			FROM student_tests JOIN tests ON student_tests.test_id = tests.id WHERE student_tests.released = 0
@@ -39,7 +41,12 @@ class Test {
 		return $out;
 	}
 
+	# User here is student
+	public static function getAvailableTestsUser($user_id) {
+		return [];
+	}
 
+	# User here is professor
 	public static function getTestsForUser($user_id) {
 		global $mysqli;
 		$out = [];
@@ -70,19 +77,20 @@ class Test {
 		];
 	}
 
-	public static function getTestSolutions($user_id, $test_id) {
+	public static function getTestSolutions($test_id) {
 		global $mysqli;
+		$out = [];
 		$sql = "SELECT `question_id`, `solution`,
 		`has_correct_function_modifier`, `has_correct_function_type`,
 		`has_correct_function_name`,
 		`has_correct_function_params`, `does_compile`,
 		`passes_unit_tests`, `score`, `remark`
 			FROM `student_solutions`
-			WHERE `user_id`=$user_id and `test_id`=$test_id";
+			WHERE `test_id` = $test_id";
 		$result = $mysqli->query($sql);
 		while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
 			$out[] = [
-				`question_id`	=> (int) $row[`question_id`],
+				`question_id`	=> (int) $row['question_id'],
 				`solution`	=> $row['solution'],
 				'has_correct_function_modifier' => $row['has_correct_function_modifier'],
 				'has_correct_function_type' => $row['has_correct_function_type'],
@@ -122,6 +130,7 @@ class Test {
 
 	public static function getResultsForUser($user_id) {
 		global $mysqli;
+		$out = [];
 		$sql = "
 			SELECT users.name AS user_name,st.test_id, t.name AS test_name, st.score, st.released
 			FROM student_tests AS st JOIN tests AS t ON t.id = st.test_id
@@ -177,7 +186,7 @@ class Test {
 
 	public static function insertTestScore($user_id, $test_id, $score) {
 		global $mysqli;
-		$sql = "INSERT INTO student_tests (user_id, test_id, score) VALUES ($user_id, $test_id, $score)";
+		$sql = "INSERT INTO student_tests (user_id, test_id, score, completed, released) VALUES ($user_id, $test_id, $score, 1, 0)";
 		$mysqli->query($sql);
 		return $mysqli->insert_id;
 	}
@@ -190,6 +199,7 @@ class Test {
 
 	public static function getReleasedTests() {
 		global $mysqli;
+		$out = [];
 		$sql = "SELECT `id`, `user_id`, `test_id`, `score`
 			FROM `student_tests`
 			WHERE `released`=1";
@@ -199,10 +209,9 @@ class Test {
 				'id'	  => (int) $row['id'],
 				'user_id' => (int) $row['user_id'],
 				'test_id' => (int) $row['test_id'],
-				'score'   => (int) $row['score'],					];
-	            }									        return $out;
-
-
+				'score'   => (int) $row['score'],
+			];
+	    }
+	    return $out;
 	}
-
 }

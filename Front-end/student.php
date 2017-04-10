@@ -4,7 +4,15 @@
 
 require_once('header.php');
 
-$tests = http(MIDDLE_END, "student_tests");
+if ($_SESSION['role'] != 0) {
+	redirect("instructor.php");
+}
+
+$user_id = (int) $_SESSION['user_id'];
+
+$tests = http(MIDDLE_END, "student_tests", [
+	'user_id' => $user_id
+]);
 
 if ($tests === false) {
 	error("cURL request failed");

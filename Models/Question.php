@@ -48,17 +48,18 @@ class Question {
 				JOIN questions AS q ON q.id = tq.question_id WHERE tests.id = $test_id";
 		$result = $mysqli->query($sql);
 		while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-			$out[(int) $row['id']] = [
+			$out[(int) $row['question_id']] = [
 				'id'                => (int) $row['id'],
 				'question_id'       => (int) $row['question_id'],
 				'user_id'           => (int) $row['user_id'],
 				'category'          => (int) $row['category'],
 				'function_name'     => $row['function_name'],
 				'function_type'     => $row['function_type'],
+				'function_type_str' => self::type_to_string((int) $row['function_type']),
 				'description'       => $row['description'],
 				'difficulty'        => (int) $row['difficulty'],
 				'weight'            => (double) $row['weight'],
-		];
+			];
 		}
 		if (!empty($out)) {
 			$sql = "

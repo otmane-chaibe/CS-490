@@ -7,4 +7,10 @@ require_once('../functions.php');
 
 assertPost();
 
-echo json_encode(Test::getAllTests());
+if (!isset($_POST['user_id'])) {
+	error("Missing Parameter: user_id.");
+}
+
+$user_id = (int) $_POST['user_id'];
+
+echo json_encode(Test::getAvailableTestsUser($user_id));

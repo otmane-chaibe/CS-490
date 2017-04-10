@@ -11,28 +11,23 @@ if (!isset($_GET['id'])) {
 $test_id = (int) $_GET['id'];
 
 $test = http(MIDDLE_END, "take_test", [
-	"test_id" => $test_id,
+	'test_id' => $test_id,
 ]);
 
 if ($test === false) {
 	error("cURL request failed");
 }
 
-if (empty($test)) { die('No Such Test.'); }
+if (empty($test)) {
+	redirect("student.php");
+}
 
 $questions = http(MIDDLE_END, "get_questions_for_test", [
-	"test_id" => $test_id,
+	'test_id' => $test_id,
 ]);
 
 if ($questions === false) {
 	error("cURL request failed");
-}
-
-function get_args($args) {
-	$str_out = array_map(function($value) {
-		return '<strong>' . type_to_string($value) . '</strong>';
-	}, $args);
-	return implode(', ', $str_out);
 }
 
 ?>
@@ -46,9 +41,8 @@ function get_args($args) {
 				$idx++;
 				echo '
 					<li>
-						' . $idx .'. Write a function of type <strong>' . type_to_string($q['function_type']) . '</strong> named <strong>' . $q['function_name'] . '</strong>
-						that accepts ' . count($q['arguments']) . ' arguments of type (' . get_args($q['arguments']) . '), ' . $q['description'] . '
-						<textarea id="solution-' . $q['id'] . '"></textarea>
+						' . $idx . generate_question_description($q) . '
+						<textarea id="solution-' . $q['question_id'] . '"></textarea>
 					</li>
 				';
 			}
