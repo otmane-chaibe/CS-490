@@ -31,7 +31,7 @@
 #test-wrapper table td:nth-child(2) input {
 	margin: auto;
 	text-align: center;
-	width: 52px
+	width: 55px
 }
 #test-wrapper table td:nth-child(2) { width: 80px }
 #test-wrapper table td:last-child   { width: 80px }

@@ -34,7 +34,7 @@ class Question {
 			'description'       => isset($row['description']) ? $row['description'] : null,
 			'difficulty'        => isset($row['difficulty']) ? (int) $row['difficulty'] : null,
 			'difficulty_str'    => isset($row['difficulty']) ? self::difficulty_to_string((int) $row['difficulty']) : null,
-			'weight'            => isset($row['weight']) ? $row['weight'] : null,
+			'weight'            => isset($row['weight']) ? (double) $row['weight'] : null,
 			'arguments'         => [],
 		];
 	}
@@ -42,13 +42,23 @@ class Question {
 	public static function getQuestionsForTest($test_id) {
 		global $mysqli;
 		$out = [];
-		$sql = "SELECT q.id, q.user_id, q.category, q.function_name, q.function_type, q.difficulty,
+		$sql = "SELECT tq.id, q.id AS question_id, q.user_id, q.category, q.function_name, q.function_type, q.difficulty,
 				q.description, tq.weight FROM tests
 				JOIN test_questions AS tq ON tq.test_id = tests.id
 				JOIN questions AS q ON q.id = tq.question_id WHERE tests.id = $test_id";
 		$result = $mysqli->query($sql);
 		while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-			$out[(int) $row['id']] = self::formatQuestion($row);
+			$out[(int) $row['id']] = [
+				'id'                => (int) $row['id'],
+				'question_id'       => (int) $row['question_id'],
+				'user_id'           => (int) $row['user_id'],
+				'category'          => (int) $row['category'],
+				'function_name'     => $row['function_name'],
+				'function_type'     => $row['function_type'],
+				'description'       => $row['description'],
+				'difficulty'        => (int) $row['difficulty'],
+				'weight'            => (double) $row['weight'],
+		];
 		}
 		if (!empty($out)) {
 			$sql = "
@@ -64,16 +74,6 @@ class Question {
 			}
 		}
 		return $out;
-	}
-
-	public static function updateQuestionWeight($test_question_id, $weight) {
-		global $mysqli;
-		$sql = "UPDATE `ks492`.`test_questions` 
-			SET `weight` = $weight 
-			WHERE `test_questions`.`id` = $test_question_id";
-		$mysqli->query($sql);
-			
-
 	}
 
 	public static function createQuestion($user_id, $fname, $category = 0, $difficulty = 0, $type = 0, $description = "", $args = []) {
@@ -205,6 +205,15 @@ class Question {
 			];
 		}
 		return $out;
+	}
+
+	public static function updateQuestionWeight($test_question_id, $weight) {
+		global $mysqli;
+		$sql = "
+			UPDATE `ks492`.`test_questions`  SET `weight` = $weight
+			WHERE `test_questions`.`id` = $test_question_id
+		";
+		$mysqli->query($sql);
 	}
 
 	private static function get_str_from_type($type) {

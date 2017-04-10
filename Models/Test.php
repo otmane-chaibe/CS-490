@@ -75,7 +75,7 @@ class Test {
 		`has_correct_function_name`,
 		`has_correct_function_params`, `does_compile`,
 		`passes_unit_tests`, `score`, `remark`
-			FROM `student_solutions` 
+			FROM `student_solutions`
 			WHERE `user_id`=$user_id and `test_id`=$test_id";
 		$result = $mysqli->query($sql);
 		while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
@@ -92,7 +92,7 @@ class Test {
 				'remark'	=> $row['remark'],
 			];
 		}
-		return $out;	   
+		return $out;
 	}
 
 	public static function addQuestionToTest($test_id, $question_id, $weight = 1.0) {
@@ -103,7 +103,7 @@ class Test {
 
 	public static function removeQuestionFromTest($test_id, $question_id) {
 		global $mysqli;
-		$sql = "DELETE FROM test_questions WHERE test_id = $test_id AND question_id = $question_id";
+		$sql = "DELETE FROM test_questions WHERE test_id = $test_id AND id = $question_id";
 		$mysqli->query($sql);
 	}
 

@@ -29,7 +29,7 @@ function handleDelete(id) {
 }
 
 function updateQuestionWeight(id) {
-	var body = "q_id=" + id + "&weight=" + byId('weight-' + id).value
+	var body = "test_question_id=" + id + "&weight=" + byId('weight-' + id).value
 	ajaxThenReload("../Front-end/update_question_weight.php", body)
 }
 

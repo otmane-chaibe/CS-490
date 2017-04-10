@@ -34,6 +34,7 @@ if ($questions === false) {
 }
 
 $q_ids = [];
+$test_question_ids = [];
 
 ?>
 <div id="sidebar">
@@ -91,6 +92,7 @@ $q_ids = [];
 			$seen = [];
 			foreach($test_questions as $id => $question) {
 				$seen[] = $id;
+				$test_question_ids[] = $question['id'];
 				echo '<tr>';
 				echo '<td>' . $question['function_name'] . '</td>';
 				echo '<td><input id="weight-' . $id . '" type="text" value="' . $question['weight'] . '" /></td>';
@@ -105,6 +107,7 @@ $q_ids = [];
 	var test_id = <?=$test_id?>;
 	var questions = <?=json_encode($seen)?>;
 	var question_bank = <?=json_encode($q_ids)?>;
+	var test_question_ids = <?=json_encode($test_question_ids)?>;
 	<?php echo file_get_contents('js/sidebar.js') ?>
 </script>
 <?php
