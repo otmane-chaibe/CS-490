@@ -46,6 +46,7 @@ class UnitTest {
 		while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
 			$unit_test_id = (int) $row['id'];
 			$unit_tests[] = [
+				'id'     => $unit_test_id,
 				'inputs' => self::getInputsForUnitTest($unit_test_id),
 				'output' => $row['output'],
 			];
