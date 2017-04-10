@@ -37,6 +37,7 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
 		<link rel="stylesheet" href="style/student.css" />
 		<link rel="stylesheet" href="style/take_test.css" />
 		<link rel="stylesheet" href="style/test.css" />
+		<link rel="stylesheet" href="style/view_results.css" />
 		<title>Online Exam System</title>
 	</head>
 	<body>

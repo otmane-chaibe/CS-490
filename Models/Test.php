@@ -43,7 +43,22 @@ class Test {
 
 	# User here is student
 	public static function getAvailableTestsUser($user_id) {
-		return [];
+		global $mysqli;
+		$out = [];
+		$sql = "
+			SELECT student_tests.id, student_tests.user_id, student_tests.test_id, tests.name AS name
+			FROM student_tests JOIN tests ON student_tests.test_id = tests.id WHERE student_tests.completed = 0
+		";
+		$result = $mysqli->query($sql);
+		while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+			$out[] = [
+				'id'	  => (int) $row['id'],
+				'user_id' => (int) $row['user_id'],
+				'test_id' => (int) $row['test_id'],
+				'name'    => $row['name'],
+			];
+		}
+		return $out;
 	}
 
 	# User here is professor
@@ -90,13 +105,13 @@ class Test {
 		$result = $mysqli->query($sql);
 		while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
 			$out[] = [
-				`question_id`	=> (int) $row['question_id'],
-				`solution`	=> $row['solution'],
+				'question_id'	=> (int) $row['question_id'],
+				'solution'	=> $row['solution'],
 				'has_correct_function_modifier' => $row['has_correct_function_modifier'],
 				'has_correct_function_type' => $row['has_correct_function_type'],
 				'has_correct_function_name' => $row['has_correct_function_name'],
 				'has_correct_function_params' => $row['has_correct_function_params'],
-				`does_compile`	=> $row['does_compile'],
+				'does_compile'	=> $row['does_compile'],
 				'passes_unit_tests' => $row['passes_unit_tests'],
 				'score'		=> $row['score'],
 				'remark'	=> $row['remark'],

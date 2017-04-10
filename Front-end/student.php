@@ -23,6 +23,10 @@ if ($tests === false) {
 <h1>Available Tests</h1>
 	<ul class="list" id="tests">
 		<?php
+			if (empty($tests)) {
+				echo "<p>There are currently no tests available.</p>";
+			}
+
 			foreach($tests as $test) {
 				echo '
 					<li class="item">

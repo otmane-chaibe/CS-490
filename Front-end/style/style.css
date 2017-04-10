@@ -35,6 +35,11 @@ a:hover, a:focus, a:active { text-decoration: underline }
 
 ul { list-style-type: none }
 
+table {
+    border-spacing: 0;
+    border-collapse: separate
+}
+
 header {
 	background: #8A0000 url('../images/njit.png') no-repeat 40px center;
 	background-size: 150px 50px;

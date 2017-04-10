@@ -1,0 +1,84 @@
+/* Maurice Achtenhagen */
+
+#results-wrapper,
+#results-table-wrapper {
+	color: #333;
+	float: left;
+	font-size: 16px;
+	height: 100%;
+	padding: 40px;
+	width: 50%
+}
+
+#results-wrapper table { width: 100% }
+
+#results-wrapper td { vertical-align: text-top; width: 50% }
+
+#results-wrapper h1 { margin-left: 40px }
+
+textarea[readonly] { background: rgba(0, 0, 0, .04) }
+
+#results-wrapper .question {
+	border-bottom: 1px solid rgba(0, 0, 0, .1);
+	color: #333;
+	font-size: 16px;
+	height: 700px;
+	line-height: 26px;
+	padding: 40px 0
+}
+
+#results-wrapper td:nth-child(even) { padding: 40px 0 40px 40px }
+#results-wrapper td:nth-child(odd)  { padding: 40px 40px 40px 0 }
+
+#test-questions li:last-child { border-bottom: 0 }
+
+#results-wrapper textarea {
+	margin-top: 20px;
+	height: 200px;
+	min-height: 200px;
+	resize: none
+}
+
+#results-wrapper strong {
+	background: #f1f8ff;
+	border: 1px solid #c8e1ff;
+	border-radius: 4px;
+	font-size: 12px;
+	padding: 0 10px
+}
+
+#results-table-wrapper .result {
+	border-bottom: 1px solid rgba(0, 0, 0, .1);
+	height: 700px;
+	padding-top: 40px
+}
+
+#results-table-wrapper .result .header {
+    font-weight: 600;
+    margin-bottom: 20px
+}
+
+#results-table-wrapper table {
+	border: 1px solid rgba(0, 0, 0, .1);
+	border-radius: 6px;
+	margin: auto auto 40px auto;
+	width: 100%
+}
+
+#results-table-wrapper .unit-test-table td {
+	border-bottom: 1px solid rgba(0, 0, 0, .1);
+	margin: auto auto 40px auto;
+    padding: 10px;
+    text-align: center;
+    vertical-align: text-top
+}
+
+#results-table-wrapper .result-table td {
+	border-bottom: 1px solid rgba(0, 0, 0, .1);
+    padding: 10px;
+    vertical-align: text-top
+}
+
+#results-table-wrapper .result-table td:nth-child(even) { text-align: center }
+
+#results-table-wrapper tbody tr:last-child td  { border-bottom: 0 }
