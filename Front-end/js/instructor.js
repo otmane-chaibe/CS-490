@@ -30,3 +30,12 @@ byId('submit').onclick = function(e) {
 	var body = "name=" + name
 	ajaxThenReload("../Front-end/create_test.php", body)
 }
+
+test_ids.forEach(function(id) {
+	byId('checkbox-' + id).onchange = function(e) {
+		if (this.checked) {
+			var body = "test_id=" + id
+			ajaxThenReload("../Front-end/release_test.php", body)
+		}
+	}
+})

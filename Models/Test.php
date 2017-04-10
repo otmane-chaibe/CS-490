@@ -182,9 +182,9 @@ class Test {
 		return $mysqli->insert_id;
 	}
 
-	public static function releaseTest($test_id, $user_id) {
+	public static function releaseTest($test_id) {
 		global $mysqli;
-		$sql = "UPDATE student_tests SET released = 1 WHERE test_id = $test_id AND user_id = $user_id";
+		$sql = "UPDATE student_tests SET released = 1 WHERE id = $test_id";
 		$mysqli->query($sql);
 	}
 

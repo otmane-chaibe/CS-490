@@ -24,6 +24,8 @@ if ($pending_tests === false) {
 	error("cURL request failed");
 }
 
+$test_ids = [];
+
 /*
   {
     "id": 1,
@@ -66,11 +68,12 @@ if ($pending_tests === false) {
 		<tbody>
 		<?php
 			foreach($pending_tests as $test) {
+				$test_ids[] = $test['id'];
 				echo '
 					<tr>
 						<td><a href="view_results.php?id=' . $test['id'] . '">' . $test['name'] . '</a></td>
 						<td>' . $test['score'] . '</td>
-						<td><input type="checkbox"</td>
+						<td><input id="checkbox-' . $test['id'] . '" type="checkbox"</td>
 					</tr>
 				';
 			}
@@ -78,6 +81,9 @@ if ($pending_tests === false) {
 		</tbody>
 	</table>
 </div>
+<script>
+	var test_ids = <?=json_encode($test_ids)?>;
+</script>
 <?php
 	$js = "instructor";
 	require_once('footer.php');
