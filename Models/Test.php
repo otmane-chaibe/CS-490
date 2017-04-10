@@ -22,7 +22,7 @@ class Test {
 
 	public static function getPendingTests() {
 		global $mysqli;
-		$sql = "SELECT `id`, `user_id`, `test_id`, `score` 
+		$sql = "SELECT `id`, `user_id`, `test_id`, `score`
 			FROM `student_tests`
 			WHERE `released`=0";
 		$result = $mysqli->query($sql);
@@ -32,7 +32,7 @@ class Test {
 				'user_id' => (int) $row['user_id'],
 				'test_id' => (int) $row['test_id'],
 				'score'   => (int) $row['score'],
-			];		
+			];
 		}
 		return $out;
 	}
@@ -140,7 +140,7 @@ class Test {
 		return $out;
 	}
 
-	public static function insertQuestionSolution($user_id, $question_id, $solution, $results, $score) {
+	public static function insertQuestionSolution($user_id, $test_id, $question_id, $solution, $results, $score) {
 		global $mysqli;
 		$has_correct_function_modifier = (int) $results->has_correct_function_modifier;
 		$has_correct_function_type = (int) $results->has_correct_function_type;
@@ -148,21 +148,21 @@ class Test {
 		$has_correct_function_params = (int) $results->has_correct_function_params;
 		$does_compile = (int) $results->does_compile;
 		$passes_unit_tests = (int) $results->passes_unit_tests;
-		$sql = "INSERT INTO student_solutions (user_id, question_id, solution, has_correct_function_modifier, has_correct_function_type,
+		$sql = "INSERT INTO student_solutions (user_id, test_id, question_id, solution, has_correct_function_modifier, has_correct_function_type,
 				has_correct_function_name, has_correct_function_params, does_compile, passes_unit_tests, score)
-				VALUES ($user_id, $question_id, '$solution', $has_correct_function_modifier, $has_correct_function_type, $has_correct_function_name,
+				VALUES ($user_id, $test_id, $question_id, '$solution', $has_correct_function_modifier, $has_correct_function_type, $has_correct_function_name,
 				$has_correct_function_params, $does_compile, $passes_unit_tests, $score)";
 		$mysqli->query($sql);
 		return $mysqli->insert_id;
 	}
 
-	public static function updateScore($id, $score) {
+	public static function updateQuestionScore($id, $passes_unit_tests, $score) {
 		global $mysqli;
 		$sql = "UPDATE `ks492`.`student_solutions`
-			SET `score` = $score 
-			WHERE `student_solutions`.`id` = $id";
+			SET `passes_unit_tests` = $passes_unit_tests, `score` =
+			$score WHERE `student_solutions`.`id` = $id";
 		$mysqli->query($sql);
-		
+
 	}
 
 	public static function insertRemark($id, $remark) {
@@ -170,7 +170,7 @@ class Test {
 		$sql = "UPDATE `ks492`.`student_solutions` SET `remark` = $remark WHERE
 		`student_solutions`.`id` = $id";
 		$mysqli->query($sql);
-		
+
 	}
 
 	public static function insertTestScore($user_id, $test_id, $score) {
@@ -185,10 +185,10 @@ class Test {
 		$sql = "UPDATE student_tests SET released = 1 WHERE test_id = $test_id AND user_id = $user_id";
 		$mysqli->query($sql);
 	}
-	
+
 	public static function getReleasedTests() {
 		global $mysqli;
-		$sql = "SELECT `id`, `user_id`, `test_id`, `score` 
+		$sql = "SELECT `id`, `user_id`, `test_id`, `score`
 			FROM `student_tests`
 			WHERE `released`=1";
 		$result = $mysqli->query($sql);
@@ -199,8 +199,8 @@ class Test {
 				'test_id' => (int) $row['test_id'],
 				'score'   => (int) $row['score'],					];
 	            }									        return $out;
-	
-				
+
+
 	}
 
 }
