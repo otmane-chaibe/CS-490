@@ -110,12 +110,18 @@ function getUnitTestInputsAsString($inputs) {
 					$results = http(MIDDLE_END, "get_unit_test_results", [
 						'unit_test_id' => $unit_test['id']
 					]);
+
+					$expected = "";
+					if (isset($results[$key]['expected'])) {
+						$expected = $results[$key]['expected'];
+					}
+
 					echo '
 						<tr>
 							<td><b>' . getUnitTestInputsAsString($unit_test['inputs']) . '</b></td>
 							<td><b>' . $unit_test['output'] . '</b></td>
-							<td><b>' . (isset($results[$key]['expected']) ? $results[$key]['expected'] : "") . '</b></td>
-							<td><b>' . (strcasecmp((string) $unit_test['output'], (string) $results[$key]['expected']) == 0 ? "True" : "False") . '</b></td>
+							<td><b>' . $expected . '</b></td>
+							<td><b>' . (strcasecmp((string) $unit_test['output'], (string) $expected) == 0 ? "True" : "False") . '</b></td>
 						</tr>
 					';
 				}
