@@ -30,7 +30,7 @@ if ($results === false) {
 					$str = '<a href="view_results.php?id=' . $result['test_id'] . '">' . $result['test_name'] . '</a>';
 				}
 				$status = '<div class="status pass">Yes</div>';
-				if ($result['released']) {
+				if ($result['released'] == 0) {
 					$status = '<div class="status">No</div>';
 				}
 				echo '<tr>';
