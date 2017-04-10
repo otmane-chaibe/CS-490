@@ -114,7 +114,7 @@ function getUnitTestInputsAsString($inputs) {
 						<tr>
 							<td><b>' . getUnitTestInputsAsString($unit_test['inputs']) . '</b></td>
 							<td><b>' . $unit_test['output'] . '</b></td>
-							<td><b>' . $results[$key]['expected'] . '</b></td>
+							<td><b>' . (isset($results[$key]['expected']) ? $results[$key]['expected'] : "") . '</b></td>
 							<td><b>' . (strcasecmp((string) $unit_test['output'], (string) $results[$key]['expected']) == 0 ? "True" : "False") . '</b></td>
 						</tr>
 					';
