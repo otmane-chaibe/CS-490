@@ -212,7 +212,7 @@ class Question {
 		global $mysqli;
 		$sql = "
 			UPDATE `ks492`.`test_questions`  SET `weight` = $weight
-			WHERE `test_questions`.`id` = $test_question_id
+			WHERE `test_questions`.`question_id` = $test_question_id
 		";
 		$mysqli->query($sql);
 	}
