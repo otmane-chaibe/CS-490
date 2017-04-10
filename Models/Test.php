@@ -133,7 +133,7 @@ class Test {
 
 	public static function removeQuestionFromTest($test_id, $question_id) {
 		global $mysqli;
-		$sql = "DELETE FROM test_questions WHERE test_id = $test_id AND id = $question_id";
+		$sql = "DELETE FROM test_questions WHERE test_id = $test_id AND question_id = $question_id";
 		$mysqli->query($sql);
 	}
 
