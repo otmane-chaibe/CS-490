@@ -1,22 +1,55 @@
 
 /* Maurice Achtenhagen */
 
+#tests-wrapper, #pending-wrapper {
+	color: #333;
+	font-size: 16px;
+	float: left;
+	height: 100%;
+	padding-top: 60px;
+	width: 50%
+}
+
+#tests-wrapper h1,
+#pending-wrapper h1 { margin-left: 40px }
+
+#tests-wrapper .header {
+	padding: 0 40px;
+	width: 100%
+}
+
+#tests-wrapper input {
+	float: left;
+	height: 40px;
+	margin: 40px 0;
+	width: 70%
+}
+
+#tests-wrapper button {
+	float: right;
+	height: 40px;
+	margin-top: 40px;
+	width: 25%
+}
+
 #tests {
 	border-top: 1px solid rgba(0, 0, 0, .1);
 }
 
-#tests-wrapper {
-	color: #333;
-	font-size: 16px;
-	margin: 40px;
-	width: 600px
+#pending-wrapper {
+	border-left: 1px solid rgba(0, 0, 0, .1);
+	overflow-y: scroll
 }
 
-#tests-wrapper input {
-	margin: 40px 0;
-	width: 200px;
+#pending-wrapper table {
+	padding: 40px;
+	width: 100%
 }
 
-#tests-wrapper button {
-	width: 200px;
+#pending-wrapper td {
+	border-bottom: 1px solid rgba(0, 0, 0, .1);
+	height: 60px
 }
+
+#pending-wrapper td:nth-child(2),
+#pending-wrapper td:nth-child(3) { text-align: center }

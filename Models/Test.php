@@ -22,15 +22,17 @@ class Test {
 
 	public static function getPendingTests() {
 		global $mysqli;
-		$sql = "SELECT `id`, `user_id`, `test_id`, `score`
-			FROM `student_tests`
-			WHERE `released`=0";
+		$sql = "
+			SELECT student_tests.id, student_tests.user_id, student_tests.test_id, tests.name AS name, student_tests.score
+			FROM student_tests JOIN tests ON student_tests.test_id = tests.id WHERE student_tests.released = 0
+		";
 		$result = $mysqli->query($sql);
 		while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
 			$out[] = [
 				'id'	  => (int) $row['id'],
 				'user_id' => (int) $row['user_id'],
 				'test_id' => (int) $row['test_id'],
+				'name'    => $row['name'],
 				'score'   => (int) $row['score'],
 			];
 		}

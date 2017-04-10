@@ -173,9 +173,12 @@ main {
 }
 
 nav    {
-	background: #660101;
-	color: #fff;
-	position: relative
+background: #660101;
+    color: #fff;
+    position: absolute;
+    width: 100%;
+    top: 60px;
+    left: 0;
 }
 nav a  { padding: 8px 10px; display: block }
 nav li { display: inline-block }
@@ -194,3 +197,4 @@ fieldset {
 	border-radius: 4px;
 }
 
+.clear { clear: both }

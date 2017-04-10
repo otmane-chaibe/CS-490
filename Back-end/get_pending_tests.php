@@ -7,4 +7,4 @@ require_once('../functions.php');
 
 assertPost();
 
-echo json_encode(Test.php::getPendingTests());
+echo json_encode(Test::getPendingTests());
