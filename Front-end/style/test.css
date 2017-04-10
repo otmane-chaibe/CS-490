@@ -2,7 +2,8 @@
 /* Maurice Achtenhagen */
 
 #test-wrapper {
-	padding: 40px
+	padding: 40px;
+	width: 70%
 }
 
 #test-wrapper h1 {
@@ -10,8 +11,30 @@
 }
 
 #test-wrapper table {
-	margin-top: 40px
+	border-spacing: 0;
+    border-collapse: separate;
+	margin-top: 40px;
+	width: 100%
 }
+
+#test-wrapper table thead td { font-weight: bold }
+
+#test-wrapper table thead td:nth-child(2),
+#test-wrapper table thead td:nth-child(3) { text-align: center }
+
+#test-wrapper table td {
+	border-bottom: 1px solid #E0E2EA;
+	color: #333;
+	height: 60px
+}
+
+#test-wrapper table td:nth-child(2) input {
+	margin: auto;
+	text-align: center;
+	width: 52px
+}
+#test-wrapper table td:nth-child(2) { width: 80px }
+#test-wrapper table td:last-child   { width: 80px }
 
 #test-questions-wrapper {
 	margin: auto;

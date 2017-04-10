@@ -20,7 +20,7 @@ define("BASE_URL", "https://web.njit.edu/~");
 
 # UCID constants for testing purposes
 define("BACK_END", "mma93/Back-end/"); #ks492
-define("MIDDLE_END", "mma93/Middle-end/"); #sma76
+define("MIDDLE_END", "mma93/Middle-end/");
 
 spl_autoload_register(function ($class) {
 	$base_dir = __DIR__ . '/Models/';
@@ -70,6 +70,24 @@ function error($error) {
 		'status'   => 400,
 		'response' => $error,
 	]));
+}
+
+# Global function generator
+function generate_question_description($q) {
+	$question = '
+		Write a function of type <strong>' . $q['function_type_str'] . '</strong>
+		 named <strong>' . $q['function_name'] . '</strong>
+		that accepts ' . count($q['arguments']) . ' ' . (count($q['arguments']) === 1 ? 'argument' : 'arguments') . ' of type (' . get_args($q['arguments']) . '), ' . $q['description'];
+	return $question;
+}
+
+# Global argument generator for question description
+function get_args($args) {
+	$arg_arr = [];
+	foreach($args as $arg) {
+		$arg_arr[] = '<strong>' . type_to_string($arg['type']) . '</strong>';
+	}
+	return implode(', ', $arg_arr);
 }
 
 # Global type to string function

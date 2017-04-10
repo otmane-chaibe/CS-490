@@ -32,6 +32,7 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
 		<link rel="stylesheet" href="style/style.css" />
 		<link rel="stylesheet" href="style/controls.css" />
 		<link rel="stylesheet" href="style/question.css" />
+		<link rel="stylesheet" href="style/sidebar.css" />
 		<link rel="stylesheet" href="style/instructor.css" />
 		<link rel="stylesheet" href="style/student.css" />
 		<link rel="stylesheet" href="style/test.css" />

@@ -10,22 +10,6 @@ if ($questions === false) {
 	error("cURL request failed");
 }
 
-function generateQuestionDescription($q) {
-	$question = '
-		Write a function of type <strong>' . $q['function_type_str'] . '</strong>
-		 named <strong>' . $q['function_name'] . '</strong>
-		that accepts ' . count($q['arguments']) . ' ' . (count($q['arguments']) === 1 ? 'argument' : 'arguments') . ' of type (' . get_args($q['arguments']) . '), ' . $q['description'];
-	return $question;
-}
-
-function get_args($args) {
-	$arg_arr = [];
-	foreach($args as $arg) {
-		$arg_arr[] = '<strong>' . type_to_string($arg['type']) . '</strong>';
-	}
-	return implode(', ', $arg_arr);
-}
-
 function get_difficulty($diff) {
 	switch ($diff) {
 		case 0: return "easy";
@@ -37,7 +21,6 @@ function get_difficulty($diff) {
 
 ?>
 <div id="sidebar">
-<!-- 	<div class="header"></div> -->
 	<div id="filter">
 		<input id="filter-search" type="text" placeholder="Search Questions" />
 		<button id="filter-search-btn" type="button" class="button red">Search</button>
@@ -68,7 +51,7 @@ function get_difficulty($diff) {
 				echo '
 					<li>
 						<p class="' . $question['difficulty_str'] . '">' .
-						generateQuestionDescription($question) . '</p>
+						generate_question_description($question) . '</p>
 					</li>
 				';
 			}
@@ -130,6 +113,9 @@ function get_difficulty($diff) {
 		<button id="submit" type="button" class="green">Let's Go!</button>
 	</div>
 </div>
+<script>
+	<?php echo file_get_contents('js/sidebar.js') ?>
+</script>
 <?php
 	$js = "question";
 	require_once('footer.php');

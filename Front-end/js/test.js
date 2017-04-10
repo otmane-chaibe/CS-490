@@ -32,7 +32,10 @@ questions.forEach(function(id) {
 	byId('delete' + id).onclick = function(e) { handleDelete(id) }
 })
 
-byId('submit').onclick = function(e) {
-	var body = "test_id=" + test_id + "&question_id=" + byId('question').value
-	ajaxThenReload("../Front-end/add_question_to_test.php", body)
-}
+question_bank.forEach(function(id) {
+	let li = byId('q-' + id)
+	li.onclick = function(e) {
+		var body = "test_id=" + test_id + "&question_id=" + id
+		ajaxThenReload("../Front-end/add_question_to_test.php", body)
+	}
+})
