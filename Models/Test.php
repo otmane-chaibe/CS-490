@@ -68,6 +68,33 @@ class Test {
 		];
 	}
 
+	public static function getTestSolutions($user_id, $test_id) {
+		global $mysqli;
+		$sql = "SELECT `question_id`, `solution`,
+		`has_correct_function_modifier`, `has_correct_function_type`,
+		`has_correct_function_name`,
+		`has_correct_function_params`, `does_compile`,
+		`passes_unit_tests`, `score`, `remark`
+			FROM `student_solutions` 
+			WHERE `user_id`=$user_id and `test_id`=$test_id";
+		$result = $mysqli->query($sql);
+		while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+			$out[] = [
+				`question_id`	=> $row[`question_id`],
+				`solution`	=> $row['solution'],
+				'has_correct_function_modifier' => $row['has_correct_function_modifier'],
+				'has_correct_function_type' => $row['has_correct_function_type'],
+				'has_correct_function_name' => $row['has_correct_function_name'],
+				'has_correct_function_params' => $row['has_correct_function_params'],
+				`does_compile`	=> $row['does_compile'],
+				'passes_unit_tests' => $row['passes_unit_tests'],
+				'score'		=> $row['score'],
+				'remark'	=> $row['remark'],
+			];
+		}
+		return $out;	   
+	}
+
 	public static function addQuestionToTest($test_id, $question_id, $weight = 1.0) {
 		global $mysqli;
 		$sql = "INSERT INTO test_questions (test_id, question_id, weight) VALUES ($test_id, $question_id, $weight)";
