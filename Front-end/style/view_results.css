@@ -22,7 +22,7 @@ textarea[readonly] { background: rgba(0, 0, 0, .04) }
 	border-bottom: 1px solid rgba(0, 0, 0, .1);
 	color: #333;
 	font-size: 16px;
-	height: 700px;
+	height: 800px;
 	line-height: 26px;
 	padding: 40px 0
 }
@@ -47,9 +47,20 @@ textarea[readonly] { background: rgba(0, 0, 0, .04) }
 	padding: 0 10px
 }
 
+#results-table-wrapper .score {
+	background: #f1f8ff;
+    border: 1px solid #c8e1ff;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 4px 0;
+    text-align: center;
+    width: 50px
+}
+
 #results-table-wrapper .result {
 	border-bottom: 1px solid rgba(0, 0, 0, .1);
-	height: 700px;
+	height: 800px;
 	padding-top: 40px
 }
 
@@ -65,6 +76,23 @@ textarea[readonly] { background: rgba(0, 0, 0, .04) }
 	width: 100%
 }
 
+#results-table-wrapper .result-table td:nth-child(2n) { width: 70px }
+
+#results-table-wrapper table div {
+	background: #fff1f1;
+	border: 1px solid #ffc8c8;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 4px 0;
+    text-align: center
+}
+
+#results-table-wrapper table div.pass {
+	background: #f3fff1;
+	border: 1px solid #c8ffcb;
+}
+
 #results-table-wrapper .unit-test-table td {
 	border-bottom: 1px solid rgba(0, 0, 0, .1);
 	margin: auto auto 40px auto;
@@ -78,7 +106,5 @@ textarea[readonly] { background: rgba(0, 0, 0, .04) }
     padding: 10px;
     vertical-align: text-top
 }
-
-#results-table-wrapper .result-table td:nth-child(even) { text-align: center }
 
 #results-table-wrapper tbody tr:last-child td  { border-bottom: 0 }

@@ -61,33 +61,33 @@ function getUnitTestInputsAsString($inputs) {
 					<table class="result-table">
 						<thead>
 							<tr>
-								<td></td>
+								<td><div class="score">' . $result['score'] . '</div></td>
 								<td>Pass</td>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
 								<td>Function Modifier</td>
-								<td>' . ($result['has_correct_function_modifier'] == 1 ? "Yes" : "No") .'</td>
+								<td>' . ($result['has_correct_function_modifier'] == 1 ? "<div class=\"pass\">Yes</div>" : "No") .'</td>
 							</tr>
 							<tr>
 								<td>Function Type</td>
-								<td>' . ($result['has_correct_function_type'] == 1 ? "Yes" : "No") .'</td>
+								<td>' . ($result['has_correct_function_type'] == 1 ? "<div class=\"pass\">Yes</div>" : "No") .'</td>
 							</tr>
 							<tr>
 								<td>Function Name</td>
-								<td>' . ($result['has_correct_function_name'] == 1 ? "Yes" : "No") .'</td>
+								<td>' . ($result['has_correct_function_name'] == 1 ? "<div class=\"pass\">Yes</div>" : "No") .'</td>
 							</tr>
 								<td>Function Params</td>
-								<td>' . ($result['has_correct_function_params'] == 1 ? "Yes" : "No") .'</td>
+								<td>' . ($result['has_correct_function_params'] == 1 ? "<div class=\"pass\">Yes</div>" : "No") .'</td>
 							</tr>
 							<tr>
 								<td>Compiles</td>
-								<td>' . ($result['does_compile'] == 1 ? "Yes" : "No") .'</td>
+								<td>' . ($result['does_compile'] == 1 ? "<div class=\"pass\">Yes</div>" : "No") .'</td>
 							</tr>
 							<tr>
 								<td>Passes Unit Tests</td>
-								<td>' . ($result['passes_unit_tests'] == 1 ? "Yes" : "No") .'</td>
+								<td>' . ($result['passes_unit_tests'] == 1 ? "<div class=\"pass\">Yes</div>" : "No") .'</td>
 							</tr>
 						</tbody>
 					</table>
@@ -122,8 +122,10 @@ function getUnitTestInputsAsString($inputs) {
 				echo '
 					</tbody>
 					</table>
+				';
+				echo '
 					<div class="header">Remark</div>
-					<textarea id="remark" placeholder="Question Remark">' . $result['remark'] . '</textarea>
+					<textarea id="remark" placeholder="Question Remark"' . ($_SESSION['role'] == 0 ? "readonly" : "") . '>' . $result['remark'] . '</textarea>
 				';
 			}
 			echo '</div>';
