@@ -66,6 +66,16 @@ class Question {
 		return $out;
 	}
 
+	public static function updateQuestionWeight($test_question_id, $weight) {
+		global $mysqli;
+		$sql = "UPDATE `ks492`.`test_questions` 
+			SET `weight` = $weight 
+			WHERE `test_questions`.`id` = $test_question_id";
+		$mysqli->query($sql);
+			
+
+	}
+
 	public static function createQuestion($user_id, $fname, $category = 0, $difficulty = 0, $type = 0, $description = "", $args = []) {
 		global $mysqli;
 		$question_id = 0;
