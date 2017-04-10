@@ -80,7 +80,7 @@ class Test {
 		$result = $mysqli->query($sql);
 		while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
 			$out[] = [
-				`question_id`	=> $row[`question_id`],
+				`question_id`	=> (int) $row[`question_id`],
 				`solution`	=> $row['solution'],
 				'has_correct_function_modifier' => $row['has_correct_function_modifier'],
 				'has_correct_function_type' => $row['has_correct_function_type'],
