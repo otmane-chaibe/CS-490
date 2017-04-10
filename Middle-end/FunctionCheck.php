@@ -134,19 +134,21 @@ class FunctionCheck {
 	# (4) Check code output against expected output
 	# Todo: $result should be type casted to the return type of the function
 	private function verify_tests($results) {
-		$test_pass = true;
-		foreach ($this->unit_tests as $idx => $test) {
-			$this->unit_test_results[] = [
-				'output'   => $results[$idx],
-				'expected' => $test["output"],
-			];
-			if (in_array($test["output"], $results) === false) {
-				$test_pass = false;
+		if (!empty($results)) {
+			$test_pass = true;
+			foreach ($this->unit_tests as $idx => $test) {
+				$this->unit_test_results[] = [
+					'output'   => $results[$idx],
+					'expected' => $test["output"],
+				];
+				if (in_array($test["output"], $results) === false) {
+					$test_pass = false;
+				}
 			}
-		}
-		if ($test_pass) {
-			$this->passes_unit_tests = true;
-			$this->score += 50;
+			if ($test_pass) {
+				$this->passes_unit_tests = true;
+				$this->score += 50;
+			}
 		}
 		self::score();
 	}
@@ -203,6 +205,8 @@ class FunctionCheck {
 		$tests = [];
 		$inputs = [];
 		foreach ($this->unit_tests as $test) {
+			$params = [];
+			$inputs = [];
 			foreach ($test["inputs"] as $input) {
 				$inputs[] = ($input["type"] === 3 ? "\"" . $input["value"] . "\"" : (int) $input["value"]);
 			}

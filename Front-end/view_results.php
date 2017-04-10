@@ -110,20 +110,25 @@ function getUnitTestInputsAsString($inputs) {
 					$results = http(MIDDLE_END, "get_unit_test_results", [
 						'unit_test_id' => $unit_test['id']
 					]);
-
-					$expected = "";
-					if (isset($results[$key]['expected'])) {
-						$expected = $results[$key]['expected'];
+					foreach($results as $k => $r) {
+						$expected = "";
+						if (isset($r['expected'])) {
+							$expected = $r['expected'];
+						}
+						$output = "";
+						if (isset($r['output'])) {
+							$output = $r['output'];
+						}
+						echo '
+							<tr>
+								<td><b>' . getUnitTestInputsAsString($unit_test['inputs']) . '</b></td>
+								<td><b>' . $output . '</b></td>
+								<td><b>' . $expected . '</b></td>
+								<td><b>' . (strcasecmp((string) $output, (string) $expected) == 0 ? "True" : "False") . '</b></td>
+							</tr>
+						';
 					}
 
-					echo '
-						<tr>
-							<td><b>' . getUnitTestInputsAsString($unit_test['inputs']) . '</b></td>
-							<td><b>' . $unit_test['output'] . '</b></td>
-							<td><b>' . $expected . '</b></td>
-							<td><b>' . (strcasecmp((string) $unit_test['output'], (string) $expected) == 0 ? "True" : "False") . '</b></td>
-						</tr>
-					';
 				}
 				echo '
 					</tbody>
