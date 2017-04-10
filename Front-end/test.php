@@ -102,9 +102,9 @@ $q_ids = [];
 	</table>
 </div>
 <script>
-	let test_id = <?=$test_id?>;
-	let questions = <?=json_encode($seen)?>;
-	let question_bank = <?=json_encode($q_ids)?>;
+	var test_id = <?=$test_id?>;
+	var questions = <?=json_encode($seen)?>;
+	var question_bank = <?=json_encode($q_ids)?>;
 	<?php echo file_get_contents('js/sidebar.js') ?>
 </script>
 <?php
