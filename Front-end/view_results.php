@@ -38,14 +38,16 @@ function getUnitTestInputsAsString($inputs) {
 		$idx = 0;
 		foreach ($questions as $index => $q) {
 			$idx++;
-			echo '
-				<div class="question">' .
-					generate_question_description($q) . '
-					<textarea id="solution-' . $q['question_id'] . '" readonly>' .
-						$test_results[$idx-1]['solution'] .'
-					</textarea>
-				</div>
-			';
+			if (isset($test_results[$idx-1]['solution'])) {
+				echo '
+					<div class="question">' .
+						generate_question_description($q) . '
+						<textarea id="solution-' . $q['question_id'] . '" readonly>' .
+							$test_results[$idx-1]['solution'] .'
+						</textarea>
+					</div>
+				';
+			}
 		}
 	?>
 </div>
