@@ -48,7 +48,7 @@ foreach ($question_ids as $q_id) {
 	if ($unit_test === false) {
 		error("cURL request failed.");
 	}
-	$unit_tests[] = $unit_test;
+	$unit_tests[$q_id] = $unit_test;
 }
 
 foreach ($question_ids as $q_id) {
@@ -63,7 +63,8 @@ foreach ($question_ids as $q_id) {
 
 foreach ($student_solutions as $idx => $solution) {
 	try {
-		$f_check = new FunctionCheck($solution, $questions[$idx], $unit_tests[$idx]);
+		$q_id = $question_ids[$idx];
+		$f_check = new FunctionCheck($solution, $questions[$idx], $unit_tests[$q_id]);
 		if ($f_check->parse() === true) {
 			$f_check->compile();
 			$f_check->run_tests();
@@ -76,16 +77,33 @@ foreach ($student_solutions as $idx => $solution) {
 			"does_compile"                  => (int) $f_check->does_compile,
 			"passes_unit_tests"             => (int) $f_check->passes_unit_tests,
 		];
+		# die(var_dump($unit_tests[$q_id][$idx]));
+		# die(print_r($f_check->unit_test_results));
+		# Insert unit test results
+		foreach ($f_check->unit_test_results as $result) {
+			$unit_test_result_id = http(MIDDLE_END, "insert_unit_test_result", [
+				'unit_test_id' => $unit_tests[$q_id][$idx]['id'],
+				'output'       => $result['output'],
+				'expected'     => $result['expected'],
+			]);
+			if ($unit_test_result_id === false) {
+				error("cURL request failed.");
+			}
+		}
+
 		$score_id = http(MIDDLE_END, "insert_question_solution", [
 			"user_id"  => $_SESSION['user_id'],
+			"test_id"  => $test_id,
 			"q_id"     => $question_ids[$idx],
 			"solution" => $solution,
 			"results"  => json_encode($results),
 			"score"    => (int) $f_check->score,
 		]);
+
 		if ($score_id === false) {
 			error("cURL request failed.");
 		}
+
 		$scores[] = $f_check->score;
 		unset($f_check);
 	} catch (FileWriteException $ex) {

@@ -35,6 +35,7 @@ class FunctionCheck {
 	public $has_correct_function_params = false;
 	public $does_compile = false;
 	public $passes_unit_tests = false;
+	public $unit_test_results = [];
 	public $score = 0;
 
 	function __construct($student_solution, $question_solution, $unit_tests) {
@@ -134,7 +135,11 @@ class FunctionCheck {
 	# Todo: $result should be type casted to the return type of the function
 	private function verify_tests($results) {
 		$test_pass = true;
-		foreach ($this->unit_tests as $test) {
+		foreach ($this->unit_tests as $idx => $test) {
+			$this->unit_test_results[] = [
+				'output'   => $results[$idx],
+				'expected' => $test["output"],
+			];
 			if (in_array($test["output"], $results) === false) {
 				$test_pass = false;
 			}
