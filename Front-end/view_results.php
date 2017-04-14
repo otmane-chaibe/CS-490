@@ -4,8 +4,6 @@
 
 require_once('header.php');
 
-# if ($_SESSION['role'] == 0) {}
-
 $test_id = (int) $_GET['id'];
 
 $test_results = http(MIDDLE_END, "get_test_solutions", [
@@ -17,7 +15,7 @@ if ($test_results === false) {
 }
 
 $questions = http(MIDDLE_END, "get_questions_for_test", [
-	'test_id' => $test_id,
+	'test_id' => $test_id
 ]);
 
 if ($questions === false) {
@@ -26,30 +24,31 @@ if ($questions === false) {
 
 function getUnitTestInputsAsString($inputs) {
 	$input_arr = [];
-	foreach($inputs as $input) { $input_arr[] = $input['value']; }
+	foreach($inputs as $input) {
+		$input_arr[] = $input['value'];
+	}
 	return implode(",", $input_arr);
 }
 
 ?>
 
 <div id="results-wrapper">
-<!-- 	<h1>Test Results</h1> -->
-	<?php
-		$idx = 0;
-		foreach ($questions as $index => $q) {
-			$idx++;
-			if (isset($test_results[$idx-1]['solution'])) {
-				echo '
-					<div class="question">' .
-						generate_question_description($q) . '
-						<textarea id="solution-' . $q['question_id'] . '" readonly>' .
-							$test_results[$idx-1]['solution'] .'
-						</textarea>
-					</div>
-				';
-			}
+<?php
+	$idx = 0;
+	foreach ($questions as $index => $q) {
+		$idx++;
+		if (isset($test_results[$idx-1]['solution'])) {
+			echo '
+				<div class="question">' .
+					generate_question_description($q) . '
+					<textarea id="solution-' . $q['question_id'] . '" readonly>' .
+						$test_results[$idx-1]['solution'] .'
+					</textarea>
+				</div>
+			';
 		}
-	?>
+	}
+?>
 </div>
 <div id="results-table-wrapper">
 	<?php
@@ -63,7 +62,7 @@ function getUnitTestInputsAsString($inputs) {
 					<table class="result-table">
 						<thead>
 							<tr>
-								<td><div class="score">' . $result['score'] . '</div></td>
+								<td><input type="number" name="score" value="' . $result['score'] . '" step="1" min="0" max="100"></td>
 								<td>Pass</td>
 							</tr>
 						</thead>
@@ -126,7 +125,7 @@ function getUnitTestInputsAsString($inputs) {
 								<td><b>' . getUnitTestInputsAsString($unit_test['inputs']) . '</b></td>
 								<td><b>' . $output . '</b></td>
 								<td><b>' . $expected . '</b></td>
-								<td><b>' . (strcasecmp((string) $output, (string) $expected) == 0 ? "True" : "False") . '</b></td>
+								<td>' . (strcasecmp((string) $output, (string) $expected) == 0 ? "<div class=\"pass\">Yes</div>" : "<div>No</div>") . '</td>
 							</tr>
 						';
 					}

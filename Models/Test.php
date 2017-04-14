@@ -100,26 +100,29 @@ class Test {
 	public static function getTestSolutions($test_id) {
 		global $mysqli;
 		$out = [];
-		$sql = "SELECT `question_id`, `solution`,
-		`has_correct_function_modifier`, `has_correct_function_type`,
-		`has_correct_function_name`,
-		`has_correct_function_params`, `does_compile`,
-		`passes_unit_tests`, `score`, `remark`
-			FROM `student_solutions`
-			WHERE `test_id` = $test_id";
+		$sql = "
+			SELECT ss.question_id, ss.solution, ss.has_correct_function_modifier,
+			ss.has_correct_function_type, ss.has_correct_function_name,
+			ss.has_correct_function_params, ss.does_compile, ss.passes_unit_tests,
+			ss.score, ss.remark, test_questions.weight
+			FROM student_solutions AS ss
+			JOIN test_questions ON test_questions.question_id = ss.question_id
+			WHERE ss.test_id = $test_id
+		";
 		$result = $mysqli->query($sql);
 		while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
 			$out[] = [
-				'question_id'	=> (int) $row['question_id'],
-				'solution'	=> $row['solution'],
-				'has_correct_function_modifier' => $row['has_correct_function_modifier'],
-				'has_correct_function_type' => $row['has_correct_function_type'],
-				'has_correct_function_name' => $row['has_correct_function_name'],
-				'has_correct_function_params' => $row['has_correct_function_params'],
-				'does_compile'	=> $row['does_compile'],
-				'passes_unit_tests' => $row['passes_unit_tests'],
-				'score'		=> $row['score'],
-				'remark'	=> $row['remark'],
+				'question_id'	                => (int) $row['question_id'],
+				'solution'	                    => $row['solution'],
+				'has_correct_function_modifier' => (int) $row['has_correct_function_modifier'],
+				'has_correct_function_type'     => (int) $row['has_correct_function_type'],
+				'has_correct_function_name'     => (int) $row['has_correct_function_name'],
+				'has_correct_function_params'   => (int) $row['has_correct_function_params'],
+				'does_compile'	                => (int) $row['does_compile'],
+				'passes_unit_tests'             => (int) $row['passes_unit_tests'],
+				'score'		                    => (int) $row['score'],
+				'weight'		                => (int) ($row['weight'] * 100),
+				'remark'	                    => $row['remark'],
 			];
 		}
 		return $out;
@@ -189,9 +192,10 @@ class Test {
 
 	public static function updateQuestionScore($id, $passes_unit_tests, $score) {
 		global $mysqli;
-		$sql = "UPDATE `ks492`.`student_solutions`
-			SET `passes_unit_tests` = $passes_unit_tests, `score` =
-			$score WHERE `student_solutions`.`id` = $id";
+		$sql = "
+			UPDATE `ks492`.`student_solutions` SET `passes_unit_tests` = $passes_unit_tests, `score` = $score
+			WHERE `student_solutions`.`id` = $id
+		";
 		$mysqli->query($sql);
 
 	}
