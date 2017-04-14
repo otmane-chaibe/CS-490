@@ -12,34 +12,30 @@ button {
 	width: 100%
 }
 
-button, button:hover {
-	-webkit-transition: background 0.2s ease-in-out;
-    -moz-transition: background 0.2s ease-in-out;
-    transition: background 0.2s ease-in-out;
-}
+button, button:hover { transition: background 0.2s ease-in-out }
 
-button[disabled=disabled], button:disabled { opacity: 0.4 }
+button[disabled=disabled],
+button:disabled { opacity: 0.4 }
 
-button.blue { background: #5093E1 }
-button.blue:active { background: #4282CE !important}
-button.blue:hover  { background: #59A6FF }
-button.green { background: #4CD964 }
-button.green:active { background: #43B957 !important }
-button.green:hover  { background: #4FEA69 }
-button.delete { background: #ec4a39 url('../images/icon_delete.png') center center no-repeat; background-size: 24px }
-button.delete:active { background: #da4131 url('../images/icon_delete.png') center center no-repeat !important; background-size: 24px !important }
-button.delete:hover  { background: #fe4c39 url('../images/icon_delete.png') center center no-repeat; background-size: 24px }
+button.blue   { background: #5093E1 }
+button.green  { background: #4CD964 }
+button.red    { background: #8A0000 }
+button.delete { background: #ec4a39 }
 
-button.red { background: #8A0000 }
-button.red:active { background: #660101 !important}
-button.red:hover  { background: #BD0000 }
+button.blue:hover    { background: #59A6FF }
+button.green:hover   { background: #4FEA69 }
+button.red:hover     { background: #BD0000 }
+button.delete:active { background: #da4131 }
+
+button.blue:active   { background: #4282CE }
+button.green:active  { background: #43B957 }
+button.red:active    { background: #660101 }
+button.delete:hover  { background: #fe4c39 }
 
 #delete-btn {
 	display: none;
 	float: right;
 	opacity: 0;
-	-webkit-transition: opacity 0.25s ease-in-out;
-    -moz-transition: opacity 0.25s ease-in-out;
     transition: opacity 0.25s ease-in-out;
 	width: 40px
 }

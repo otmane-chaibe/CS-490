@@ -22,7 +22,7 @@ textarea[readonly] { background: rgba(0, 0, 0, .04) }
 	border-bottom: 1px solid rgba(0, 0, 0, .1);
 	color: #333;
 	font-size: 16px;
-	height: 800px;
+	height: 900px;
 	line-height: 26px;
 	padding: 40px 0
 }
@@ -47,21 +47,24 @@ textarea[readonly] { background: rgba(0, 0, 0, .04) }
 	padding: 0 10px
 }
 
-#results-table-wrapper .score {
-	background: #f1f8ff;
-    border: 1px solid #c8e1ff;
+#results-table-wrapper input[type=number] {
+	background: #f5f5f5;
+    border: 1px solid rgba(0, 0, 0, .1);
     border-radius: 4px;
     font-size: 16px;
     font-weight: 600;
-    padding: 4px 0;
+    padding: 4px;
     text-align: center;
-    width: 50px
+    width: 60px
 }
+
+#results-table-wrapper input[type=number]::-webkit-inner-spin-button,
+#results-table-wrapper input[type=number]::-webkit-outer-spin-button { opacity: 1 }
 
 #results-table-wrapper .result {
 	border-bottom: 1px solid rgba(0, 0, 0, .1);
-	height: 800px;
-	padding-top: 40px
+	height: 900px;
+	padding: 40px 0
 }
 
 #results-table-wrapper .result .header {
@@ -76,11 +79,12 @@ textarea[readonly] { background: rgba(0, 0, 0, .04) }
 	width: 100%
 }
 
-#results-table-wrapper .result-table td:nth-child(2n) { width: 70px }
+#results-table-wrapper .result-table td:nth-child(2n),
+#results-table-wrapper .unit-test-table td:nth-child(4n) { width: 70px }
 
 #results-table-wrapper table div {
-	background: #fff1f1;
-	border: 1px solid #ffc8c8;
+	background: #ffc8c8;
+    border: 1px solid #d94c4c;
     border-radius: 4px;
     font-size: 16px;
     font-weight: 600;
@@ -89,8 +93,8 @@ textarea[readonly] { background: rgba(0, 0, 0, .04) }
 }
 
 #results-table-wrapper table div.pass {
-	background: #f3fff1;
-	border: 1px solid #c8ffcb;
+    background: #c8ffcb;
+    border: 1px solid #4cd964
 }
 
 #results-table-wrapper .unit-test-table td {

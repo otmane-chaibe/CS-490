@@ -115,8 +115,8 @@
 }
 
 #question-list li p.easy strong {
-	background: #f3fff1;
-	border: 1px solid #c8ffcb;
+    background: #c8ffcb;
+    border: 1px solid #4cd964
 }
 
 #question-list li p.medium strong {

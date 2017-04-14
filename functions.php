@@ -19,7 +19,7 @@ ini_set('display_errors', 'On');
 define("BASE_URL", "https://web.njit.edu/~");
 
 # UCID constants for testing purposes
-define("BACK_END", "ks492/Back-end/"); #ks492
+define("BACK_END", "mma93/Back-end/"); #ks492
 define("MIDDLE_END", "mma93/Middle-end/");
 
 spl_autoload_register(function ($class) {
@@ -94,11 +94,11 @@ function get_args($args) {
 # Global type to string function
 function type_to_string($type) {
 	switch ($type) {
-		case 0: return "Int";
-		case 1: return "Float";
-		case 2: return "Double";
-		case 3; return "String";
-		case 4: return "Boolean";
+		case 0:  return "Int";
+		case 1:  return "Float";
+		case 2:  return "Double";
+		case 3;  return "String";
+		case 4:  return "Boolean";
 		default: return "Int";
 	}
 }
@@ -107,11 +107,11 @@ function type_to_string($type) {
 function get_type_from($str) {
 	if (empty($str)) { return 0; }
 	switch ($str) {
-		case "int": return 0;
-		case "float": return 1;
+		case "int":    return 0;
+		case "float":  return 1;
 		case "double": return 2;
 		case "string": return 3;
-		case "bool": return 4;
-		default: return 0;
+		case "bool":   return 4;
+		default:       return 0;
 	}
 }
