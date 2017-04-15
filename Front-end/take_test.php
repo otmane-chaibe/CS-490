@@ -41,7 +41,10 @@ if ($questions === false) {
 				$idx++;
 				echo '
 					<li>
-						' . $idx . generate_question_description($q) . '
+						<strong>' . ($q['weight'] * 100) . ' pts</strong>
+						<p>'
+							. generate_question_description($q) . '
+						</p>
 						<textarea id="solution-' . $q['question_id'] . '"></textarea>
 					</li>
 				';
