@@ -41,21 +41,19 @@ class Test {
 		return $out;
 	}
 
-	# User here is student
-	public static function getAvailableTestsUser($user_id) {
+	public static function getAvailableStudentTests($user_id) {
 		global $mysqli;
 		$out = [];
 		$sql = "
-			SELECT student_tests.id, student_tests.user_id, student_tests.test_id, tests.name AS name
-			FROM student_tests JOIN tests ON student_tests.test_id = tests.id WHERE student_tests.completed = 0
+			SELECT id, `name`, created FROM tests
+			WHERE id NOT IN (SELECT id FROM student_tests WHERE user_id = $user_id)
 		";
 		$result = $mysqli->query($sql);
 		while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
 			$out[] = [
 				'id'	  => (int) $row['id'],
-				'user_id' => (int) $row['user_id'],
-				'test_id' => (int) $row['test_id'],
 				'name'    => $row['name'],
+				'created' => $row['created'],
 			];
 		}
 
@@ -193,7 +191,7 @@ class Test {
 	public static function updateQuestionScore($id, $passes_unit_tests, $score) {
 		global $mysqli;
 		$sql = "
-			UPDATE `ks492`.`student_solutions` SET `passes_unit_tests` = $passes_unit_tests, `score` = $score
+			UPDATE `student_solutions` SET `passes_unit_tests` = $passes_unit_tests, `score` = $score
 			WHERE `student_solutions`.`id` = $id
 		";
 		$mysqli->query($sql);
@@ -202,7 +200,7 @@ class Test {
 
 	public static function insertRemark($id, $remark) {
 		global $mysqli;
-		$sql = "UPDATE `ks492`.`student_solutions` SET `remark` = $remark WHERE
+		$sql = "UPDATE `student_solutions` SET `remark` = $remark WHERE
 		`student_solutions`.`id` = $id";
 		$mysqli->query($sql);
 

@@ -13,4 +13,4 @@ if (!isset($_POST['user_id'])) {
 
 $user_id = (int) $_POST['user_id'];
 
-echo json_encode(Test::getAvailableTestsUser($user_id));
+echo json_encode(Test::getAvailableStudentTests($user_id));
