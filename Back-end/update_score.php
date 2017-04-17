@@ -15,4 +15,4 @@ if(!isset($_POST['id']) || !isset($_POST['score']))
 $id = (int) $_POST['id'];
 $score = (int) $_POST['score'];
 
-echo json_encode(Test::updateScore($id, $score));
+echo json_encode(Test::updateQuestionScore($id, $score));
