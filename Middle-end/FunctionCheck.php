@@ -179,7 +179,8 @@ class FunctionCheck {
 			$s_param_types[] = strtolower($param["type"]);
 		}
 
-		if ($param_names == $s_param_names && $param_types == $s_param_types) {
+		if ($param_types == $s_param_types) {
+			echo "Params matched\n";
 			$this->has_correct_function_params = true;
 			$this->score += 10;
 		}

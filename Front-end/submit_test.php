@@ -7,6 +7,10 @@ require_once('../Middle-end/FunctionCheck.php');
 
 session_start();
 
+if (!isset($_SESSION['user_id'])) {
+	error("Must be logged in.", 403);
+}
+
 header('Content-Type: application/json');
 
 assertPost();
