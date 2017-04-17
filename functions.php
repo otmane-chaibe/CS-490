@@ -64,10 +64,10 @@ function redirect($to) {
 }
 
 # Global error function
-function error($error) {
+function error($error, $code = 400) {
 	header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad Request');
 	die(json_encode([
-		'status'   => 400,
+		'status'   => $code,
 		'response' => $error,
 	]));
 }
