@@ -63,31 +63,38 @@ function getUnitTestInputsAsString($inputs) {
 						<thead>
 							<tr>
 								<td><input type="number" name="score" value="' . $result['score'] . '" step="1" min="0" max="100"></td>
+								<td>Points</td>
 								<td>Pass</td>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
 								<td>Function Modifier</td>
+								<td>10</td>
 								<td>' . ($result['has_correct_function_modifier'] == 1 ? "<div class=\"pass\">Yes</div>" : "<div>No</div>") .'</td>
 							</tr>
 							<tr>
 								<td>Function Type</td>
+								<td>10</td>
 								<td>' . ($result['has_correct_function_type'] == 1 ? "<div class=\"pass\">Yes</div>" : "<div>No</div>") .'</td>
 							</tr>
 							<tr>
 								<td>Function Name</td>
+								<td>10</td>
 								<td>' . ($result['has_correct_function_name'] == 1 ? "<div class=\"pass\">Yes</div>" : "<div>No</div>") .'</td>
 							</tr>
 								<td>Function Params</td>
+								<td>10</td>
 								<td>' . ($result['has_correct_function_params'] == 1 ? "<div class=\"pass\">Yes</div>" : "<div>No</div>") .'</td>
 							</tr>
 							<tr>
 								<td>Compiles</td>
+								<td>10</td>
 								<td>' . ($result['does_compile'] == 1 ? "<div class=\"pass\">Yes</div>" : "<div>No</div>") .'</td>
 							</tr>
 							<tr>
 								<td>Passes Unit Tests</td>
+								<td>50</td>
 								<td>' . ($result['passes_unit_tests'] == 1 ? "<div class=\"pass\">Yes</div>" : "<div>No</div>") .'</td>
 							</tr>
 						</tbody>

@@ -69,7 +69,7 @@ textarea[readonly] { background: rgba(0, 0, 0, .04) }
 
 #results-table-wrapper .result .header {
     font-weight: 600;
-    margin-bottom: 20px
+    margin: 0 0 20px 5px
 }
 
 #results-table-wrapper table {
@@ -79,13 +79,19 @@ textarea[readonly] { background: rgba(0, 0, 0, .04) }
 	width: 100%
 }
 
-#results-table-wrapper .result-table td:nth-child(2n),
-#results-table-wrapper .unit-test-table td:nth-child(4n) { width: 70px }
+
+#results-table-wrapper .result-table td:nth-child(2n) { text-align: center }
+#results-table-wrapper .result-table td:nth-child(3n),
+#results-table-wrapper .unit-test-table td:nth-child(4n) {
+	text-align: center;
+	width: 70px
+}
 
 #results-table-wrapper table div {
 	background: #ffc8c8;
     border: 1px solid #d94c4c;
     border-radius: 4px;
+    color: #c32020;
     font-size: 16px;
     font-weight: 600;
     padding: 4px 0;
@@ -94,7 +100,8 @@ textarea[readonly] { background: rgba(0, 0, 0, .04) }
 
 #results-table-wrapper table div.pass {
     background: #c8ffcb;
-    border: 1px solid #4cd964
+    border: 1px solid #4cd964;
+    color: #20c33c
 }
 
 #results-table-wrapper .unit-test-table td {
