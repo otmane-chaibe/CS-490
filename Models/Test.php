@@ -188,14 +188,37 @@ class Test {
 		return $mysqli->insert_id;
 	}
 
-	public static function updateQuestionScore($id, $passes_unit_tests, $score) {
+	public static function updateQuestionScore($id, $score) {
 		global $mysqli;
 		$sql = "
-			UPDATE `student_solutions` SET `passes_unit_tests` = $passes_unit_tests, `score` = $score
+			UPDATE `student_solutions` SET `score` = $score
 			WHERE `student_solutions`.`id` = $id
 		";
 		$mysqli->query($sql);
 
+	}
+
+	public static function getQuestionScore($test_id){
+		global $mysqli;
+		$sql = "SELECT `id`, `score` FROM `student_solutions`
+			WHERE `test_id`=$test_id";
+		$result = $mysqli->query($sql);
+		while ($row = $result->fetch_array(MYSQLI_ASSOC)){
+			$out[] = [
+				`id` 	=> (int) $row['id'],
+				`score` => (int) $row[`score`],
+			];
+		}
+		return $out;
+
+	}
+
+	public static function updateTestScore($test_id, $score)
+	{
+		global $mysqli;
+		$sql = "UPDATE `student_tests` SET `score` = $score
+			WHERE `test_id` = $test_id";
+		$mysqli->query($sql);
 	}
 
 	public static function insertRemark($id, $remark) {
