@@ -26,6 +26,8 @@ body, h1, h2, h3, h4, h5, h6, p, ul {
 	padding: 0
 }
 
+h1 { font-size: 30px }
+
 a, a:visited {
 	color: #C7273F;
 	text-decoration: none
@@ -33,12 +35,16 @@ a, a:visited {
 
 a:hover, a:focus, a:active { text-decoration: underline }
 
+b { font-weight: 600 }
+
 ul { list-style-type: none }
 
 table {
     border-spacing: 0;
     border-collapse: separate
 }
+
+thead { font-weight: 600 }
 
 header {
 	background: #8A0000 url('../images/njit.png') no-repeat 40px center;
