@@ -96,7 +96,7 @@ $test_question_ids = [];
 				echo '
 					<tr>
 						<td>' . $question['function_name'] . '</td>
-						<td><input id="weight-' . $id . '" type="text" value="' . ($question['weight'] * 100) . '" /></td>
+						<td><input id="weight-' . $id . '" type="number" value="' . ($question['weight'] * 100) . '" min="0" max="100" step="5" /></td>
 						<td><button id="delete' . $id . '" type="button" class="red">Delete</button></td>
 					</tr>
 				';

@@ -29,13 +29,17 @@
 }
 
 #test-wrapper table td:nth-child(2) input {
+	border: 1px solid #E0E2EA;
+	border-radius: 4px;
 	margin: auto;
+	padding: 8px 4px;
 	text-align: center;
 	width: 55px
 }
 #test-wrapper table td:nth-child(2) { width: 80px }
 #test-wrapper table td:last-child   { width: 80px }
 
+#test-wrapper table tbody tr:first-child td { border-top: 1px solid #E0E2EA }
 #test-wrapper table tr:last-child td { border-bottom: 0 }
 
 #test-msg-output { font-weight: 600 }
