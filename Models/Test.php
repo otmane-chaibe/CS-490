@@ -188,6 +188,7 @@ class Test {
 		return $mysqli->insert_id;
 	}
 
+	# Todo: update total test score after changing question score.
 	public static function updateQuestionScore($id, $score) {
 		global $mysqli;
 		$sql = "
@@ -198,23 +199,21 @@ class Test {
 
 	}
 
-	public static function getQuestionScore($test_id){
+	public static function getQuestionScore($test_id) {
 		global $mysqli;
-		$sql = "SELECT `id`, `score` FROM `student_solutions`
-			WHERE `test_id`=$test_id";
+		$sql = "
+			SELECT `id`, `score` FROM `student_solutions`
+			WHERE `test_id` = $test_id
+		";
 		$result = $mysqli->query($sql);
-		while ($row = $result->fetch_array(MYSQLI_ASSOC)){
-			$out[] = [
-				`id` 	=> (int) $row['id'],
-				`score` => (int) $row[`score`],
-			];
-		}
-		return $out;
-
+		$row = $result->fetch_array(MYSQLI_ASSOC);
+		return [
+			'id' 	=> (int) $row['id'],
+			'score' => (int) $row['score'],
+		];
 	}
 
-	public static function updateTestScore($test_id, $score)
-	{
+	public static function updateTestScore($test_id, $score) {
 		global $mysqli;
 		$sql = "UPDATE `student_tests` SET `score` = $score
 			WHERE `test_id` = $test_id";
