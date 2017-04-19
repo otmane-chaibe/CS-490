@@ -15,7 +15,7 @@ if (!isset($_POST['weight'])) {
 }
 
 $test_question_id = (int) $_POST['test_question_id'];
-$weight = (double) $_POST['weight'];
+$weight = ((double) $_POST['weight'] / 100);
 
 $resp = http(MIDDLE_END, "update_question_weight", [
 	'test_question_id' => $test_question_id,
