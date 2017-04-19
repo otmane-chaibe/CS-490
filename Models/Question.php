@@ -224,7 +224,6 @@ class Question {
 		$result = $mysqli->query($sql);
 		$row = $result->fetch_array(MYSQLI_ASSOC);
 		return $row['weight'];
-
 	}
 
 	private static function get_str_from_type($type) {
