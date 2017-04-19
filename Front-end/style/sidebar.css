@@ -91,8 +91,6 @@
 	position: relative
 }
 
-#question-list li:first-child { border-top: 1px solid rgba(0, 0, 0, .1) }
-
 #question-list li:first-child:hover { border-top: 1px solid #ffc8c8 }
 
 #question-list li:hover {
@@ -121,10 +119,10 @@
 
 #question-list li p.medium strong {
 	background: #fffbf1;
-	border: 1px solid #ffdfc8;
+	border: 1px solid #ffdfc8
 }
 
 #question-list li p.difficult strong {
-	background: #fff1f1;
-	border: 1px solid #ffc8c8;
+	background: #ffc8c8;
+	border: 1px solid #d94c4c
 }
