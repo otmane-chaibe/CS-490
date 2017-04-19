@@ -53,7 +53,6 @@ textarea[readonly] { background: rgba(0, 0, 0, .04) }
     border: 1px solid rgba(0, 0, 0, .1);
     border-radius: 4px;
     font-size: 16px;
-    font-weight: 600;
     padding: 4px;
     text-align: center;
     width: 60px
