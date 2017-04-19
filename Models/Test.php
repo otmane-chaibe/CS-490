@@ -119,7 +119,7 @@ class Test {
 				'does_compile'	                => (int) $row['does_compile'],
 				'passes_unit_tests'             => (int) $row['passes_unit_tests'],
 				'score'		                    => (int) $row['score'],
-				'weight'		                => (int) ($row['weight'] * 100),
+				'weight'		                => (double) $row['weight'],
 				'remark'	                    => $row['remark'],
 			];
 		}
@@ -180,10 +180,12 @@ class Test {
 		$has_correct_function_params = (int) $results->has_correct_function_params;
 		$does_compile = (int) $results->does_compile;
 		$passes_unit_tests = (int) $results->passes_unit_tests;
-		$sql = "INSERT INTO student_solutions (user_id, test_id, question_id, solution, has_correct_function_modifier, has_correct_function_type,
-				has_correct_function_name, has_correct_function_params, does_compile, passes_unit_tests, score)
-				VALUES ($user_id, $test_id, $question_id, '$solution', $has_correct_function_modifier, $has_correct_function_type, $has_correct_function_name,
-				$has_correct_function_params, $does_compile, $passes_unit_tests, $score)";
+		$sql = "
+			INSERT INTO student_solutions (user_id, test_id, question_id, solution, has_correct_function_modifier, has_correct_function_type,
+			has_correct_function_name, has_correct_function_params, does_compile, passes_unit_tests, score)
+			VALUES ($user_id, $test_id, $question_id, '$solution', $has_correct_function_modifier, $has_correct_function_type, $has_correct_function_name,
+			$has_correct_function_params, $does_compile, $passes_unit_tests, $score)
+			";
 		$mysqli->query($sql);
 		return $mysqli->insert_id;
 	}
@@ -196,7 +198,6 @@ class Test {
 			WHERE `student_solutions`.`id` = $id
 		";
 		$mysqli->query($sql);
-
 	}
 
 	public static function getQuestionScore($test_id) {
