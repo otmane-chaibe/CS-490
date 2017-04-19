@@ -191,13 +191,23 @@ class Test {
 	}
 
 	# Todo: update total test score after changing question score.
-	public static function updateQuestionScore($id, $score) {
+	public static function updateQuestionScore($id, $test_id, $score) {
 		global $mysqli;
 		$sql = "
 			UPDATE `student_solutions` SET `score` = $score
 			WHERE `student_solutions`.`id` = $id
 		";
 		$mysqli->query($sql);
+
+		$sql1 = "
+		        UPDATE `student_tests` 
+			SET score=(SELECT SUM(score) 
+			FROM `student_solutions` 
+			WHERE `test_id` = $test_id)
+			WHERE `test_id`= $test_id
+													                ";
+		$mysqli->query($sql1);
+
 	}
 
 	public static function getQuestionScore($test_id) {
@@ -212,6 +222,17 @@ class Test {
 			'id' 	=> (int) $row['id'],
 			'score' => (int) $row['score'],
 		];
+	}
+
+	public static function updateExamScore($test_id) {
+		global $mysqli;
+		$sql = "
+			UPDATE `student_tests` 
+			SET score=(SELECT SUM(score) FROM `student_solutions`
+			WHERE `test_id` = $test_id) WHERE `test_id`= $test_id
+		";
+	
+
 	}
 
 	public static function updateTestScore($test_id, $score) {
