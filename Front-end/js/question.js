@@ -99,7 +99,6 @@ byId('add-unit-test').onclick = function(e) {
 	tr.setAttribute("id", "inputrow" + count)
 	tr.innerHTML = html
 	tests.appendChild(tr)
-	// Add the same number of unit test inputs as function arguments
 	var list = byId("inputs" + count)
 	var argCount = byId("arguments").children.length
 	for (var i = 0; i < argCount; i++) {
