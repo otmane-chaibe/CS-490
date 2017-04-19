@@ -198,15 +198,14 @@ class Test {
 			WHERE `student_solutions`.`id` = $id
 		";
 		$mysqli->query($sql);
-
-		$sql1 = "
-		        UPDATE `student_tests` 
-			SET score=(SELECT SUM(score) 
-			FROM `student_solutions` 
+		$sql = "
+		    UPDATE `student_tests`
+		    SET score=(SELECT SUM(score)
+			FROM `student_solutions`
 			WHERE `test_id` = $test_id)
 			WHERE `test_id`= $test_id
-													                ";
-		$mysqli->query($sql1);
+		";
+		$mysqli->query($sql);
 
 	}
 
@@ -227,12 +226,10 @@ class Test {
 	public static function updateExamScore($test_id) {
 		global $mysqli;
 		$sql = "
-			UPDATE `student_tests` 
+			UPDATE `student_tests`
 			SET score=(SELECT SUM(score) FROM `student_solutions`
 			WHERE `test_id` = $test_id) WHERE `test_id`= $test_id
 		";
-	
-
 	}
 
 	public static function updateTestScore($test_id, $score) {
@@ -266,11 +263,13 @@ class Test {
 	public static function getReleasedTests() {
 		global $mysqli;
 		$out = [];
-		$sql = "SELECT `id`, `user_id`, `test_id`, `score`
+		$sql = "
+			SELECT `id`, `user_id`, `test_id`, `score`
 			FROM `student_tests`
-			WHERE `released`=1";
+			WHERE `released` = 1
+		";
 		$result = $mysqli->query($sql);
-                while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+        while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
 			$out[] = [
 				'id'	  => (int) $row['id'],
 				'user_id' => (int) $row['user_id'],
