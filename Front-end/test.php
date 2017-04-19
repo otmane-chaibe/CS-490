@@ -83,7 +83,7 @@ $test_question_ids = [];
 		<thead>
 			<tr>
 				<td>Question</td>
-				<td>Weight</td>
+				<td>Points</td>
 				<td>Action</td>
 			</tr>
 		</thead>
@@ -93,13 +93,22 @@ $test_question_ids = [];
 			foreach($test_questions as $id => $question) {
 				$seen[] = $id;
 				$test_question_ids[] = $question['id'];
-				echo '<tr>';
-				echo '<td>' . $question['function_name'] . '</td>';
-				echo '<td><input id="weight-' . $id . '" type="text" value="' . ($question['weight'] * 100) . '" /></td>';
-				echo '<td><button id="delete' . $id . '" class="red">Delete</button></td>';
-				echo '</tr>';
+				echo '
+					<tr>
+						<td>' . $question['function_name'] . '</td>
+						<td><input id="weight-' . $id . '" type="text" value="' . ($question['weight'] * 100) . '" /></td>
+						<td><button id="delete' . $id . '" type="button" class="red">Delete</button></td>
+					</tr>
+				';
 			}
 		?>
+			<tr>
+				<td><div id="test-msg-output"></div></td>
+				<td></td>
+				<td>
+					<button id="update-weight-btn" type="button" class="green">Save</button>
+				</td>
+			</tr>
 		</tbody>
 	</table>
 </div>
