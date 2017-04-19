@@ -62,7 +62,7 @@ function getUnitTestInputsAsString($inputs) {
 					<table class="result-table">
 						<thead>
 							<tr>
-								<td><input type="number" name="score" value="' . $result['score'] . '" step="1" min="0" max="100"></td>
+								<td>Criteria</td>
 								<td>Points</td>
 								<td>Pass</td>
 							</tr>
@@ -70,32 +70,37 @@ function getUnitTestInputsAsString($inputs) {
 						<tbody>
 							<tr>
 								<td>Function Modifier</td>
-								<td>10</td>
+								<td>' . ($result['has_correct_function_modifier'] == 1 ? ((double) $result['weight'] * 10) : "0") .'</td>
 								<td>' . ($result['has_correct_function_modifier'] == 1 ? "<div class=\"pass\">Yes</div>" : "<div>No</div>") .'</td>
 							</tr>
 							<tr>
 								<td>Function Type</td>
-								<td>10</td>
+								<td>' . ($result['has_correct_function_type'] == 1 ? ((double) $result['weight'] * 10) : "0") .'</td>
 								<td>' . ($result['has_correct_function_type'] == 1 ? "<div class=\"pass\">Yes</div>" : "<div>No</div>") .'</td>
 							</tr>
 							<tr>
 								<td>Function Name</td>
-								<td>10</td>
+								<td>' . ($result['has_correct_function_name'] == 1 ? ((double) $result['weight'] * 10) : "0") .'</td>
 								<td>' . ($result['has_correct_function_name'] == 1 ? "<div class=\"pass\">Yes</div>" : "<div>No</div>") .'</td>
 							</tr>
 								<td>Function Params</td>
-								<td>10</td>
+								<td>' . ($result['has_correct_function_params'] == 1 ? ((double) $result['weight'] * 10) : "0") .'</td>
 								<td>' . ($result['has_correct_function_params'] == 1 ? "<div class=\"pass\">Yes</div>" : "<div>No</div>") .'</td>
 							</tr>
 							<tr>
 								<td>Compiles</td>
-								<td>10</td>
+								<td>' . ($result['does_compile'] == 1 ? ((double) $result['weight'] * 10) : "0") .'</td>
 								<td>' . ($result['does_compile'] == 1 ? "<div class=\"pass\">Yes</div>" : "<div>No</div>") .'</td>
 							</tr>
 							<tr>
 								<td>Passes Unit Tests</td>
-								<td>50</td>
+								<td>' . ($result['passes_unit_tests'] == 1 ? ((double) $result['weight'] * 50) : "0") .'</td>
 								<td>' . ($result['passes_unit_tests'] == 1 ? "<div class=\"pass\">Yes</div>" : "<div>No</div>") .'</td>
+							</tr>
+							<tr>
+								<td><b>Total</b></td>
+								<td><input type="number" name="score" value="' . ((double) $result['weight'] * $result['score']) . '" step="1" min="0" max="100"></td>
+								<td><b>' . ((double) $result['weight'] * 100) . '</b></td>
 							</tr>
 						</tbody>
 					</table>
@@ -129,9 +134,9 @@ function getUnitTestInputsAsString($inputs) {
 						}
 						echo '
 							<tr>
-								<td><b>' . getUnitTestInputsAsString($unit_test['inputs']) . '</b></td>
-								<td><b>' . $output . '</b></td>
-								<td><b>' . $expected . '</b></td>
+								<td>' . getUnitTestInputsAsString($unit_test['inputs']) . '</td>
+								<td>' . $output . '</td>
+								<td>' . $expected . '</td>
 								<td>' . (strcasecmp((string) $output, (string) $expected) == 0 ? "<div class=\"pass\">Yes</div>" : "<div>No</div>") . '</td>
 							</tr>
 						';
