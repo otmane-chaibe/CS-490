@@ -21,12 +21,12 @@ class Test {
 		return $out;
 	}
 
-	public static function getPendingTests() {
+	public static function getPendingTests($user_id) {
 		global $mysqli;
 		$out = [];
 		$sql = "
-			SELECT student_tests.id, student_tests.user_id, student_tests.test_id, tests.name AS name, student_tests.score
-			FROM student_tests JOIN tests ON student_tests.test_id = tests.id WHERE student_tests.released = 0
+			SELECT student_tests.id, student_tests.user_id, student_tests.test_id, tests.name AS `name`, student_tests.score
+			FROM student_tests JOIN tests ON student_tests.test_id = tests.id AND tests.user_id = $user_id WHERE student_tests.released = 0
 		";
 		$result = $mysqli->query($sql);
 		while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
