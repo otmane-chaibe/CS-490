@@ -26,4 +26,4 @@ if ($resp === false) {
 	error("cURL request failed.");
 }
 
-echo json_encode(true);
+echo $resp;

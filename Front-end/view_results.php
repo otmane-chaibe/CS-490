@@ -31,7 +31,6 @@ function getUnitTestInputsAsString($inputs) {
 }
 
 ?>
-
 <div id="results-wrapper">
 <?php
 	$idx = 0;
@@ -88,7 +87,7 @@ function getUnitTestInputsAsString($inputs) {
 								<td>' . ($result['has_correct_function_params'] == 1 ? "<div class=\"pass\">Yes</div>" : "<div>No</div>") .'</td>
 							</tr>
 							<tr>
-								<td>Compiles</td>
+								<td>Code Compiles</td>
 								<td>' . ($result['does_compile'] == 1 ? ((double) $result['weight'] * 10) : "0") .'</td>
 								<td>' . ($result['does_compile'] == 1 ? "<div class=\"pass\">Yes</div>" : "<div>No</div>") .'</td>
 							</tr>
@@ -99,12 +98,21 @@ function getUnitTestInputsAsString($inputs) {
 							</tr>
 							<tr>
 								<td><b>Total</b></td>
-								<td><input type="number" name="score" value="' . ((double) $result['weight'] * $result['score']) . '" step="1" min="0" max="100"></td>
+								<td>';
+								if ($_SESSION['role'] == 1) {
+									echo '
+										<input id="score-counter-' . $result['question_id'] . '" type="number" name="score" value="' .
+										((double) $result['weight'] * $result['score']) . '" step="1" min="0" max="100" />
+									';
+								} else {
+									echo (double) $result['weight'] * $result['score'];
+								}
+								echo '
+								</td>
 								<td><b>' . ((double) $result['weight'] * 100) . '</b></td>
 							</tr>
 						</tbody>
-					</table>
-			';
+					</table>';
 			if (!empty($unit_tests)) {
 				echo '
 					<div class="header">Unit Tests</div>
@@ -149,10 +157,22 @@ function getUnitTestInputsAsString($inputs) {
 				';
 				echo '
 					<div class="header">Remark</div>
-					<textarea id="remark" placeholder="Question Remark"' . ($_SESSION['role'] == 0 ? "readonly" : "") . '>' . $result['remark'] . '</textarea>
+					<textarea id="remark-' . $result['question_id'] . '" placeholder="Question Remark"' . ($_SESSION['role'] == 0 ? "readonly" : "") . '>' . $result['remark'] . '</textarea>
 				';
+				if ($_SESSION['role'] == 1) {
+					echo '<button id="question-edit-btn-' . $result['question_id'] . '" type="button" data-id="' . $result['id'] . '" class="blue">Save Changes</button>';
+				}
 			}
 			echo '</div>';
 		}
 	?>
 </div>
+<script type="text/javascript">
+	let questions =  JSON.parse('<?=json_encode($questions)?>')
+	let identifiers = Object.keys(questions)
+	var testID = <?=$test_id?>
+</script>
+<?php
+	$js = "view_results";
+	require_once('footer.php');
+?>

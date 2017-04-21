@@ -94,7 +94,8 @@ textarea[readonly] { background: rgba(0, 0, 0, .04) }
     color: #c32020;
     font-size: 16px;
     font-weight: 600;
-    padding: 4px 0;
+    height: 26px;
+	padding-top: 3px;
     text-align: center
 }
 
@@ -119,3 +120,5 @@ textarea[readonly] { background: rgba(0, 0, 0, .04) }
 }
 
 #results-table-wrapper tbody tr:last-child td  { border-bottom: 0 }
+
+#results-table-wrapper button { margin-top: 20px }

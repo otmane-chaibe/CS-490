@@ -15,4 +15,6 @@ if(!isset($_POST['id']) || !isset($_POST['remark']))
 $id=(int) $_POST['id'];
 $remark=$_POST['remark'];
 
-echo json_encode(Test::insertRemark($id, $remark));
+Test::insertRemark($id, $remark);
+
+echo json_encode(true);

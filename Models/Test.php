@@ -99,7 +99,7 @@ class Test {
 		global $mysqli;
 		$out = [];
 		$sql = "
-			SELECT ss.question_id, ss.solution, ss.has_correct_function_modifier,
+			SELECT ss.id, ss.question_id, ss.solution, ss.has_correct_function_modifier,
 			ss.has_correct_function_type, ss.has_correct_function_name,
 			ss.has_correct_function_params, ss.does_compile, ss.passes_unit_tests,
 			ss.score, ss.remark, test_questions.weight
@@ -110,6 +110,7 @@ class Test {
 		$result = $mysqli->query($sql);
 		while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
 			$out[] = [
+				'id'                            => (int) $row['id'],
 				'question_id'	                => (int) $row['question_id'],
 				'solution'	                    => $row['solution'],
 				'has_correct_function_modifier' => (int) $row['has_correct_function_modifier'],
@@ -206,7 +207,6 @@ class Test {
 			WHERE `test_id`= $test_id
 		";
 		$mysqli->query($sql);
-
 	}
 
 	public static function getQuestionScore($test_id) {
@@ -234,17 +234,17 @@ class Test {
 
 	public static function updateTestScore($test_id, $score) {
 		global $mysqli;
-		$sql = "UPDATE `student_tests` SET `score` = $score
-			WHERE `test_id` = $test_id";
+		$sql = "
+			UPDATE `student_tests` SET `score` = $score
+			WHERE `test_id` = $test_id
+		";
 		$mysqli->query($sql);
 	}
 
 	public static function insertRemark($id, $remark) {
 		global $mysqli;
-		$sql = "UPDATE `student_solutions` SET `remark` = $remark WHERE
-		`student_solutions`.`id` = $id";
+		$sql = "UPDATE `student_solutions` SET `remark` = '$remark' WHERE `id` = $id";
 		$mysqli->query($sql);
-
 	}
 
 	public static function insertTestScore($user_id, $test_id, $score) {
