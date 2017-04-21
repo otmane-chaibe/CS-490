@@ -109,7 +109,7 @@ class Test {
 		";
 		$result = $mysqli->query($sql);
 		while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-			$out[] = [
+			$out[(int) $row['question_id']] = [
 				'id'                            => (int) $row['id'],
 				'question_id'	                => (int) $row['question_id'],
 				'solution'	                    => $row['solution'],

@@ -17,17 +17,17 @@ class UnitTest {
 		return $unit_test_id;
 	}
 
-	public static function insertUnitTestResult($unit_test_id, $output, $expected) {
+	public static function insertUnitTestResult($test_id, $unit_test_id, $output, $expected) {
 		global $mysqli;
-		$sql = "INSERT INTO unit_test_results (unit_test_id, output, expected) VALUES ($unit_test_id, '$output', '$expected')";
+		$sql = "INSERT INTO unit_test_results (test_id, unit_test_id, output, expected) VALUES ($test_id, $unit_test_id, '$output', '$expected')";
 		$mysqli->query($sql);
 		return $mysqli->insert_id;
 	}
 
-	public static function getUnitTestResults($unit_test_id) {
+	public static function getUnitTestResults($unit_test_id, $test_id) {
 		global $mysqli;
 		$unit_test_results = [];
-		$sql = "SELECT output,expected FROM unit_test_results WHERE unit_test_id = $unit_test_id";
+		$sql = "SELECT output,expected FROM unit_test_results WHERE unit_test_id = $unit_test_id AND test_id = $test_id";
 		$result = $mysqli->query($sql);
 		while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
 			$unit_test_results[] = [

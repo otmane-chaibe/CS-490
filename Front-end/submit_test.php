@@ -93,6 +93,7 @@ foreach ($student_solutions as $idx => $solution) {
 		# Insert unit test results
 		foreach ($f_check->unit_test_results as $key => $result) {
 			$unit_test_result_id = http(MIDDLE_END, "insert_unit_test_result", [
+				'test_id'      => $test_id,
 				'unit_test_id' => $unit_tests[$q_id][$key]['id'],
 				'output'       => $result['output'],
 				'expected'     => $result['expected'],

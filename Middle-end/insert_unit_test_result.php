@@ -6,6 +6,10 @@ require_once('../functions.php');
 
 assertPost();
 
+if (!isset($_POST['test_id'])) {
+	error("Missing Parameter: test_id.");
+}
+
 if (!isset($_POST['unit_test_id'])) {
 	error("Missing Parameter: unit_test_id.");
 }
@@ -18,11 +22,13 @@ if (!isset($_POST['expected'])) {
 	error("Missing Parameter: expected.");
 }
 
+$test_id = (int) $_POST['test_id'];
 $unit_test_id = (int) $_POST['unit_test_id'];
 $output = $_POST['output'];
 $expected = $_POST['expected'];
 
 $unit_test_result_id = http(BACK_END, "insert_unit_test_result", [
+	'test_id'      => $test_id,
 	'unit_test_id' => $unit_test_id,
 	'output'       => $output,
 	'expected'     => $expected,
