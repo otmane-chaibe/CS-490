@@ -4,16 +4,22 @@
 
 require_once('../functions.php');
 
-assertPost();
+session_start();
 
-if (!isset($_POST['test_id'])) {
-	error("Missing Parameter: test_id.");
+if (!isset($_SESSION['user_id'])) {
+	error("Must be logged in.", 403);
 }
 
-$test_id = (int) $_POST['test_id'];
+assertPost();
+
+if (!isset($_POST['id'])) {
+	error("Missing Parameter: id.");
+}
+
+$id = (int) $_POST['id'];
 
 $resp = http(MIDDLE_END, "release_test", [
-	'test_id' => $test_id
+	'id' => $id,
 ]);
 
 if ($resp === false) {

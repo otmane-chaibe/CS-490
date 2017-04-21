@@ -7,12 +7,12 @@ require_once('../functions.php');
 
 assertPost();
 
-if (!isset($_POST['test_id'])) {
-	error("Missing Parameter: test_id.");
+if (!isset($_POST['id'])) {
+	error("Missing Parameter: id.");
 }
 
-$test_id=(int)$_POST['test_id'];
+$id=(int)$_POST['id'];
 
-Test::releaseTest($test_id);
+Test::releaseTest($id);
 
 echo json_encode(true);

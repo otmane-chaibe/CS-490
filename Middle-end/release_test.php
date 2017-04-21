@@ -6,18 +6,18 @@ require_once('../functions.php');
 
 assertPost();
 
-if (!isset($_POST['test_id'])) {
-	error("Missing Parameter: test_id.");
+if (!isset($_POST['id'])) {
+	error("Missing Parameter: id.");
 }
 
-$test_id = (int) $_POST['test_id'];
+$id = (int) $_POST['id'];
 
 $resp = http(BACK_END, "release_test", [
-	'test_id' => $test_id
+	'id' => $id
 ]);
 
 if ($resp === false) {
 	error("cURL request failed.");
 }
 
-echo json_encode(true);
+echo $resp;
