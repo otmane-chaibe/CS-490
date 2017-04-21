@@ -75,7 +75,9 @@ $test_ids = [];
 					<tr>
 						<td><a href="view_results.php?id=' . $test['test_id'] . '">' . $test['name'] . '</a></td>
 						<td>' . $test['score'] . '</td>
-						<td><input id="checkbox-' . $test['id'] . '" type="checkbox"</td>
+						<td>
+							<input id="checkbox-' . $test['test_id'] . '" type="checkbox" />
+						</td>
 					</tr>
 				';
 			}
