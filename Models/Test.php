@@ -99,7 +99,7 @@ class Test {
 		global $mysqli;
 		$out = [];
 		$sql = "
-			SELECT ss.id, ss.question_id, ss.solution, ss.has_correct_function_modifier,
+			SELECT DISTINCT ss.id, ss.question_id, ss.solution, ss.has_correct_function_modifier,
 			ss.has_correct_function_type, ss.has_correct_function_name,
 			ss.has_correct_function_params, ss.does_compile, ss.passes_unit_tests,
 			ss.score, ss.remark, test_questions.weight
