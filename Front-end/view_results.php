@@ -102,7 +102,7 @@ function getUnitTestInputsAsString($inputs) {
 								if ($_SESSION['role'] == 1) {
 									echo '
 										<input id="score-counter-' . $result['question_id'] . '" type="number" data-id="' . $result['id'] .
-										'" value="' . $result['score'] . '" step="1" min="0" max="100" />
+										'" value="' . $result['score'] . '" step="1" min="0" max="' . ($result['weight'] * 100) . '" />
 									';
 								} else {
 									echo $result['score'];
@@ -113,7 +113,7 @@ function getUnitTestInputsAsString($inputs) {
 							</tr>
 						</tbody>
 					</table>';
-			if (!empty($unit_tests)) {
+			if (!empty($unit_tests) && $result['does_compile'] == 1) {
 				echo '
 					<div class="header">Unit Tests</div>
 					<table class="unit-test-table">
@@ -155,13 +155,13 @@ function getUnitTestInputsAsString($inputs) {
 					</tbody>
 					</table>
 				';
-				echo '
-					<div class="header">Remark</div>
-					<textarea id="remark-' . $result['question_id'] . '" placeholder="Question Remark"' . ($_SESSION['role'] == 0 ? "readonly" : "") . '>' . $result['remark'] . '</textarea>
-				';
-				if ($_SESSION['role'] == 1) {
-					echo '<button id="question-edit-btn-' . $result['question_id'] . '" type="button" data-id="' . $result['id'] . '" class="blue">Save Changes</button>';
-				}
+			}
+			echo '
+				<div class="header">Remark</div>
+				<textarea id="remark-' . $result['question_id'] . '" placeholder="Question Remark"' . ($_SESSION['role'] == 0 ? "readonly" : "") . '>' . $result['remark'] . '</textarea>
+			';
+			if ($_SESSION['role'] == 1) {
+				echo '<button id="question-edit-btn-' . $result['question_id'] . '" type="button" data-id="' . $result['id'] . '" class="blue">Save Changes</button>';
 			}
 			echo '</div>';
 		}
