@@ -26,9 +26,10 @@
 #test-results-wrapper tr:last-child td { border-bottom: 0 }
 
 #test-results-wrapper .status {
-	background: #fff1f1;
-	border: 1px solid #ffc8c8;
-    border-radius: 4px;
+	background: #ffc8c8;
+	border: 1px solid #d94c4c;
+	border-radius: 4px;
+	color: #c32020;
     font-size: 16px;
     font-weight: 600;
     margin: auto;
@@ -38,6 +39,7 @@
 }
 
 #test-results-wrapper .status.pass {
-	background: #f3fff1;
-	border: 1px solid #c8ffcb;
+    background: #c8ffcb;
+    border: 1px solid #4cd964;
+    color: #20c33c
 }
