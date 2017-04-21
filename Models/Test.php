@@ -191,7 +191,6 @@ class Test {
 		return $mysqli->insert_id;
 	}
 
-	# Todo: update total test score after changing question score.
 	public static function updateQuestionScore($id, $test_id, $score) {
 		global $mysqli;
 		$sql = "
@@ -221,6 +220,14 @@ class Test {
 			'id' 	=> (int) $row['id'],
 			'score' => (int) $row['score'],
 		];
+	}
+
+	public static function getQuestionWeight($q_id) {
+		global $mysqli;
+		$sql = "SELECT weight FROM test_questions WHERE question_id = $q_id";
+		$result = $mysqli->query($sql);
+		$row = $result->fetch_array(MYSQLI_ASSOC);
+		return $row['weight'];
 	}
 
 	public static function updateExamScore($test_id) {

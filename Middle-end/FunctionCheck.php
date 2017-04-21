@@ -180,7 +180,6 @@ class FunctionCheck {
 		}
 
 		if ($param_types == $s_param_types) {
-			echo "Params matched\n";
 			$this->has_correct_function_params = true;
 			$this->score += 10;
 		}

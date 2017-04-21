@@ -217,15 +217,6 @@ class Question {
 		$mysqli->query($sql);
 	}
 
-	public static function getQuestionWeight($test_id) {
-		global $mysqli;
-		$sql = "SELECT `weight` FROM `test_questions`
-			WHERE `test_id` = $test_id";
-		$result = $mysqli->query($sql);
-		$row = $result->fetch_array(MYSQLI_ASSOC);
-		return $row['weight'];
-	}
-
 	private static function get_str_from_type($type) {
 		switch ($type) {
 			case 0: return "int";

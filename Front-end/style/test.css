@@ -31,6 +31,7 @@
 #test-wrapper table td:nth-child(2) input {
 	border: 1px solid #E0E2EA;
 	border-radius: 4px;
+	display: block;
 	margin: auto;
 	padding: 8px 4px;
 	text-align: center;

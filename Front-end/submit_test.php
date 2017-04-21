@@ -68,6 +68,15 @@ foreach ($question_ids as $q_id) {
 foreach ($student_solutions as $idx => $solution) {
 	try {
 		$q_id = $question_ids[$idx];
+		# Get question weight
+		$weight = 1.0;
+		$resp = http(MIDDLE_END, "get_question_weight", [
+			'q_id' => $q_id
+		]);
+		if ($resp !== false) {
+			$weight = (double) $resp;
+		}
+		# Initialize code compiler
 		$f_check = new FunctionCheck($solution, $questions[$idx], $unit_tests[$q_id]);
 		if ($f_check->parse() === true) {
 			$f_check->compile();
@@ -93,20 +102,19 @@ foreach ($student_solutions as $idx => $solution) {
 			}
 		}
 		# Insert question solution
+		$score = (int) (($weight * $f_check->score));
 		$score_id = http(MIDDLE_END, "insert_question_solution", [
 			"user_id"  => $_SESSION['user_id'],
 			"test_id"  => $test_id,
-			"q_id"     => $question_ids[$idx],
+			"q_id"     => $q_id,
 			"solution" => $solution,
 			"results"  => json_encode($results),
-			"score"    => (int) $f_check->score,
+			"score"    => $score,
 		]);
-
 		if ($score_id === false) {
 			error("cURL request failed.");
 		}
-
-		$scores[] = $f_check->score;
+		$scores[] = $score;
 		unset($f_check);
 	} catch (FileWriteException $ex) {
 		die(json_encode($ex->getMessage()));
@@ -122,7 +130,7 @@ foreach ($scores as $s) {
 $score_id = http(MIDDLE_END, "insert_test_score", [
 	"user_id" => $_SESSION['user_id'],
 	"test_id" => $test_id,
-	"score"   => $final_score / count($question_ids),
+	"score"   => $final_score,
 ]);
 
 if ($score_id === false) {

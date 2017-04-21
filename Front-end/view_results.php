@@ -101,11 +101,11 @@ function getUnitTestInputsAsString($inputs) {
 								<td>';
 								if ($_SESSION['role'] == 1) {
 									echo '
-										<input id="score-counter-' . $result['question_id'] . '" type="number" name="score" value="' .
-										((double) $result['weight'] * $result['score']) . '" step="1" min="0" max="100" />
+										<input id="score-counter-' . $result['question_id'] . '" type="number" data-id="' . $result['id'] .
+										'" value="' . $result['score'] . '" step="1" min="0" max="100" />
 									';
 								} else {
-									echo (double) $result['weight'] * $result['score'];
+									echo $result['score'];
 								}
 								echo '
 								</td>

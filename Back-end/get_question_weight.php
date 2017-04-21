@@ -7,11 +7,11 @@ require_once('../functions.php');
 
 assertPost();
 
-if(!isset($_POST['$test_id']))
+if(!isset($_POST['q_id']))
 {
 	error("Missing Parameters");
 }
 
-$test_id = $_POST['test_id'];
+$q_id = $_POST['q_id'];
 
-echo json_encode(Question::getQuestionWeight($test_id));
+echo json_encode(Test::getQuestionWeight($q_id));
