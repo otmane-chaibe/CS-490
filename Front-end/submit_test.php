@@ -104,11 +104,7 @@ foreach ($student_solutions as $idx => $solution) {
 			}
 		}
 		# Insert question solution
-		var_dump($weight);
-		var_dump($f_check->score);
 		$score = (int) (($weight * $f_check->score));
-		var_dump($score);
-		die();
 		$score_id = http(MIDDLE_END, "insert_question_solution", [
 			"user_id"  => $_SESSION['user_id'],
 			"test_id"  => $test_id,
