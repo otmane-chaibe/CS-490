@@ -71,7 +71,8 @@ foreach ($student_solutions as $idx => $solution) {
 		# Get question weight
 		$weight = 1.0;
 		$resp = http(MIDDLE_END, "get_question_weight", [
-			'q_id' => $q_id
+			'test_id' => $test_id,
+			'q_id'    => $q_id,
 		]);
 		if ($resp !== false) {
 			$weight = (double) $resp;
@@ -103,7 +104,11 @@ foreach ($student_solutions as $idx => $solution) {
 			}
 		}
 		# Insert question solution
+		var_dump($weight);
+		var_dump($f_check->score);
 		$score = (int) (($weight * $f_check->score));
+		var_dump($score);
+		die();
 		$score_id = http(MIDDLE_END, "insert_question_solution", [
 			"user_id"  => $_SESSION['user_id'],
 			"test_id"  => $test_id,

@@ -222,9 +222,9 @@ class Test {
 		];
 	}
 
-	public static function getQuestionWeight($q_id) {
+	public static function getQuestionWeight($test_id, $q_id) {
 		global $mysqli;
-		$sql = "SELECT weight FROM test_questions WHERE question_id = $q_id";
+		$sql = "SELECT weight FROM test_questions WHERE test_id = $test_id AND question_id = $q_id";
 		$result = $mysqli->query($sql);
 		$row = $result->fetch_array(MYSQLI_ASSOC);
 		return $row['weight'];
