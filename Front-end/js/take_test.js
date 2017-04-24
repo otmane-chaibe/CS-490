@@ -6,6 +6,8 @@
 function byId(id) { return document.getElementById(id) }
 
 byId('submit-btn').onclick = function(e) {
+	byId('scrim').style.display = "block"
+	document.body.style.overflow = "hidden"
 	var body = ""
 	var i = 0
 	while (true) {

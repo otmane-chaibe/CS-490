@@ -61,3 +61,23 @@
 }
 
 #note strong { color: #333 }
+
+#scrim {
+	background: rgba(255, 255, 255, .9);
+	display: none;
+	height: 100%;
+	left: 0;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 1
+}
+
+#scrim img {
+	height: 100px;
+	left: 50%;
+	margin: -50px 0 0 -50px;
+	position: absolute;
+	top: 50%;
+	width: 100px
+}

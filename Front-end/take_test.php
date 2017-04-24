@@ -31,6 +31,9 @@ if ($questions === false) {
 }
 
 ?>
+<div id="scrim">
+	<img src="../Front-end/images/hourglass.svg" alt="Loading" />
+</div>
 <div id="test-questions-wrapper">
 	<div id="note"><strong>Please note:</strong>&nbsp;all answers must be provided in Java code.</div>
 	<div id="error"></div>
