@@ -21,8 +21,6 @@ class Question {
 	const RETURN_STRING = 3;
 	const RETURN_BOOL = 4;
 
-	private static function getArgsForQuestions() {}
-
 	private static function formatQuestion($row) {
 		return [
 			'id'                => isset($row['id']) ? (int) $row['id'] : null,
