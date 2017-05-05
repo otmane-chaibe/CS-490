@@ -58,7 +58,8 @@ class Test {
 		}
 
 		if (empty($out)) {
-			$out = self::getAllTests();
+		#	$out = self::getAllTests();
+			return 0;
 		}
 
 		return $out;
